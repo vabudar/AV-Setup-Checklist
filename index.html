@@ -57,7 +57,7 @@
         
         <div class="absolute top-3 right-4 z-40 pointer-events-none opacity-40">
             <div class="flex items-center gap-1.5 text-xs font-mono text-[#30D158]">
-                <span class="inline-block w-2 h-2 rounded-full bg-[#30D158]"></span> Local Standalone
+                <span class="inline-block w-2 h-2 rounded-full bg-[#30D158]"></span> Local Mode
             </div>
         </div>
 
@@ -173,7 +173,7 @@
 
                                 <div class="w-[1px] bg-white/10 my-3"></div>
 
-                                <button @click.stop="openTroubleshooter(step)" :class="['w-[72px] flex flex-col items-center justify-center transition-colors', isStepChecked(step.id) ? 'text-white/20' : 'text-[#FF9F0A]/80 hover:text-[#FF9F0A]']">
+                                <button @click.stop="openTroubleshooter(step)" :class="['w-[72px] flex flex-col items-center justify-center transition-colors', isStepChecked(step.id) ? 'text-white/20' : 'text-[#FF9F0A]/80 hover:text-[#FF9F0A] hover:bg-[#FF9F0A]/10']">
                                     <span class="text-lg mb-0.5">⚙️</span>
                                     <span class="font-mono text-[9px] uppercase tracking-wider font-semibold">Fix</span>
                                 </button>
@@ -252,6 +252,338 @@
     </div>
 
     <script>
+        const INITIAL_TEAM = [
+            "Ver-se", "Tim", "Andy", "Johnny", "Titi", 
+            "Izzy", "Neil", "Simon", "Melchizedek", "Ulvis"
+        ];
+
+        const STEPS = {
+            audio: [
+                { label: 'Immediate Action', steps: [
+                { 
+                    id: 'audio-pre-1', 
+                    text: "Switch on tech in Lomond", 
+                    why: "Systems downstairs need time to sync and boot before the service feed starts.",
+                    note: "It's good to do this first as it takes a little while to boot up.",
+                    time: "09:00" 
+                }
+                ]},
+                { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
+                { 
+                    id: 'audio-1', 
+                    text: 'Pray with team member(s)', 
+                    why: "Aligns the team's heart and focus before technical tasks begin.",
+                    time: "09:00" 
+                },
+                { 
+                    id: 'audio-2', 
+                    text: "Read through the handout", 
+                    why: "Ensures we don't miss unique requirements like extra mics or stream-only audio.",
+                    note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary.",
+                    time: "09:05" 
+                },
+                { 
+                    id: 'audio-3', 
+                    text: 'Switch on the 2 switches on the wall', 
+                    why: "Powers up the primary equipment racks in the hall.",
+                    time: "09:10" 
+                },
+                { 
+                    id: 'audio-4', 
+                    text: 'Switch on the desk', 
+                    why: "The brain of the system must be stable before the speakers (amps) are live.",
+                    time: "09:12" 
+                },
+                { 
+                    id: 'audio-5', 
+                    text: 'Switch on the amps', 
+                    why: "Must follow the desk to prevent a loud pop that could damage speakers.",
+                    note: "It's important you switch on the desk first.",
+                    time: "09:15" 
+                },
+                { 
+                    id: 'audio-6', 
+                    text: 'Set up headset mics', 
+                    why: "Gives speakers time to test fit and comfort early.",
+                    time: "09:18" 
+                },
+                { 
+                    id: 'audio-7', 
+                    text: 'Test and adjust sound for headset mic', 
+                    why: "Prevents feedback and ensures clarity before the hall gets noisy.",
+                    time: "09:20" 
+                },
+                { 
+                    id: 'audio-8', 
+                    text: "Figure out who's on band", 
+                    why: "Helps you assign the right mic channels on the desk.",
+                    time: "09:25" 
+                },
+                { 
+                    id: 'audio-9', 
+                    text: "Leave spare mic pack on the speaker's glass table", 
+                    why: "A quick backup if the primary mic fails mid-service.",
+                    time: "09:28" 
+                },
+                { 
+                    id: 'audio-10', 
+                    text: 'Set up band mics', 
+                    why: "Organized cabling prevents trips and keeps the stage tidy.",
+                    time: "09:30" 
+                },
+                { 
+                    id: 'audio-11', 
+                    text: 'Test and adjust all band mics', 
+                    why: "Ensures the label on the desk matches the person on stage.",
+                    note: "Make sure you know which mic is in which input.",
+                    time: "09:33" 
+                },
+                { 
+                    id: 'audio-12', 
+                    text: 'Make sure sound is coming through on OBS', 
+                    why: "Broadcast audio needs to be clear and audible for the stream.",
+                    note: "Aiming for yellows touching reds.",
+                    time: "09:35" 
+                },
+                { 
+                    id: 'audio-13', 
+                    text: 'Test YouTube video for sound level', 
+                    why: "Confirms that both the physical room and the digital feed are receiving audio.",
+                    note: "Make sure it's coming through in the hall and in Lomond downstairs (While you go downstairs take the headset mic(s) and leave them in the vestry).",
+                    time: "09:37" 
+                },
+                { 
+                    id: 'audio-14', 
+                    text: 'In Lomond: Make sure "Stream" is selected on the wall panel', 
+                    why: "Routes the upstairs signal to the downstairs screens/speakers.",
+                    time: "09:40" 
+                },
+                { 
+                    id: 'audio-15', 
+                    text: 'Make sure feed from upstairs can be seen and heard', 
+                    why: "Final check that the overflow room downstairs is active and ready.",
+                    time: "09:42" 
+                }
+                ]}
+            ],
+            visuals: [
+                { label: 'Immediate Action', steps: [
+                { 
+                    id: 'vis-pre-1', 
+                    text: "Switch on tech in Lomond", 
+                    why: "Ensures the downstairs visual signal path is active early.",
+                    note: "it's good to do this first as it takes a little while to boot up.",
+                    time: "09:00" 
+                }
+                ]},
+                { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
+                { 
+                    id: 'vis-1', 
+                    text: 'Pray with team member(s)', 
+                    why: "Unity and spiritual readiness for the service.",
+                    time: "09:00" 
+                },
+                { 
+                    id: 'vis-2', 
+                    text: "Read the handout", 
+                    why: "Prepares the operator for specific slide timings or stream graphics.",
+                    note: "Make note of if we're streaming, if there's anything out of the ordinary.",
+                    time: "09:05" 
+                },
+                { 
+                    id: 'vis-3', 
+                    text: 'Turn on both projectors and FBack Screen', 
+                    why: "Warm-up time for bulbs and prevents 'No Signal' errors on screen.",
+                    time: "09:08" 
+                },
+                { 
+                    id: 'vis-4', 
+                    text: 'Check the 2 switches on the wall are switched on', 
+                    why: "Necessary for signal distribution and switcher power.",
+                    time: "09:10" 
+                },
+                { 
+                    id: 'vis-5', 
+                    text: 'Switch on both Macs', 
+                    why: "Main control and slide machines need to sync with the network.",
+                    time: "09:12" 
+                },
+                { 
+                    id: 'vis-6', 
+                    text: 'Set up matrix switcher', 
+                    why: "Ensures the right computers are showing on the right screens.",
+                    note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare.",
+                    time: "09:15" 
+                },
+                { 
+                    id: 'vis-7', 
+                    text: 'On the Slides Mac: Open up the Pre, During and Post Service slides', 
+                    why: "Saves time during the transitions later in the morning.",
+                    time: "09:20" 
+                },
+                
+                // Dynamic Conditional Steps based on Stream State (Streaming: NO)
+                { 
+                    id: 'vis-ns-1', 
+                    text: 'On the Slides Mac: Open up YouTube in Chrome', 
+                    why: "Prepares the offline monitoring tab.",
+                    note: "Await the stream.",
+                    branch: 'no', 
+                    time: "09:25" 
+                },
+                { 
+                    id: 'vis-ns-2', 
+                    text: 'Set Up Breeze Translate in Safari', 
+                    why: "Prepares translations in the browser window.",
+                    note: "Await hitting 'Start'.",
+                    branch: 'no', 
+                    time: "09:28" 
+                },
+                { 
+                    id: 'vis-ns-3', 
+                    text: 'On Streaming Mac: Open ATEM Switcher Software', 
+                    why: "Provides camera switcher desk link.",
+                    branch: 'no', 
+                    time: "09:30" 
+                },
+                { 
+                    id: 'vis-ns-4', 
+                    text: 'On Streaming Mac: Open OBS', 
+                    why: "Enables visual audio meters.",
+                    note: "This is for the sound person to gauge that the sound level is correct.",
+                    branch: 'no', 
+                    time: "09:33" 
+                },
+
+                // Dynamic Conditional Steps based on Stream State (Streaming: YES)
+                { 
+                    id: 'vis-s-1', 
+                    text: 'Open OBS', 
+                    why: "Starts the broadcast encoding client.",
+                    branch: 'yes', 
+                    time: "09:25" 
+                },
+                { 
+                    id: 'vis-s-2', 
+                    text: 'Set up the stream in Boxcast', 
+                    why: "Locks the cloud schedule into active broadcast state.",
+                    branch: 'yes', 
+                    time: "09:28" 
+                },
+                { 
+                    id: 'vis-s-3', 
+                    text: 'Open ATEM switcher software', 
+                    why: "Opens switcher remote deck control.",
+                    branch: 'yes', 
+                    time: "09:32" 
+                },
+
+                { 
+                    id: 'vis-9', 
+                    text: 'Set up your camera presets on the camera switcher', 
+                    why: "Enables fast, professional camera transitions.",
+                    note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4.",
+                    time: "09:35" 
+                }
+                ]},
+                { label: '9:40 — 9:50 · Go-Time Transitions', steps: [
+                // If we aren't streaming
+                { 
+                    id: 'vis-ns-t1', 
+                    text: "Hit 'Start' Breeze translate", 
+                    why: "Initializes transcription feed.",
+                    branch: 'no', 
+                    time: "09:40" 
+                },
+                { 
+                    id: 'vis-ns-t2', 
+                    text: "Find stream on YouTube and play in the background", 
+                    why: "Monitors downstream quality.",
+                    branch: 'no', 
+                    time: "09:42" 
+                },
+                { 
+                    id: 'vis-ns-t3', 
+                    text: "Play Pre-Service slides", 
+                    why: "Prepares hall screens for entrance.",
+                    branch: 'no', 
+                    time: "09:45" 
+                },
+                { 
+                    id: 'vis-ns-t4', 
+                    text: "Make sure MAC is Live on the cameras", 
+                    why: "Switches ATEM stream source to MAC feeds.",
+                    branch: 'no', 
+                    time: "09:48" 
+                },
+
+                // If we are streaming
+                { 
+                    id: 'vis-s-t1', 
+                    text: "Start Breeze translate", 
+                    why: "Triggers active transcription engine.",
+                    branch: 'yes', 
+                    time: "09:40" 
+                },
+                { 
+                    id: 'vis-s-t2', 
+                    text: "Play Pre-Service slides", 
+                    why: "Establishes stream buffer content.",
+                    branch: 'yes', 
+                    time: "09:42" 
+                },
+                { 
+                    id: 'vis-s-t3', 
+                    text: "Make sure MAC is Live on the cameras", 
+                    why: "Sets video switcher stream output.",
+                    branch: 'yes', 
+                    time: "09:44" 
+                },
+                { 
+                    id: 'vis-s-t4', 
+                    text: "Start stream at 9:45", 
+                    why: "Activates stream broadcast schedule.",
+                    branch: 'yes', 
+                    time: "09:45" 
+                },
+                { 
+                    id: 'vis-s-t5', 
+                    text: "Check stream is running on YouTube using your phone or browser", 
+                    why: "Validates final broadcast destination.",
+                    branch: 'yes', 
+                    time: "09:48" 
+                }
+                ]}
+            ]
+        };
+
+        const FLOWCHARTS = {
+            // --- UNIVERSAL / LOMOND ---
+            'audio-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
+            'vis-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
+
+            // --- AUDIO FLOWS ---
+            'audio-3': { 'start': { text: "Did the racks turn on when you hit the switches?", options: [{ label: "No, dead", target: "escalate" }, { label: "Yes", target: "resolved" }]}, 'resolved': { type: 'success', text: "Power is flowing.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Check the breaker panel. If tripped, alert building management.", actionText: "Alert Lead & Skip" } },
+            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { label: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
+            'audio-5': { 'start': { text: "Did you hear the amps 'click' on?", options: [{ label: "No", target: "rack" }, { label: "Yes", target: "resolved" }]}, 'rack': { text: "Check the specific amp power buttons in the rack. Are they toggled on?", options: [{ label: "Toggled them. Fixed!", target: "resolved" }, { label: "Still no click/lights", target: "escalate" }]}, 'resolved': { type: 'success', text: "Amps are live.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Amps are not receiving power.", actionText: "Alert Lead & Skip" } },
+            'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
+            'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
+
+            // --- VISUALS FLOWS ---
+            'vis-3': {
+                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", target: "status_check" }]},
+                'power_check': { text: "Check the main wall switch behind the equipment rack. Is it flipped off?", options: [{ label: "Yes, it was off", target: "turn_on_wall" }, { label: "No, it's on", target: "escalate_power" }]},
+                'turn_on_wall': { text: "Flip it up. Wait 30s. Did it turn on?", options: [{ label: "Yes! Working.", target: "resolved" }, { label: "No, still dead.", target: "escalate_power" }]},
+                'status_check': { text: "Is the 'TEMP' or 'LAMP' indicator blinking red?", options: [{ label: "Yes", target: "escalate_temp" }, { label: "No", target: "input_check" }]},
+                'input_check': { text: "Grab the remote and press 'Source' -> 'HDMI 1'.", options: [{ label: "Picture appeared!", target: "resolved" }, { label: "Still no signal", target: "escalate_signal" }]},
+                'resolved': { type: 'success', text: "Projectors are live.", actionText: "Mark Complete" },
+                'escalate_power': { type: 'escalation', text: "Hardware power failure. Alert Lead.", actionText: "Skip Task" },
+                'escalate_temp': { type: 'escalation', text: "Overheating/Lamp Failure. Alert Lead.", actionText: "Skip Task" },
+                'escalate_signal': { type: 'escalation', text: "Not receiving data from Matrix. Alert Lead.", actionText: "Skip Task" }
+            },
+            'vis-6': { 'start': { text: "Is the Matrix panel unresponsive or blank?", options: [{ label: "Yes", target: "cycle" }, { label: "No, it's working", target: "resolved" }]}, 'cycle': { text: "Pull the power plug from the back of the matrix, wait 5s, plug in.", options: [{ label: "It reset and works", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Matrix routed.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Matrix switcher failure.", actionText: "Alert Lead" } }
+        };
+
         const { createApp } = Vue;
 
         createApp({
@@ -298,9 +630,10 @@
                 currentWizardNode() {
                     if (!this.activeHelpStep) return {};
                     
+                    // Pull explicit specialized tree or dynamically configure smart diagnostic tree matrix
                     const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
                         'start': {
-                            text: `Let's isolate the failure for "${this.activeHelpStep.text}". Is the main status light active or flashing on the hardware unit?`,
+                            text: `Let's isolate the failure for "${this.activeHelpStep.text}". Is the main status light active or flashing on the hardware hardware unit?`,
                             options: [
                                 { label: "Yes, lights are active", target: "signal_check" },
                                 { label: "No signs of life / dead", target: "power_check" }
@@ -364,6 +697,7 @@
                         this.checkedSteps.push(id);
                         this.justChecked = id;
                         setTimeout(() => { this.justChecked = null; }, 600);
+                        try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
                     }
                 },
                 openTroubleshooter(step) {
@@ -382,17 +716,6 @@
                     this.activeHelpStep = null;
                 },
                 finalizeSession() {
-                    const today = new Date().toLocaleDateString();
-                    let reportText = `AV SETUP FINAL REPORT - ${today}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
-                    
-                    this.filteredBands.forEach(band => {
-                        band.steps.forEach(step => {
-                            const done = this.isStepChecked(step.id) ? '[DONE]' : '[MISSING]';
-                            reportText += `${done} ${step.text}\n`;
-                        });
-                    });
-
-                    window.location.href = `mailto:vabudar98@gmail.com?subject=AV Setup completed by ${this.currentName}&body=${encodeURIComponent(reportText)}`;
                     this.screen = 'summary';
                 },
                 copyReport() {
@@ -406,6 +729,7 @@
                         });
                     });
 
+                    // We use an older copy method here to ensure widespread mobile compatibility in the plain HTML file
                     const el = document.createElement('textarea');
                     el.value = reportText;
                     document.body.appendChild(el);
