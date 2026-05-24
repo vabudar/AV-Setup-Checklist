@@ -209,7 +209,7 @@
 
                                 <button @click.stop="openTroubleshooter(step)" :class="['w-[72px] flex flex-col items-center justify-center transition-colors', isStepChecked(step.id) ? 'text-white/20 hover:text-white/50' : 'text-[#FF9F0A]/80 hover:text-[#FF9F0A] hover:bg-[#FF9F0A]/10']">
                                     <svg class="w-[18px] h-[18px] mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                    <span class="font-mono text-[9px] uppercase tracking-wider font-semibold">Fix</span>
+                                    <span class="font-mono text-[9px] uppercase tracking-wider font-semibold">Help</span>
                                 </button>
                             </div>
                         </div>
@@ -410,7 +410,7 @@
                 { 
                     id: 'audio-14', 
                     text: 'Grab headset mics and leave in the vestry and chat to the leader', 
-                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.",
+                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am before the countdown has been and gone.",
                     note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!",
                     time: "09:40" 
                 },
@@ -478,7 +478,7 @@
                 { 
                     id: 'vis-ns-1', 
                     text: 'On the Slides Mac: Open up YouTube in Chrome', 
-                    why: "we always do this in Chrome because the video quality seems more consistent in Chrome.",
+                    why: "We always do this in Chrome because the video quality seems more consistent in Chrome.",
                     note: "Await the stream.",
                     branch: 'no', 
                     time: "09:25" 
@@ -486,7 +486,7 @@
                 { 
                     id: 'vis-ns-2', 
                     text: 'Set Up Breeze Translate in Safari', 
-                    why: "we always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
+                    why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
                     note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).",
                     branch: 'no', 
                     time: "09:28" 
@@ -542,7 +542,7 @@
                 { 
                     id: 'vis-ns-t2', 
                     text: "Find stream on YouTube and play in the background", 
-                    why: "So you’re time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
+                    why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
                     branch: 'no', 
                     time: "09:42" 
                 },
@@ -555,7 +555,7 @@
                 { 
                     id: 'vis-ns-t4', 
                     text: "Make sure MAC is Live on the cameras", 
-                    why: "to make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
+                    why: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
                     branch: 'no', 
                     time: "09:48" 
                 },
@@ -576,7 +576,7 @@
                 { 
                     id: 'vis-s-t3', 
                     text: "Make sure MAC is Live on the cameras", 
-                    why: "to make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
+                    why: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
                     branch: 'yes', 
                     time: "09:44" 
                 },
@@ -665,7 +665,6 @@
                 currentWizardNode() {
                     if (!this.activeHelpStep) return {};
                     
-                    // Fallback configuration tree shell
                     const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
                         'start': {
                             text: `Let's check the device infrastructure for "${this.activeHelpStep.text}". Is the item receiving operational line power?`,
@@ -675,7 +674,7 @@
                             ]
                         },
                         'power_check': {
-                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialiase?",
+                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialise?",
                             options: [
                                 { label: "Yes, power restored", target: "resolved" },
                                 { label: "No, still unpowered", target: "escalate_power" }
