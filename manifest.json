@@ -1,0 +1,15 @@
+{
+  "name": "AV Setup Checklist",
+  "short_name": "AV Setup",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#525E5E",
+  "theme_color": "#525E5E",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}
