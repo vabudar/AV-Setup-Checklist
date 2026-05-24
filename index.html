@@ -5,22 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AV Setup Checklist</title>
     
-    <!-- === WEB APP / FULL SCREEN MAGIC === -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#525E5E">
-    <!-- iOS specific tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
-    <!-- =================================== -->
-
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Vue.js for dynamic interactivity -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -29,7 +22,6 @@
         body {
             font-family: 'IBM Plex Sans', sans-serif;
             background-color: #525E5E;
-            /* Prevents pull-to-refresh blank spaces on mobile */
             overscroll-behavior-y: none; 
         }
         .font-mono {
@@ -72,7 +64,6 @@
 
     <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#525E5E]">
         
-        <!-- Offline Fallback Cloud Status Bar -->
         <div class="absolute top-3 right-4 z-40 pointer-events-none opacity-40">
             <div class="flex items-center gap-1.5 text-xs font-mono text-[#30D158]">
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
@@ -80,9 +71,8 @@
             </div>
         </div>
 
-        <!-- SCREEN: HOME -->
         <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-screen justify-between">
-            <div class="p-8 flex-1 pt-12"> <!-- Added extra top padding for iPhone notch/Dynamic Island -->
+            <div class="p-8 flex-1 pt-12">
                 <p class="font-mono text-[11px] tracking-[0.18em] text-gray-300 uppercase mb-6">AV Team · Pre-Service</p>
                 <h1 class="text-[34px] font-light tracking-[-0.5px] mb-3">Who's setting up?</h1>
                 <p class="text-gray-300 text-[15px] leading-relaxed mb-8">Select your name or create one below.</p>
@@ -104,7 +94,6 @@
             </div>
         </div>
 
-        <!-- SCREEN: ROLE SELECTION -->
         <div v-if="screen === 'role'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-start animate-fade-in">
             <button @click="screen = 'home'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -137,7 +126,6 @@
             </button>
         </div>
 
-        <!-- SCREEN: STREAMING QUESTION -->
         <div v-if="screen === 'streaming'" class="p-8 pt-12 flex-1 min-h-screen animate-fade-in">
             <button @click="screen = 'role'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -158,7 +146,6 @@
             </div>
         </div>
 
-        <!-- SCREEN: CHECKLIST WORKSPACE -->
         <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-screen animate-fade-in">
             <div class="sticky top-0 bg-[#525E5E] border-b border-white/10 z-10 px-5 pt-12 pb-4 shadow-xl">
                 <div class="flex items-center justify-between mb-3">
@@ -170,7 +157,7 @@
                         <p class="font-mono text-[10px] tracking-[0.2em] text-gray-300 uppercase font-bold">{{ role }} {{ streaming === 'yes' ? '· STREAM' : (streaming === 'no' ? '· LOCAL ONLY' : '') }}</p>
                         <p class="font-semibold text-sm">{{ currentName }}</p>
                     </div>
-                    <div class="w-16"></div> <!-- Spacer for centering -->
+                    <div class="w-16"></div>
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="flex-1 h-[2px] bg-white/10">
@@ -183,7 +170,6 @@
             <div class="px-4 pb-40 flex-1">
                 <div v-for="band in filteredBands" :key="band.label" class="mb-2">
                     
-                    <!-- Collapsible Section Accordion Bar -->
                     <div @click="toggleAccordion(band.label)" class="font-mono text-[11px] tracking-[0.2em] text-white/50 uppercase flex items-center justify-between mt-8 mb-4 font-semibold cursor-pointer select-none group">
                         <div class="flex items-center gap-3 flex-1">
                             <span class="group-hover:text-white/80 transition-colors">{{ band.label }}</span>
@@ -195,7 +181,6 @@
                         </div>
                     </div>
 
-                    <!-- Step Cards -->
                     <div v-if="!collapsedBands[band.label]" class="animate-fade-in">
                         <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
                             <div :class="['flex items-stretch rounded-xl overflow-hidden transition-all duration-300 relative', 
@@ -214,7 +199,6 @@
                                         </div>
                                         <p :class="['text-[15px] leading-snug font-medium tracking-normal transition-colors', isStepChecked(step.id) ? 'line-through text-white/40' : 'text-white']">{{ step.text }}</p>
                                         
-                                        <!-- Bold, Indented Notes -->
                                         <p v-if="step.note" :class="['mt-2 text-xs border-l-2 border-white/20 pl-2 font-bold transition-opacity', isStepChecked(step.id) ? 'opacity-30' : 'opacity-85 text-amber-200']">
                                             {{ step.note }}
                                         </p>
@@ -240,7 +224,6 @@
             </div>
         </div>
 
-        <!-- SCREEN: COMPLETE REPORT SUMMARY -->
         <div v-if="screen === 'summary'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-center text-center animate-fade-in">
             <p class="font-mono text-[11px] text-[#30D158] uppercase mb-4 font-bold tracking-widest">Setup Complete</p>
             <h1 class="text-[34px] font-light mb-12">Nicely done,<br />{{ currentName }}.</h1>
@@ -261,7 +244,6 @@
             </div>
         </div>
 
-        <!-- OVERLAY PANEL: DYNAMIC INTERACTIVE DIAGNOSTIC DRAWER -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="activeHelpStep = null"></div>
             
@@ -275,7 +257,6 @@
                     </button>
                 </div>
 
-                <!-- Bold Indented Setup Context Notice inside help portal -->
                 <div v-if="activeHelpStep.note" class="bg-amber-100/10 border-l-4 border-amber-400 p-3.5 rounded-lg mb-4 text-xs font-bold leading-relaxed text-amber-100 flex items-start gap-2">
                     <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                     <span>Note: {{ activeHelpStep.note }}</span>
@@ -289,7 +270,6 @@
                     <p class="text-white/90 text-[15px] leading-relaxed">{{ activeHelpStep.why || 'Critical procedural initialization step needed for core audio/visual stability.' }}</p>
                 </div>
 
-                <!-- Diagnostic Step Machine -->
                 <div class="animate-fade-in flex flex-col h-full bg-[#3A1B1B]/40 border border-[#FF453A]/30 rounded-2xl p-5 mb-8">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-mono text-[11px] tracking-widest text-[#FF453A] uppercase font-bold flex items-center">
@@ -327,7 +307,6 @@
 
     </div>
 
-    <!-- Vue Setup Engine Containing your Full Flowchart Databases -->
     <script>
         const INITIAL_TEAM = [
             "Ver-se", "Tim", "Andy", "Johnny", "Titi", 
@@ -340,7 +319,7 @@
                 { 
                     id: 'audio-pre-1', 
                     text: "Switch on tech in Lomond", 
-                    why: "It's good to do this first as it takes a little while to boot up.",
+                    why: "Do this first as it takes a little while to boot up.",
                     time: "09:00" 
                 }
                 ]},
@@ -348,19 +327,19 @@
                 { 
                     id: 'audio-1', 
                     text: 'Pray with team member(s)', 
-                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord's help.",
+                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service.",
                     time: "09:00" 
                 },
                 { 
                     id: 'audio-2', 
                     text: "Read through the handout", 
-                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always remember BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
+                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
                     note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary.",
                     time: "09:05" 
                 },
                 { 
                     id: 'audio-3', 
-                    text: 'Switch on the 2 wall switches', 
+                    text: 'Switch on the 2 switches on the wall', 
                     why: "This switches everything on. You can do nothing without it.",
                     time: "09:10" 
                 },
@@ -373,76 +352,71 @@
                 { 
                     id: 'audio-recv', 
                     text: 'Switch on mic receivers', 
-                    why: "Ensures wireless microphones can connect to the system.",
                     time: "09:13" 
                 },
                 { 
                     id: 'audio-5', 
                     text: 'Switch on the amps', 
-                    why: "Powers the main speakers for the hall.",
                     note: "Ensure the desk is switched on first.",
                     time: "09:15" 
                 },
                 { 
                     id: 'audio-6', 
                     text: 'Set up headset mics', 
-                    why: "Gives speakers time to test fit and comfort early.",
                     time: "09:18" 
                 },
                 { 
                     id: 'audio-7', 
-                    text: 'Test & adjust headset sound', 
+                    text: 'Test and adjust sound for headset mic', 
                     why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments.",
                     time: "09:20" 
                 },
                 { 
                     id: 'audio-8', 
                     text: "Figure out who's on band", 
-                    why: "So you know what mics to take.",
+                    why: "Do this so you know what mics to take.",
                     time: "09:25" 
                 },
                 { 
                     id: 'audio-9', 
-                    text: "Place spare mic pack on speaker's table", 
+                    text: "Leave spare mic pack on the speaker's glass table", 
                     why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to.",
                     time: "09:28" 
                 },
                 { 
                     id: 'audio-10', 
                     text: 'Set up band mics', 
-                    why: "Organized cabling prevents trips and keeps the stage tidy.",
                     time: "09:30" 
                 },
                 { 
                     id: 'audio-11', 
-                    text: 'Test & adjust all band mics', 
-                    why: "Ensures the levels on the desk are appropriate for the band members on stage.",
+                    text: 'Test and adjust all band mics', 
                     note: "Make sure you know which mic is in which input.",
                     time: "09:33" 
                 },
                 { 
                     id: 'audio-12', 
-                    text: 'Verify sound is coming through on OBS', 
-                    why: "This is what goes downstairs to Lomond so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service, will make for adequately loud and consistent volume throughout the stream.",
+                    text: 'Make sure sound is coming through on OBS', 
+                    why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service, will make for adequately loud and consistent volume throughout the stream.",
                     note: "Aiming for yellows touching reds.",
                     time: "09:35" 
                 },
                 { 
                     id: 'audio-13', 
-                    text: 'Test YouTube video sound level', 
+                    text: 'Test YouTube video for sound level', 
                     why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!",
                     time: "09:37" 
                 },
                 { 
                     id: 'audio-14', 
-                    text: 'Deliver headsets & brief service leader', 
-                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am before the countdown.",
-                    note: "Grab headset mics and leave in the vestry. Chat to the service leader/minister about whether everything is as normal or as abnormal!",
+                    text: 'Deliver headsets to vestry and brief leader', 
+                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.",
+                    note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!",
                     time: "09:40" 
                 },
                 { 
                     id: 'audio-15', 
-                    text: 'Verify Lomond & Reception feeds', 
+                    text: 'Route wall panel & verify Lomond / Reception feed', 
                     why: "It's a massive pain to hear that somethings not on down there mid-service.",
                     note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs.",
                     time: "09:45" 
@@ -454,8 +428,7 @@
                 { 
                     id: 'vis-pre-1', 
                     text: "Switch on tech in Lomond", 
-                    why: "Ensures the downstairs visual signal path is active early.",
-                    note: "It's good to do this first as it takes a little while to boot up.",
+                    why: "Do this first as it takes a little while to boot up.",
                     time: "09:00" 
                 }
                 ]},
@@ -463,53 +436,50 @@
                 { 
                     id: 'vis-1', 
                     text: 'Pray with team member(s)', 
-                    why: "Unity and spiritual readiness for the service.",
+                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service.",
                     time: "09:00" 
                 },
                 { 
                     id: 'vis-2', 
                     text: "Read the handout", 
-                    why: "Prepares the operator for specific slide timings or stream graphics.",
-                    note: "Make note of if we're streaming, if there's anything out of the ordinary.",
+                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
+                    note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary.",
                     time: "09:05" 
                 },
                 { 
                     id: 'vis-3', 
                     text: 'Turn on both projectors and FBack Screen', 
-                    why: "Warm-up time for bulbs and prevents 'No Signal' errors on screen.",
+                    note: "We don’t need “Proj” if there’s a Farsi service on.",
                     time: "09:08" 
                 },
                 { 
                     id: 'vis-4', 
                     text: 'Check the 2 switches on the wall are switched on', 
-                    why: "Necessary for signal distribution and switcher power.",
                     time: "09:10" 
                 },
                 { 
                     id: 'vis-5', 
                     text: 'Switch on both Macs', 
-                    why: "Main control and slide machines need to sync with the network.",
                     time: "09:12" 
                 },
                 { 
                     id: 'vis-6', 
                     text: 'Set up matrix switcher', 
-                    why: "Ensures the right computers are showing on the right screens.",
+                    why: "This ensures all the screens are showing what they should be.",
                     note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare.",
                     time: "09:15" 
                 },
                 { 
                     id: 'vis-7', 
-                    text: 'On the Slides Mac: Open up the Pre, During and Post Service slides', 
-                    why: "Saves time during the transitions later in the morning.",
+                    text: 'On the Slides mac: Open up the Pre, During and Post Service slides', 
                     time: "09:20" 
                 },
                 
-                // Dynamic Conditional Steps based on Stream State (Streaming: NO)
+                // --- STRIP CONDITIONAL HOOKS: STREAM FALSE TRACK ---
                 { 
                     id: 'vis-ns-1', 
                     text: 'On the Slides Mac: Open up YouTube in Chrome', 
-                    why: "Prepares the offline monitoring tab.",
+                    why: "We always do this in Chrome because the video quality seems more consistent in Chrome.",
                     note: "Await the stream.",
                     branch: 'no', 
                     time: "09:25" 
@@ -517,122 +487,112 @@
                 { 
                     id: 'vis-ns-2', 
                     text: 'Set Up Breeze Translate in Safari', 
-                    why: "Prepares translations in the browser window.",
-                    note: "Await hitting 'Start'.",
+                    why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
+                    note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).",
                     branch: 'no', 
                     time: "09:28" 
                 },
                 { 
                     id: 'vis-ns-3', 
                     text: 'On Streaming Mac: Open ATEM Switcher Software', 
-                    why: "Provides camera switcher desk link.",
                     branch: 'no', 
                     time: "09:30" 
                 },
                 { 
                     id: 'vis-ns-4', 
                     text: 'On Streaming Mac: Open OBS', 
-                    why: "Enables visual audio meters.",
                     note: "This is for the sound person to gauge that the sound level is correct.",
                     branch: 'no', 
                     time: "09:33" 
                 },
 
-                // Dynamic Conditional Steps based on Stream State (Streaming: YES)
+                // --- STRIP CONDITIONAL HOOKS: STREAM TRUE TRACK ---
                 { 
                     id: 'vis-s-1', 
                     text: 'Open OBS', 
-                    why: "Starts the broadcast encoding client.",
                     branch: 'yes', 
                     time: "09:25" 
                 },
                 { 
                     id: 'vis-s-2', 
                     text: 'Set up the stream in Boxcast', 
-                    why: "Locks the cloud schedule into active broadcast state.",
                     branch: 'yes', 
                     time: "09:28" 
                 },
                 { 
                     id: 'vis-s-3', 
                     text: 'Open ATEM switcher software', 
-                    why: "Opens switcher remote deck control.",
                     branch: 'yes', 
                     time: "09:32" 
                 },
 
                 { 
                     id: 'vis-9', 
-                    text: 'Set up your camera presets on the camera switcher', 
-                    why: "Enables fast, professional camera transitions.",
+                    text: 'Set up your camera presets set on the camera switcher', 
                     note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4.",
                     time: "09:35" 
                 }
                 ]},
                 { label: '9:40 — 9:50 · Go-Time Transitions', steps: [
-                // If we aren't streaming
+                // Non-Streaming Transition Steps
                 { 
                     id: 'vis-ns-t1', 
                     text: "Hit 'Start' Breeze translate", 
-                    why: "Initializes transcription feed.",
                     branch: 'no', 
                     time: "09:40" 
                 },
                 { 
                     id: 'vis-ns-t2', 
                     text: "Find stream on YouTube and play in the background", 
-                    why: "Monitors downstream quality.",
+                    why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
                     branch: 'no', 
                     time: "09:42" 
                 },
                 { 
                     id: 'vis-ns-t3', 
                     text: "Play Pre-Service slides", 
-                    why: "Prepares hall screens for entrance.",
                     branch: 'no', 
                     time: "09:45" 
                 },
                 { 
                     id: 'vis-ns-t4', 
                     text: "Make sure MAC is Live on the cameras", 
-                    why: "Switches ATEM stream source to MAC feeds.",
+                    note: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
                     branch: 'no', 
                     time: "09:48" 
                 },
 
-                // If we are streaming
+                // Streaming Transition Steps
                 { 
                     id: 'vis-s-t1', 
                     text: "Start Breeze translate", 
-                    why: "Triggers active transcription engine.",
                     branch: 'yes', 
                     time: "09:40" 
                 },
                 { 
                     id: 'vis-s-t2', 
                     text: "Play Pre-Service slides", 
-                    why: "Establishes stream buffer content.",
                     branch: 'yes', 
                     time: "09:42" 
                 },
                 { 
                     id: 'vis-s-t3', 
                     text: "Make sure MAC is Live on the cameras", 
-                    why: "Sets video switcher stream output.",
+                    note: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
                     branch: 'yes', 
                     time: "09:44" 
                 },
                 { 
                     id: 'vis-s-t4', 
                     text: "Start stream at 9:45", 
-                    why: "Activates stream broadcast schedule.",
+                    why: "This is important as it give the other venues time to find the stream and play the stream in the background and allow adequate time to display their notices.",
                     branch: 'yes', 
                     time: "09:45" 
                 },
                 { 
                     id: 'vis-s-t5', 
                     text: "Check stream is running on YouTube using your phone or browser", 
-                    why: "Validates final broadcast destination.",
+                    why: "So you know it’s good to go.",
                     branch: 'yes', 
                     time: "09:48" 
                 }
@@ -641,18 +601,13 @@
         };
 
         const FLOWCHARTS = {
-            // --- UNIVERSAL / LOMOND ---
             'audio-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
             'vis-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
-
-            // --- AUDIO FLOWS ---
             'audio-3': { 'start': { text: "Did the racks turn on when you hit the switches?", options: [{ label: "No, dead", target: "escalate" }, { label: "Yes", target: "resolved" }]}, 'resolved': { type: 'success', text: "Power is flowing.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Check the breaker panel. If tripped, alert building management.", actionText: "Alert Lead & Skip" } },
             'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { label: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
             'audio-5': { 'start': { text: "Did you hear the amps 'click' on?", options: [{ label: "No", target: "rack" }, { label: "Yes", target: "resolved" }]}, 'rack': { text: "Check the specific amp power buttons in the rack. Are they toggled on?", options: [{ label: "Toggled them. Fixed!", target: "resolved" }, { label: "Still no click/lights", target: "escalate" }]}, 'resolved': { type: 'success', text: "Amps are live.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Amps are not receiving power.", actionText: "Alert Lead & Skip" } },
             'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
             'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
-
-            // --- VISUALS FLOWS ---
             'vis-3': {
                 'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", target: "status_check" }]},
                 'power_check': { text: "Check the main wall switch behind the equipment rack. Is it flipped off?", options: [{ label: "Yes, it was off", target: "turn_on_wall" }, { label: "No, it's on", target: "escalate_power" }]},
@@ -685,7 +640,6 @@
                     flowNode: 'start',
                     copySuccess: false,
                     
-                    // App State Datastores
                     stepsDatabase: STEPS,
                     flowchartsDatabase: FLOWCHARTS
                 }
@@ -713,7 +667,6 @@
                 currentWizardNode() {
                     if (!this.activeHelpStep) return {};
                     
-                    // Pull explicit specialized tree or dynamically configure smart diagnostic tree matrix
                     const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
                         'start': {
                             text: `Let's isolate the failure for "${this.activeHelpStep.text}". Is the main status light active or flashing on the hardware unit?`,
@@ -812,7 +765,6 @@
                         });
                     });
 
-                    // Legacy copy command for broader pure HTML mobile compatibility
                     const el = document.createElement('textarea');
                     el.value = reportText;
                     document.body.appendChild(el);
