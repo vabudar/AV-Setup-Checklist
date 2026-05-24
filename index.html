@@ -262,12 +262,12 @@
                     <span>Note: {{ activeHelpStep.note }}</span>
                 </div>
 
-                <div class="bg-[#5C858A]/30 border border-[#7BC5C1]/30 rounded-2xl p-5 mb-4">
+                <div v-if="activeHelpStep.why" class="bg-5C858A border border-[#7BC5C1]/30 rounded-2xl p-5 mb-4">
                     <h3 class="font-mono text-[11px] tracking-widest text-[#7BC5C1] uppercase font-bold mb-3 flex items-center">
                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
                         The Purpose
                     </h3>
-                    <p class="text-white/90 text-[15px] leading-relaxed">{{ activeHelpStep.why || 'Critical procedural initialization step needed for core audio/visual stability.' }}</p>
+                    <p class="text-white/90 text-[15px] leading-relaxed">{{ activeHelpStep.why }}</p>
                 </div>
 
                 <div class="animate-fade-in flex flex-col h-full bg-[#3A1B1B]/40 border border-[#FF453A]/30 rounded-2xl p-5 mb-8">
@@ -409,14 +409,14 @@
                 },
                 { 
                     id: 'audio-14', 
-                    text: 'Deliver headsets to vestry and brief leader', 
+                    text: 'Grab headset mics and leave in the vestry and chat to the leader', 
                     why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.",
                     note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!",
                     time: "09:40" 
                 },
                 { 
                     id: 'audio-15', 
-                    text: 'Route wall panel & verify Lomond / Reception feed', 
+                    text: 'Route Lomond panel & check feeds', 
                     why: "It's a massive pain to hear that somethings not on down there mid-service.",
                     note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs.",
                     time: "09:45" 
@@ -428,7 +428,6 @@
                 { 
                     id: 'vis-pre-1', 
                     text: "Switch on tech in Lomond", 
-                    why: "Do this first as it takes a little while to boot up.",
                     time: "09:00" 
                 }
                 ]},
@@ -479,7 +478,7 @@
                 { 
                     id: 'vis-ns-1', 
                     text: 'On the Slides Mac: Open up YouTube in Chrome', 
-                    why: "We always do this in Chrome because the video quality seems more consistent in Chrome.",
+                    why: "we always do this in Chrome because the video quality seems more consistent in Chrome.",
                     note: "Await the stream.",
                     branch: 'no', 
                     time: "09:25" 
@@ -487,7 +486,7 @@
                 { 
                     id: 'vis-ns-2', 
                     text: 'Set Up Breeze Translate in Safari', 
-                    why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
+                    why: "we always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
                     note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).",
                     branch: 'no', 
                     time: "09:28" 
@@ -501,7 +500,6 @@
                 { 
                     id: 'vis-ns-4', 
                     text: 'On Streaming Mac: Open OBS', 
-                    note: "This is for the sound person to gauge that the sound level is correct.",
                     branch: 'no', 
                     time: "09:33" 
                 },
@@ -544,7 +542,7 @@
                 { 
                     id: 'vis-ns-t2', 
                     text: "Find stream on YouTube and play in the background", 
-                    why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
+                    why: "So you’re time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
                     branch: 'no', 
                     time: "09:42" 
                 },
@@ -557,7 +555,7 @@
                 { 
                     id: 'vis-ns-t4', 
                     text: "Make sure MAC is Live on the cameras", 
-                    note: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
+                    why: "to make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
                     branch: 'no', 
                     time: "09:48" 
                 },
@@ -578,7 +576,7 @@
                 { 
                     id: 'vis-s-t3', 
                     text: "Make sure MAC is Live on the cameras", 
-                    note: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
+                    why: "to make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
                     branch: 'yes', 
                     time: "09:44" 
                 },
@@ -604,7 +602,7 @@
             'audio-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
             'vis-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
             'audio-3': { 'start': { text: "Did the racks turn on when you hit the switches?", options: [{ label: "No, dead", target: "escalate" }, { label: "Yes", target: "resolved" }]}, 'resolved': { type: 'success', text: "Power is flowing.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Check the breaker panel. If tripped, alert building management.", actionText: "Alert Lead & Skip" } },
-            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { label: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
+            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { fill: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
             'audio-5': { 'start': { text: "Did you hear the amps 'click' on?", options: [{ label: "No", target: "rack" }, { label: "Yes", target: "resolved" }]}, 'rack': { text: "Check the specific amp power buttons in the rack. Are they toggled on?", options: [{ label: "Toggled them. Fixed!", target: "resolved" }, { label: "Still no click/lights", target: "escalate" }]}, 'resolved': { type: 'success', text: "Amps are live.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Amps are not receiving power.", actionText: "Alert Lead & Skip" } },
             'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
             'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
@@ -667,31 +665,32 @@
                 currentWizardNode() {
                     if (!this.activeHelpStep) return {};
                     
+                    // Fallback configuration tree shell
                     const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
                         'start': {
-                            text: `Let's isolate the failure for "${this.activeHelpStep.text}". Is the main status light active or flashing on the hardware unit?`,
+                            text: `Let's check the device infrastructure for "${this.activeHelpStep.text}". Is the item receiving operational line power?`,
                             options: [
-                                { label: "Yes, lights are active", target: "signal_check" },
-                                { label: "No signs of life / dead", target: "power_check" }
+                                { label: "Yes, it is drawing power", target: "signal_check" },
+                                { label: "No power indicators", target: "power_check" }
                             ]
                         },
                         'power_check': {
-                            text: "Reseat the power cable path. Inspect the specific rack wall breaker toggle. Did it boot back up?",
+                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialiase?",
                             options: [
-                                { label: "Yes, solved power issue", target: "resolved" },
-                                { label: "No, still dead", target: "escalate_power" }
+                                { label: "Yes, power restored", target: "resolved" },
+                                { label: "No, still unpowered", target: "escalate_power" }
                             ]
                         },
                         'signal_check': {
-                            text: `Cabling links might be dropped. Unplug and snap input connectivity tightly back into core interfaces. Did signal output sync?`,
+                            text: `Check that all source parameters match distribution arrays. Ensure cable inputs lock. Did the configuration execute?`,
                             options: [
-                                { label: "Yes, signal synced!", target: "resolved" },
-                                { label: "No, missing data link", target: "escalate_general" }
+                                { label: "Yes, operational alignment complete", target: "resolved" },
+                                { label: "No signal recovery", target: "escalate_general" }
                             ]
                         },
-                        'resolved': { type: 'success', text: "Excellent! The process matrix is green and operating perfectly.", actionText: "Complete" },
-                        'escalate_power': { type: 'escalation', text: "Total infrastructure power path blowout suspected.", actionText: "Escalate" },
-                        'escalate_general': { type: 'escalation', text: "Internal system hardware interface dropped input arrays.", actionText: "Escalate" }
+                        'resolved': { type: 'success', text: "The task loop is confirmed complete and execution was successful.", actionText: "Complete" },
+                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected.", actionText: "Escalate" },
+                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams.", actionText: "Escalate" }
                     };
 
                     return targetTree[this.flowNode] || targetTree['start'];
