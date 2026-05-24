@@ -2,8 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AV Setup Checklist</title>
+    
+    <!-- === WEB APP / FULL SCREEN MAGIC === -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#525E5E">
+    <!-- iOS specific tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AV Setup">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
+    <!-- =================================== -->
+
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Vue.js for dynamic interactivity -->
@@ -17,6 +29,8 @@
         body {
             font-family: 'IBM Plex Sans', sans-serif;
             background-color: #525E5E;
+            /* Prevents pull-to-refresh blank spaces on mobile */
+            overscroll-behavior-y: none; 
         }
         .font-mono {
             font-family: 'IBM Plex Mono', monospace;
@@ -68,19 +82,19 @@
 
         <!-- SCREEN: HOME -->
         <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-screen justify-between">
-            <div class="p-8 flex-1">
+            <div class="p-8 flex-1 pt-12"> <!-- Added extra top padding for iPhone notch/Dynamic Island -->
                 <p class="font-mono text-[11px] tracking-[0.18em] text-gray-300 uppercase mb-6">AV Team · Pre-Service</p>
                 <h1 class="text-[34px] font-light tracking-[-0.5px] mb-3">Who's setting up?</h1>
                 <p class="text-gray-300 text-[15px] leading-relaxed mb-8">Select your name or create one below.</p>
                 
-                <div class="border-t border-white/10 overflow-y-auto max-h-[50vh] pr-1">
+                <div class="border-t border-white/10 overflow-y-auto max-h-[50vh] pr-1 pb-10">
                     <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full flex items-center justify-between py-5 border-b border-white/10 hover:bg-white/5 transition-colors text-left group">
                         <span class="text-lg font-medium">{{ name }}</span>
                         <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     </button>
                 </div>
             </div>
-            <div class="p-4 bg-black/10 border-t border-white/10 pb-8">
+            <div class="p-4 bg-black/10 border-t border-white/10 pb-8 sticky bottom-0">
                 <div class="flex gap-2">
                     <input class="flex-1 h-14 px-4 bg-black/20 border border-white/10 text-white text-base focus:outline-none focus:border-white/30 placeholder:text-white/40" placeholder="Name not shown? Add it" v-model="newName" @keyup.enter="addName" />
                     <button @click="addName" :disabled="!newName.trim()" class="w-14 h-14 bg-white text-black flex items-center justify-center font-bold disabled:opacity-50 hover:bg-gray-200 transition-colors">
@@ -91,7 +105,7 @@
         </div>
 
         <!-- SCREEN: ROLE SELECTION -->
-        <div v-if="screen === 'role'" class="p-8 flex flex-col flex-1 min-h-screen justify-start animate-fade-in">
+        <div v-if="screen === 'role'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-start animate-fade-in">
             <button @click="screen = 'home'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
@@ -124,7 +138,7 @@
         </div>
 
         <!-- SCREEN: STREAMING QUESTION -->
-        <div v-if="screen === 'streaming'" class="p-8 flex-1 min-h-screen animate-fade-in">
+        <div v-if="screen === 'streaming'" class="p-8 pt-12 flex-1 min-h-screen animate-fade-in">
             <button @click="screen = 'role'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
@@ -146,7 +160,7 @@
 
         <!-- SCREEN: CHECKLIST WORKSPACE -->
         <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-screen animate-fade-in">
-            <div class="sticky top-0 bg-[#525E5E] border-b border-white/10 z-10 px-5 pt-4 pb-4 shadow-xl">
+            <div class="sticky top-0 bg-[#525E5E] border-b border-white/10 z-10 px-5 pt-12 pb-4 shadow-xl">
                 <div class="flex items-center justify-between mb-3">
                     <button @click="screen = 'home'" class="text-gray-300 hover:text-white transition-colors flex items-center gap-1 text-sm font-medium">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -227,7 +241,7 @@
         </div>
 
         <!-- SCREEN: COMPLETE REPORT SUMMARY -->
-        <div v-if="screen === 'summary'" class="p-8 flex flex-col flex-1 min-h-screen justify-center text-center animate-fade-in">
+        <div v-if="screen === 'summary'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-center text-center animate-fade-in">
             <p class="font-mono text-[11px] text-[#30D158] uppercase mb-4 font-bold tracking-widest">Setup Complete</p>
             <h1 class="text-[34px] font-light mb-12">Nicely done,<br />{{ currentName }}.</h1>
             
@@ -326,8 +340,7 @@
                 { 
                     id: 'audio-pre-1', 
                     text: "Switch on tech in Lomond", 
-                    why: "Systems downstairs need time to sync and boot before the service feed starts.",
-                    note: "It's good to do this first as it takes a little while to boot up.",
+                    why: "It's good to do this first as it takes a little while to boot up.",
                     time: "09:00" 
                 }
                 ]},
@@ -335,33 +348,39 @@
                 { 
                     id: 'audio-1', 
                     text: 'Pray with team member(s)', 
-                    why: "Aligns the team's heart and focus before technical tasks begin.",
+                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord's help.",
                     time: "09:00" 
                 },
                 { 
                     id: 'audio-2', 
                     text: "Read through the handout", 
-                    why: "Ensures we don't miss unique requirements like extra mics or stream-only audio.",
+                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always remember BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
                     note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary.",
                     time: "09:05" 
                 },
                 { 
                     id: 'audio-3', 
-                    text: 'Switch on the 2 switches on the wall', 
-                    why: "Powers up the primary equipment racks in the hall.",
+                    text: 'Switch on the 2 wall switches', 
+                    why: "This switches everything on. You can do nothing without it.",
                     time: "09:10" 
                 },
                 { 
                     id: 'audio-4', 
                     text: 'Switch on the desk', 
-                    why: "The brain of the system must be stable before the speakers (amps) are live.",
+                    why: "This should be done first before switching on the amps.",
                     time: "09:12" 
+                },
+                { 
+                    id: 'audio-recv', 
+                    text: 'Switch on mic receivers', 
+                    why: "Ensures wireless microphones can connect to the system.",
+                    time: "09:13" 
                 },
                 { 
                     id: 'audio-5', 
                     text: 'Switch on the amps', 
-                    why: "Must follow the desk to prevent a loud pop that could damage speakers.",
-                    note: "It's important you switch on the desk first.",
+                    why: "Powers the main speakers for the hall.",
+                    note: "Ensure the desk is switched on first.",
                     time: "09:15" 
                 },
                 { 
@@ -372,20 +391,20 @@
                 },
                 { 
                     id: 'audio-7', 
-                    text: 'Test and adjust sound for headset mic', 
-                    why: "Prevents feedback and ensures clarity before the hall gets noisy.",
+                    text: 'Test & adjust headset sound', 
+                    why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments.",
                     time: "09:20" 
                 },
                 { 
                     id: 'audio-8', 
                     text: "Figure out who's on band", 
-                    why: "Helps you assign the right mic channels on the desk.",
+                    why: "So you know what mics to take.",
                     time: "09:25" 
                 },
                 { 
                     id: 'audio-9', 
-                    text: "Leave spare mic pack on the speaker's glass table", 
-                    why: "A quick backup if the primary mic fails mid-service.",
+                    text: "Place spare mic pack on speaker's table", 
+                    why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to.",
                     time: "09:28" 
                 },
                 { 
@@ -396,36 +415,37 @@
                 },
                 { 
                     id: 'audio-11', 
-                    text: 'Test and adjust all band mics', 
-                    why: "Ensures the label on the desk matches the person on stage.",
+                    text: 'Test & adjust all band mics', 
+                    why: "Ensures the levels on the desk are appropriate for the band members on stage.",
                     note: "Make sure you know which mic is in which input.",
                     time: "09:33" 
                 },
                 { 
                     id: 'audio-12', 
-                    text: 'Make sure sound is coming through on OBS', 
-                    why: "Broadcast audio needs to be clear and audible for the stream.",
+                    text: 'Verify sound is coming through on OBS', 
+                    why: "This is what goes downstairs to Lomond so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service, will make for adequately loud and consistent volume throughout the stream.",
                     note: "Aiming for yellows touching reds.",
                     time: "09:35" 
                 },
                 { 
                     id: 'audio-13', 
-                    text: 'Test YouTube video for sound level', 
-                    why: "Confirms that both the physical room and the digital feed are receiving audio.",
-                    note: "Make sure it's coming through in the hall and in Lomond downstairs (While you go downstairs take the headset mic(s) and leave them in the vestry).",
+                    text: 'Test YouTube video sound level', 
+                    why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!",
                     time: "09:37" 
                 },
                 { 
                     id: 'audio-14', 
-                    text: 'In Lomond: Make sure "Stream" is selected on the wall panel', 
-                    why: "Routes the upstairs signal to the downstairs screens/speakers.",
+                    text: 'Deliver headsets & brief service leader', 
+                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am before the countdown.",
+                    note: "Grab headset mics and leave in the vestry. Chat to the service leader/minister about whether everything is as normal or as abnormal!",
                     time: "09:40" 
                 },
                 { 
                     id: 'audio-15', 
-                    text: 'Make sure feed from upstairs can be seen and heard', 
-                    why: "Final check that the overflow room downstairs is active and ready.",
-                    time: "09:42" 
+                    text: 'Verify Lomond & Reception feeds', 
+                    why: "It's a massive pain to hear that somethings not on down there mid-service.",
+                    note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs.",
+                    time: "09:45" 
                 }
                 ]}
             ],
@@ -693,6 +713,7 @@
                 currentWizardNode() {
                     if (!this.activeHelpStep) return {};
                     
+                    // Pull explicit specialized tree or dynamically configure smart diagnostic tree matrix
                     const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
                         'start': {
                             text: `Let's isolate the failure for "${this.activeHelpStep.text}". Is the main status light active or flashing on the hardware unit?`,
