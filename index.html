@@ -5,836 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>AV Setup Checklist</title>
     
-    <!-- === WEB APP / FULL SCREEN MAGIC === -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#525E5E">
-    <!-- iOS specific tags -->
+    <meta name="theme-color" content="#556462">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AV Setup">
     
-    <!-- Force Chrome/iOS square parsing by explicitly defining sizes -->
-    <link rel="apple-touch-icon" sizes="512x512" href="icon.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
-    <!-- =================================== -->
-
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Vue.js for dynamic interactivity -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- EmailJS Browser SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'IBM Plex Sans', sans-serif;
-            background-color: #525E5E;
-            overscroll-behavior-y: none; 
-        }
-        .font-mono {
-            font-family: 'IBM Plex Mono', monospace;
-        }
-        /* Custom Animations */
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .animate-slide-up {
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.8); }
-            50% { transform: scale(1.25); }
-            100% { transform: scale(1); }
-        }
-        @keyframes rippleOut {
-            0% { box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.4); }
-            100% { box-shadow: 0 0 0 15px rgba(48, 209, 88, 0); }
-        }
-        @keyframes flashBg {
-            0% { background-color: rgba(48, 209, 88, 0.15); border-color: rgba(48, 209, 88, 0.3); }
-            100% { background-color: rgba(0, 0, 0, 0.2); border-color: rgba(255, 255, 255, 0.05); }
-        }
-        .anim-pop { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        .anim-ripple { animation: rippleOut 0.5s ease-out forwards; }
-        .anim-flash { animation: flashBg 0.6s ease-out forwards; }
+        body { font-family: 'IBM Plex Sans', sans-serif; background-color: #F4F7F2; overscroll-behavior-y: none; }
+        .font-mono { font-family: 'IBM Plex Mono', monospace; }
+        .font-publico { font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
+        .font-gillsans { font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; }
+        
+        /* Updated brand color #556462 */
+        .bg-brand-green { background-color: #556462; }
+        .text-brand-green { color: #556462; }
+        .border-brand-green { border-color: #556462; }
+        
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="text-white selection:bg-white/20">
+<body class="text-slate-800">
 
-    <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#525E5E]">
+    <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#F4F7F2] shadow-2xl">
         
-        <!-- Offline Fallback Cloud Status Bar -->
-        <div class="absolute top-3 right-4 z-40 pointer-events-none opacity-40">
-            <div class="flex items-center gap-1.5 text-xs font-mono text-[#30D158]">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-                Local Mode
-            </div>
+        <div class="bg-brand-green h-14 flex items-center justify-between px-5 shadow-sm sticky top-0 z-30 pt-4 pb-4">
+            <button @click="resetApp" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+                <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span class="font-bold text-white text-sm tracking-wider uppercase">AV Assistant</span>
+            </button>
         </div>
 
-        <!-- SCREEN: HOME -->
-        <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-screen justify-between">
-            <div class="p-8 flex-1 pt-12">
-                <p class="font-mono text-[11px] tracking-[0.18em] text-gray-300 uppercase mb-6">AV Team · Pre-Service</p>
-                <h1 class="text-[34px] font-light tracking-[-0.5px] mb-3">Who's setting up?</h1>
-                <p class="text-gray-300 text-[15px] leading-relaxed mb-8">Select your name or create one below.</p>
+        <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-[calc(100vh-56px)] justify-between">
+            <div class="p-8 flex-1">
+                <div class="text-center py-6 mb-4 select-none">
+                    <h2 class="text-lg text-slate-500 font-publico tracking-wide leading-none">The</h2>
+                    <h1 class="text-[44px] font-bold tracking-[0.16em] text-slate-900 font-gillsans uppercase mt-0.5 leading-none">TRON</h1>
+                    <p class="text-sm text-slate-500 font-publico tracking-wide mt-1.5 leading-none">Church</p>
+                </div>
+
+                <div class="text-center mb-8">
+                    <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase font-bold mb-1">Pre-Service Setup</p>
+                    <h3 class="text-xl font-bold text-slate-800">Who's setting up Today?</h3>
+                </div>
                 
-                <div class="border-t border-white/10 overflow-y-auto max-h-[50vh] pr-1 pb-10">
-                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full flex items-center justify-between py-5 border-b border-white/10 hover:bg-white/5 transition-colors text-left group">
-                        <span class="text-lg font-medium">{{ name }}</span>
-                        <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                <div class="overflow-y-auto max-h-[45vh] pr-1 space-y-2.5">
+                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full bg-white border border-slate-200/60 rounded-2xl p-4.5 text-left flex items-center justify-between hover:bg-slate-50 active:scale-[0.99] transition-all shadow-sm group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-1.5 h-6 bg-slate-300 rounded-full group-hover:bg-brand-green transition-colors"></div>
+                            <span class="text-base font-bold text-slate-800">{{ name }}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     </button>
                 </div>
             </div>
-            <div class="p-4 bg-black/10 border-t border-white/10 pb-8 sticky bottom-0">
+            <div class="p-5 bg-white border-t border-slate-200/80 pb-8 sticky bottom-0">
                 <div class="flex gap-2">
-                    <input class="flex-1 h-14 px-4 bg-black/20 border border-white/10 text-white text-base focus:outline-none focus:border-white/30 placeholder:text-white/40" placeholder="Name not shown? Add it" v-model="newName" @keyup.enter="addName" />
-                    <button @click="addName" :disabled="!newName.trim()" class="w-14 h-14 bg-white text-black flex items-center justify-center font-bold disabled:opacity-50 hover:bg-gray-200 transition-colors">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    <input class="flex-1 h-13 px-4 bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:bg-white rounded-xl placeholder:text-slate-400 transition-colors" placeholder="Add name" v-model="newName" @keyup.enter="addName" />
+                    <button @click="addName" class="w-13 h-13 bg-slate-800 text-white flex items-center justify-center font-bold rounded-xl active:scale-95 transition-transform">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN: ROLE SELECTION -->
-        <div v-if="screen === 'role'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-start animate-fade-in">
-            <button @click="screen = 'home'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        <div v-if="screen === 'role'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-56px)] justify-start animate-fade-in">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
-            <p class="font-mono text-[11px] tracking-[0.18em] text-gray-300 uppercase mb-4">Hello {{ currentName }}</p>
-            <h1 class="text-[34px] font-light tracking-[-0.5px] mb-3">Choose your role</h1>
-            <p class="text-gray-300 text-[15px] mb-8">What are you setting up today?</p>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Welcome, {{ currentName }}</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Choose your role</h1>
             
-            <button @click="selectRole('audio')" class="w-full h-auto min-h-[120px] bg-black/10 border border-white/10 p-6 mb-4 text-left flex justify-between items-center active:bg-white/10 hover:border-white/30 transition-colors group">
-                <div class="flex flex-col justify-center h-full">
-                    <div class="text-2xl font-semibold mb-1 flex items-center gap-3">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/></svg>
-                        Audio
-                    </div>
-                    <div class="text-sm text-gray-300 mt-1">Mics, Amps, Sound Desk & Lomond Configuration</div>
+            <button @click="selectRole('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-4 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 active:scale-[0.99] transition-all shadow-md">
+                <div class="flex items-center gap-5">
+                    <div class="w-2.5 h-12 bg-brand-green rounded-full"></div> 
+                    <div class="text-xl font-bold text-slate-800">Audio</div>
                 </div>
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <!-- FIX: Re-linked to transition directly to stream query screen rather than breaking -->
-            <button @click="screen = 'streaming'" class="w-full h-auto min-h-[120px] bg-black/10 border border-white/10 p-6 text-left flex justify-between items-center active:bg-white/10 hover:border-white/30 transition-colors group">
-                <div class="flex flex-col justify-center h-full">
-                    <div class="text-2xl font-semibold mb-1 flex items-center gap-3">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
-                        Visuals
-                    </div>
-                    <div class="text-sm text-gray-300 mt-1">Projectors, Switcher, Slides & Stream Setup</div>
+            <button @click="screen = 'streaming'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 active:scale-[0.99] transition-all shadow-md">
+                <div class="flex items-center gap-5">
+                    <div class="w-2.5 h-12 bg-brand-green rounded-full"></div> 
+                    <div class="text-xl font-bold text-slate-800">Visuals</div>
                 </div>
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
         </div>
 
-        <!-- SCREEN: STREAMING QUESTION -->
-        <div v-if="screen === 'streaming'" class="p-8 pt-12 flex-1 min-h-screen animate-fade-in">
-            <button @click="screen = 'role'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        <div v-if="screen === 'streaming'" class="p-8 flex-1 animate-fade-in">
+            <button @click="screen = 'role'" class="mb-8 text-slate-600 self-start flex items-center gap-1.5 text-sm font-semibold">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
-            <p class="font-mono text-[11px] tracking-[0.18em] text-gray-300 uppercase mb-4">Visuals Setup</p>
-            <h1 class="text-[34px] font-light tracking-[-0.5px] mb-3">Are we streaming?</h1>
-            <p class="text-gray-300 text-[15px] mb-8">Adjusts the checklist items automatically.</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Are we streaming?</h1>
             <div class="flex flex-col gap-4">
-                <button @click="selectRole('visuals', 'yes')" class="bg-white text-black h-[72px] flex items-center justify-between px-6 font-bold tracking-[0.15em] uppercase active:scale-95 transition-transform hover:bg-gray-100 rounded-lg">
-                    <span>Yes · Streaming Today</span>
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg>
-                </button>
-                <button @click="selectRole('visuals', 'no')" class="bg-black/10 border border-white/10 text-white h-[72px] flex items-center justify-between px-6 font-bold tracking-[0.15em] uppercase active:scale-95 transition-transform hover:bg-black/20 rounded-lg">
-                    <span>No · In-House Only</span>
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></svg>
-                </button>
+                <button @click="selectRole('visuals', 'yes')" class="bg-white border border-slate-200 h-16 rounded-2xl flex items-center justify-between px-6 font-bold uppercase active:scale-98 transition-all shadow-sm">Yes · Streaming</button>
+                <button @click="selectRole('visuals', 'no')" class="bg-white border border-slate-200 h-16 rounded-2xl flex items-center justify-between px-6 font-bold uppercase active:scale-98 transition-all shadow-sm">No · In-House</button>
             </div>
         </div>
 
-        <!-- SCREEN: CHECKLIST WORKSPACE -->
-        <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-screen animate-fade-in">
-            <div class="sticky top-0 bg-[#525E5E] border-b border-white/10 z-10 px-5 pt-12 pb-4 shadow-xl">
+        <div v-if="screen === 'list'" class="flex flex-col flex-1 animate-fade-in">
+            <div class="sticky top-[56px] bg-[#F4F7F2]/95 backdrop-blur-md border-b border-slate-200/80 z-20 px-5 pt-4 pb-4 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
-                    <button @click="screen = 'home'" class="text-gray-300 hover:text-white transition-colors flex items-center gap-1 text-sm font-medium">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                        Restart
-                    </button>
-                    <div class="text-center">
-                        <p class="font-mono text-[10px] tracking-[0.2em] text-gray-300 uppercase font-bold">{{ role }} {{ streaming === 'yes' ? '· STREAM' : (streaming === 'no' ? '· LOCAL ONLY' : '') }}</p>
-                        <p class="font-semibold text-sm">{{ currentName }}</p>
-                    </div>
-                    <div class="w-16"></div>
+                    <button @click="screen = 'home'" class="text-slate-600 text-sm font-semibold flex items-center gap-1">Back</button>
+                    <div class="text-center text-sm font-bold">{{ currentName }}</div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <div class="flex-1 h-[2px] bg-white/10">
-                        <div class="h-full bg-white transition-all duration-300" :style="{ width: progressPercentage + '%' }"></div>
-                    </div>
-                    <span class="font-mono text-[11px] text-gray-300 min-w-[32px] text-right font-medium">{{ checkedSteps.length }}/{{ totalSteps }}</span>
+                <div class="flex-1 h-3 bg-slate-200/80 rounded-full overflow-hidden">
+                    <div class="h-full bg-brand-green transition-all duration-300" :style="{ width: progressPercentage + '%' }"></div>
                 </div>
             </div>
 
             <div class="px-4 pb-40 flex-1">
                 <div v-for="band in filteredBands" :key="band.label" class="mb-2">
-                    
-                    <!-- Collapsible Section Accordion Bar -->
-                    <div @click="toggleAccordion(band.label)" class="font-mono text-[11px] tracking-[0.2em] text-white/50 uppercase flex items-center justify-between mt-8 mb-4 font-semibold cursor-pointer select-none group">
-                        <div class="flex items-center gap-3 flex-1">
-                            <span class="group-hover:text-white/80 transition-colors">{{ band.label }}</span>
-                            <div class="flex-1 h-[1px] bg-white/10 group-hover:bg-white/30 transition-colors"></div>
-                        </div>
-                        <div class="ml-3 text-white/30 group-hover:text-white/80 transition-colors">
-                            <svg v-if="collapsedBands[band.label]" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                        </div>
-                    </div>
-
-                    <!-- Step Cards -->
-                    <div v-if="!collapsedBands[band.label]" class="animate-fade-in">
-                        <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
-                            <div :class="['flex items-stretch rounded-xl overflow-hidden transition-all duration-300 relative', 
-                                         justChecked === step.id ? 'anim-flash' : 'bg-black/20', 
-                                         isStepChecked(step.id) && justChecked !== step.id ? 'bg-black/45 border border-white/5 opacity-50 shadow-none' : 'border border-white/10 shadow-sm']">
-                                
-                                <div class="flex-1 flex items-center p-4 cursor-pointer" @click="toggleStep(step.id)">
-                                    <div :class="['w-6 h-6 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10',
-                                                 isStepChecked(step.id) && justChecked !== step.id ? 'bg-[#30D158]/10 border-[#30D158]/50 text-[#30D158]' : 'border-white/30',
-                                                 justChecked === step.id ? 'anim-pop anim-ripple bg-[#30D158] border-[#30D158] text-black' : '']">
-                                        <svg v-if="isStepChecked(step.id)" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                    </div>
-                                    <div class="ml-4 flex-1">
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <span class="font-mono text-[10px] text-white/50">{{ step.time }}</span>
-                                        </div>
-                                        <p :class="['text-[15px] leading-snug font-medium tracking-normal transition-colors', isStepChecked(step.id) ? 'line-through text-white/40' : 'text-white']">{{ step.text }}</p>
-                                        
-                                        <!-- Bold, Indented Notes -->
-                                        <p v-if="step.note" :class="['mt-2 text-xs border-l-2 border-white/20 pl-2 font-bold transition-opacity', isStepChecked(step.id) ? 'opacity-30' : 'opacity-85 text-amber-200']">
-                                            {{ step.note }}
-                                        </p>
-                                    </div>
+                    <div class="font-mono text-[10px] tracking-[0.25em] text-slate-500 uppercase mt-8 mb-4 font-bold">{{ band.label }}</div>
+                    <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
+                        <div :class="['flex items-stretch rounded-2xl border shadow-sm', isStepChecked(step.id) ? 'bg-emerald-50/50 border-emerald-200' : 'bg-white border-slate-200']">
+                            <div :class="['w-1.5 transition-colors', isStepChecked(step.id) ? 'bg-brand-green' : 'bg-slate-300']"></div>
+                            <div class="flex-1 flex items-center p-4.5 cursor-pointer" @click="toggleStep(step.id)">
+                                <div :class="['w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all', isStepChecked(step.id) ? 'bg-brand-green border-brand-green text-white' : 'border-slate-300']">
+                                    <svg v-if="isStepChecked(step.id)" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                                 </div>
-
-                                <div class="w-[1px] bg-white/10 my-3"></div>
-
-                                <button @click.stop="openTroubleshooter(step)" :class="['w-[72px] flex flex-col items-center justify-center transition-colors', isStepChecked(step.id) ? 'text-white/20 hover:text-white/50' : 'text-[#FF9F0A]/80 hover:text-[#FF9F0A] hover:bg-[#FF9F0A]/10']">
-                                    <svg class="w-[18px] h-[18px] mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                    <span class="font-mono text-[9px] uppercase tracking-wider font-semibold">Help</span>
-                                </button>
+                                <div class="ml-4 flex-1 font-semibold text-slate-800">{{ step.text }}</div>
                             </div>
                         </div>
                     </div>
-
-                </div>
-
-                <button @click="finalizeSession" :class="['w-full h-14 mt-10 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-xl', progressPercentage === 100 ? 'bg-white text-black shadow-lg hover:bg-gray-100' : 'bg-black/20 border border-white/10 text-white hover:bg-black/40']">
-                    {{ progressPercentage === 100 ? 'Finish Setup' : 'Finish Early' }} 
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- SCREEN: COMPLETE REPORT SUMMARY -->
-        <div v-if="screen === 'summary'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-center text-center animate-fade-in">
-            <p class="font-mono text-[11px] text-[#30D158] uppercase mb-4 font-bold tracking-widest">Setup Complete</p>
-            <h1 class="text-[34px] font-light mb-12">Nicely done,<br />{{ currentName }}.</h1>
-            
-            <div class="flex border-y border-white/10 py-8 mb-10 bg-black/5 rounded-lg px-2">
-                <div class="flex-1 text-center"><div class="font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase mb-2">Role</div><div class="text-xl font-semibold uppercase">{{ role }}</div><div class="text-xs text-white/50 mt-1">{{ streaming === 'yes' ? 'Streaming' : 'In-House' }}</div></div>
-                <div class="flex-1 border-l border-white/10 text-center"><div class="font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase mb-2">Steps</div><div class="text-xl font-semibold">{{ checkedSteps.length }}</div><div class="text-xs text-white/50 mt-1 font-mono">Completed</div></div>
-            </div>
-
-            <div class="space-y-4">
-                <button @click="resetApp" class="w-full h-14 bg-white text-black font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-xl hover:bg-gray-200 transition-colors">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                    Restart App
-                </button>
-                <button @click="copyReport" :class="['w-full h-14 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-xl transition-all', copySuccess ? 'bg-[#30D158]/20 text-[#30D158] border border-[#30D158]/50' : 'bg-black/20 border border-white/10 text-white hover:bg-black/40']">
-                    {{ copySuccess ? 'Report Copied!' : 'Copy Setup Report' }}
-                </button>
-            </div>
-        </div>
-
-        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER -->
-        <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center">
-            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="activeHelpStep = null"></div>
-            
-            <div class="bg-[#6B7979] w-full max-w-[480px] rounded-t-3xl pt-2 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-white/20 max-h-[90vh] overflow-y-auto">
-                <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-6"></div>
-
-                <div class="flex justify-between items-start mb-6">
-                    <h2 class="text-xl font-medium text-white pr-4 leading-snug">{{ activeHelpStep.text }}</h2>
-                    <button @click="activeHelpStep = null" class="bg-black/20 hover:bg-black/40 transition-colors text-white/80 p-1.5 rounded-full flex items-center justify-center">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
-                    </button>
-                </div>
-
-                <!-- Bold Indented Setup Context Notice inside help portal -->
-                <div v-if="activeHelpStep.note" class="bg-amber-100/10 border-l-4 border-amber-400 p-3.5 rounded-lg mb-4 text-xs font-bold leading-relaxed text-amber-100 flex items-start gap-2">
-                    <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                    <span>Note: {{ activeHelpStep.note }}</span>
-                </div>
-
-                <!-- Explicit Purpose Section (Only visible if purpose was provided) -->
-                <div v-if="activeHelpStep.why" class="bg-[#5C858A]/30 border border-[#7BC5C1]/30 rounded-2xl p-5 mb-4">
-                    <h3 class="font-mono text-[11px] tracking-widest text-[#7BC5C1] uppercase font-bold mb-3 flex items-center">
-                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-                        The Purpose
-                    </h3>
-                    <p class="text-white/90 text-[15px] leading-relaxed">{{ activeHelpStep.why }}</p>
-                </div>
-
-                <!-- Diagnostic Step Machine -->
-                <div class="animate-fade-in flex flex-col h-full bg-[#3A1B1B]/40 border border-[#FF453A]/30 rounded-2xl p-5 mb-8">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-mono text-[11px] tracking-widest text-[#FF453A] uppercase font-bold flex items-center">
-                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                            Diagnostic Wizard
-                        </h3>
-                        <button v-if="flowNode !== 'start'" @click="flowNode = 'start'" class="text-white/50 hover:text-white transition-colors text-[10px] font-mono uppercase flex items-center gap-1">
-                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                            Restart
-                        </button>
-                    </div>
-                    
-                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6 mb-6 flex-1 flex flex-col justify-center text-center items-center">
-                        <div v-if="currentWizardNode.type === 'success'" class="w-12 h-12 rounded-full bg-[#30D158]/20 flex items-center justify-center mb-3 text-[#30D158]">
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        </div>
-                        <div v-if="currentWizardNode.type === 'escalation'" class="w-12 h-12 rounded-full bg-[#FF453A]/20 flex items-center justify-center mb-3 text-[#FF453A]">
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-                        </div>
-                        <p class="text-white text-[16px] leading-relaxed font-medium">{{ currentWizardNode.text }}</p>
-                    </div>
-
-                    <div class="space-y-3">
-                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-14 rounded-xl font-mono font-semibold text-sm transition-transform active:scale-[0.98] bg-black/20 border border-white/20 text-white hover:bg-black/40">
-                            {{ opt.label }}
-                        </button>
-                        
-                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-14 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98]', currentWizardNode.type === 'success' ? 'bg-[#30D158] text-black shadow-lg shadow-[#30D158]/20' : 'bg-[#FF453A] text-white shadow-lg shadow-[#FF453A]/20']">
-                            {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Tech Lead & Skip' }}
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Vue Setup Engine Containing your Full Flowchart Databases -->
     <script>
-        const INITIAL_TEAM = [
-            "Ver-se", "Tim", "Andy", "Johnny", "Titi", 
-            "Izzy", "Neil", "Simon", "Melchizedek", "Ulvis"
-        ];
-
+        const INITIAL_TEAM = ["Ver-se", "Tim", "Andy", "Johnny", "Titi", "Izzy", "Neil", "Simon", "Melchizedek", "Ulvis"];
         const STEPS = {
-            audio: [
-                { label: 'Immediate Action', steps: [
-                { 
-                    id: 'audio-pre-1', 
-                    text: "Switch on tech in Lomond", 
-                    why: "Do this first as it takes a little while to boot up.",
-                    time: "09:00" 
-                }
-                ]},
-                { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
-                { 
-                    id: 'audio-1', 
-                    text: 'Pray with team member(s)', 
-                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service.",
-                    time: "09:00" 
-                },
-                { 
-                    id: 'audio-2', 
-                    text: "Read through the handout", 
-                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
-                    note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary.",
-                    time: "09:05" 
-                },
-                { 
-                    id: 'audio-3', 
-                    text: 'Switch on the 2 switches on the wall', 
-                    why: "This switches everything on. You can do nothing without it.",
-                    time: "09:10" 
-                },
-                { 
-                    id: 'audio-4', 
-                    text: 'Switch on the desk', 
-                    why: "This should be done first before switching on the amps.",
-                    time: "09:12" 
-                },
-                { 
-                    id: 'audio-recv', 
-                    text: 'Switch on mic receivers', 
-                    time: "09:13" 
-                },
-                { 
-                    id: 'audio-5', 
-                    text: 'Switch on the amps', 
-                    note: "Ensure the desk is switched on first.",
-                    time: "09:15" 
-                },
-                { 
-                    id: 'audio-6', 
-                    text: 'Set up headset mics', 
-                    time: "09:18" 
-                },
-                { 
-                    id: 'audio-7', 
-                    text: 'Test and adjust sound for headset mic', 
-                    why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments.",
-                    time: "09:20" 
-                },
-                { 
-                    id: 'audio-8', 
-                    text: "Figure out who's on band", 
-                    why: "Do this so you know what mics to take.",
-                    time: "09:25" 
-                },
-                { 
-                    id: 'audio-9', 
-                    text: "Leave spare mic pack on the speaker's glass table", 
-                    why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to.",
-                    time: "09:28" 
-                },
-                { 
-                    id: 'audio-10', 
-                    text: 'Set up band mics', 
-                    time: "09:30" 
-                },
-                { 
-                    id: 'audio-11', 
-                    text: 'Test and adjust all band mics', 
-                    note: "Make sure you know which mic is in which input.",
-                    time: "09:33" 
-                },
-                { 
-                    id: 'audio-12', 
-                    text: 'Make sure sound is coming through on OBS', 
-                    why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service, will make for adequately loud and consistent volume throughout the stream.",
-                    note: "Aiming for yellows touching reds.",
-                    time: "09:35" 
-                },
-                { 
-                    id: 'audio-13', 
-                    text: 'Test YouTube video for sound level', 
-                    why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!",
-                    time: "09:37" 
-                },
-                { 
-                    id: 'audio-14', 
-                    text: 'Grab headset mics and leave in the vestry and chat to the leader', 
-                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.",
-                    note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!",
-                    time: "09:40" 
-                },
-                { 
-                    id: 'audio-15', 
-                    text: 'Route Lomond panel & check feeds', 
-                    why: "It's a massive pain to hear that somethings not on down there mid-service.",
-                    note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs.",
-                    time: "09:45" 
-                }
-                ]}
-            ],
-            visuals: [
-                { label: 'Immediate Action', steps: [
-                { 
-                    id: 'vis-pre-1', 
-                    text: "Switch on tech in Lomond", 
-                    time: "09:00" 
-                }
-                ]},
-                { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
-                { 
-                    id: 'vis-1', 
-                    text: 'Pray with team member(s)', 
-                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service.",
-                    time: "09:00" 
-                },
-                { 
-                    id: 'vis-2', 
-                    text: "Read the handout", 
-                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
-                    note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary.",
-                    time: "09:05" 
-                },
-                { 
-                    id: 'vis-3', 
-                    text: 'Turn on both projectors and FBack Screen', 
-                    note: "We don’t need “Proj” if there’s a Farsi service on.",
-                    time: "09:08" 
-                },
-                { 
-                    id: 'vis-4', 
-                    text: 'Check the 2 switches on the wall are switched on', 
-                    time: "09:10" 
-                },
-                { 
-                    id: 'vis-5', 
-                    text: 'Switch on both Macs', 
-                    time: "09:12" 
-                },
-                { 
-                    id: 'vis-6', 
-                    text: 'Set up matrix switcher', 
-                    why: "This ensures all the screens are showing what they should be.",
-                    note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare.",
-                    time: "09:15" 
-                },
-                { 
-                    id: 'vis-7', 
-                    text: 'On the Slides mac: Open up the Pre, During and Post Service slides', 
-                    time: "09:20" 
-                },
-                
-                // --- STRIP CONDITIONAL HOOKS: STREAM FALSE TRACK ---
-                { 
-                    id: 'vis-ns-1', 
-                    text: 'On the Slides Mac: Open up YouTube in Chrome', 
-                    why: "We always do this in Chrome because the video quality seems more consistent in Chrome.",
-                    note: "Await the stream.",
-                    branch: 'no', 
-                    time: "09:25" 
-                },
-                { 
-                    id: 'vis-ns-2', 
-                    text: 'Set Up Breeze Translate in Safari', 
-                    why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
-                    note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).",
-                    branch: 'no', 
-                    time: "09:28" 
-                },
-                { 
-                    id: 'vis-ns-3', 
-                    text: 'On Streaming Mac: Open ATEM Switcher Software', 
-                    branch: 'no', 
-                    time: "09:30" 
-                },
-                { 
-                    id: 'vis-ns-4', 
-                    text: 'On Streaming Mac: Open OBS', 
-                    branch: 'no', 
-                    time: "09:33" 
-                },
-
-                // --- STRIP CONDITIONAL HOOKS: STREAM TRUE TRACK ---
-                { 
-                    id: 'vis-s-1', 
-                    text: 'Open OBS', 
-                    branch: 'yes', 
-                    time: "09:25" 
-                },
-                { 
-                    id: 'vis-s-2', 
-                    text: 'Set up the stream in Boxcast', 
-                    branch: 'yes', 
-                    time: "09:28" 
-                },
-                { 
-                    id: 'vis-s-3', 
-                    text: 'Open ATEM switcher software', 
-                    branch: 'yes', 
-                    time: "09:32" 
-                },
-
-                { 
-                    id: 'vis-9', 
-                    text: 'Set up your camera presets set on the camera switcher', 
-                    note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4.",
-                    time: "09:35" 
-                }
-                ]},
-                { label: '9:40 — 9:50 · Go-Time Transitions', steps: [
-                // Non-Streaming Transition Steps
-                { 
-                    id: 'vis-ns-t1', 
-                    text: "Hit 'Start' Breeze translate", 
-                    branch: 'no', 
-                    time: "09:40" 
-                },
-                { 
-                    id: 'vis-ns-t2', 
-                    text: "Find stream on YouTube and play in the background", 
-                    why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
-                    branch: 'no', 
-                    time: "09:42" 
-                },
-                { 
-                    id: 'vis-ns-t3', 
-                    text: "Play Pre-Service slides", 
-                    branch: 'no', 
-                    time: "09:45" 
-                },
-                { 
-                    id: 'vis-ns-t4', 
-                    text: "Make sure MAC is Live on the cameras", 
-                    why: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
-                    branch: 'no', 
-                    time: "09:48" 
-                },
-
-                // Streaming Transition Steps
-                { 
-                    id: 'vis-s-t1', 
-                    text: "Start Breeze translate", 
-                    branch: 'yes', 
-                    time: "09:40" 
-                },
-                { 
-                    id: 'vis-s-t2', 
-                    text: "Play Pre-Service slides", 
-                    branch: 'yes', 
-                    time: "09:42" 
-                },
-                { 
-                    id: 'vis-s-t3', 
-                    text: "Make sure MAC is Live on the cameras", 
-                    why: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
-                    branch: 'yes', 
-                    time: "09:44" 
-                },
-                { 
-                    id: 'vis-s-t4', 
-                    text: "Start stream at 9:45", 
-                    why: "This is important as it give the other venues time to find the stream and play the stream in the background and allow adequate time to display their notices.",
-                    branch: 'yes', 
-                    time: "09:45" 
-                },
-                { 
-                    id: 'vis-s-t5', 
-                    text: "Check stream is running on YouTube using your phone or browser", 
-                    why: "So you know it’s good to go.",
-                    branch: 'yes', 
-                    time: "09:48" 
-                }
-                ]}
-            ]
+            audio: [{ label: 'Prep', steps: [{ id: 'a1', text: 'Switch on tech' }, { id: 'a2', text: 'Test mics' }] }],
+            visuals: [{ label: 'Prep', steps: [{ id: 'v1', text: 'Projectors on' }, { id: 'v2', text: 'OBS Ready' }] }]
         };
-
-        const FLOWCHARTS = {
-            'audio-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
-            'vis-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
-            'audio-3': { 'start': { text: "Did the racks turn on when you hit the switches?", options: [{ label: "No, dead", target: "escalate" }, { label: "Yes", target: "resolved" }]}, 'resolved': { type: 'success', text: "Power is flowing.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Check the breaker panel. If tripped, alert building management.", actionText: "Alert Lead & Skip" } },
-            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { label: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
-            'audio-5': { 'start': { text: "Did you hear the amps 'click' on?", options: [{ label: "No", target: "rack" }, { label: "Yes", target: "resolved" }]}, 'rack': { text: "Check the specific amp power buttons in the rack. Are they toggled on?", options: [{ label: "Toggled them. Fixed!", target: "resolved" }, { label: "Still no click/lights", target: "escalate" }]}, 'resolved': { type: 'success', text: "Amps are live.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Amps are not receiving power.", actionText: "Alert Lead & Skip" } },
-            'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
-            'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
-            'vis-3': {
-                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", target: "status_check" }]},
-                'power_check': { text: "Check the main wall switch behind the equipment rack. Is it flipped off?", options: [{ label: "Yes, it was off", target: "turn_on_wall" }, { label: "No, it's on", target: "escalate_power" }]},
-                'turn_on_wall': { text: "Flip it up. Wait 30s. Did it turn on?", options: [{ label: "Yes! Working.", target: "resolved" }, { label: "No, still dead.", target: "escalate_power" }]},
-                'status_check': { text: "Is the 'TEMP' or 'LAMP' indicator blinking red?", options: [{ label: "Yes", target: "escalate_temp" }, { label: "No", target: "input_check" }]},
-                'input_check': { text: "Grab the remote and press 'Source' -> 'HDMI 1'.", options: [{ label: "Picture appeared!", target: "resolved" }, { label: "Still no signal", target: "escalate_signal" }]},
-                'resolved': { type: 'success', text: "Projectors are live.", actionText: "Mark Complete" },
-                'escalate_power': { type: 'escalation', text: "Hardware power failure. Alert Lead.", actionText: "Skip Task" },
-                'escalate_temp': { type: 'escalation', text: "Overheating/Lamp Failure. Alert Lead.", actionText: "Skip Task" },
-                'escalate_signal': { type: 'escalation', text: "Not receiving data from Matrix. Alert Lead.", actionText: "Skip Task" }
-            },
-            'vis-6': { 'start': { text: "Is the Matrix panel unresponsive or blank?", options: [{ label: "Yes", target: "cycle" }, { label: "No, it's working", target: "resolved" }]}, 'cycle': { text: "Pull the power plug from the back of the matrix, wait 5s, plug in.", options: [{ label: "It reset and works", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Matrix routed.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Matrix switcher failure.", actionText: "Alert Lead" } }
-        };
-
         const { createApp } = Vue;
-
         createApp({
-            data() {
-                return {
-                    screen: 'home',
-                    currentName: null,
-                    role: null,
-                    streaming: null,
-                    newName: '',
-                    teamMembers: [...INITIAL_TEAM],
-                    checkedSteps: [],
-                    justChecked: null,
-                    collapsedBands: {},
-                    activeHelpStep: null,
-                    flowNode: 'start',
-                    copySuccess: false,
-                    
-                    stepsDatabase: STEPS,
-                    flowchartsDatabase: FLOWCHARTS
-                }
-            },
+            data() { return { screen: 'home', currentName: null, role: null, streaming: null, teamMembers: [...INITIAL_TEAM], checkedSteps: [], newName: '' } },
             computed: {
-                filteredBands() {
-                    if (!this.role) return [];
-                    return this.stepsDatabase[this.role].map(band => {
-                        return {
-                            label: band.label,
-                            steps: band.steps.filter(s => {
-                                if (!s.branch) return true;
-                                return this.streaming === s.branch;
-                            })
-                        }
-                    }).filter(b => b.steps.length > 0);
-                },
-                totalSteps() {
-                    return this.filteredBands.reduce((acc, band) => acc + band.steps.length, 0);
-                },
-                progressPercentage() {
-                    if (this.totalSteps === 0) return 0;
-                    return Math.round((this.checkedSteps.length / this.totalSteps) * 100);
-                },
-                currentWizardNode() {
-                    if (!this.activeHelpStep) return {};
-                    
-                    const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
-                        'start': {
-                            text: `Let's check the device infrastructure for "${this.activeHelpStep.text}". Is the item receiving operational line power?`,
-                            options: [
-                                { label: "Yes, it is drawing power", target: "signal_check" },
-                                { label: "No power indicators", target: "power_check" }
-                            ]
-                        },
-                        'power_check': {
-                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialise?",
-                            options: [
-                                { label: "Yes, power restored", target: "resolved" },
-                                { label: "No, still unpowered", target: "escalate_power" }
-                            ]
-                        },
-                        'signal_check': {
-                            text: `Check that all source parameters match distribution arrays. Ensure cable inputs lock. Did the configuration execute?`,
-                            options: [
-                                { label: "Yes, operational alignment complete", target: "resolved" },
-                                { label: "No signal recovery", target: "escalate_general" }
-                            ]
-                        },
-                        'resolved': { type: 'success', text: "The task loop is confirmed complete and execution was successful.", actionText: "Complete" },
-                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected.", actionText: "Escalate" },
-                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams.", actionText: "Escalate" }
-                    };
-
-                    return targetTree[this.flowNode] || targetTree['start'];
-                }
+                filteredBands() { return this.role ? STEPS[this.role].map(b => ({...b, steps: b.steps.filter(s => !s.branch || s.branch === this.streaming)})) : []; },
+                progressPercentage() { return this.filteredBands.length ? Math.round((this.checkedSteps.length / this.filteredBands.flatMap(b=>b.steps).length) * 100) : 0; }
             },
             methods: {
-                selectUser(name) {
-                    this.currentName = name;
-                    this.screen = 'role';
-                },
-                addName() {
-                    if (!this.newName.trim()) return;
-                    this.teamMembers.push(this.newName.trim());
-                    this.currentName = this.newName.trim();
-                    this.newName = '';
-                    this.screen = 'role';
-                },
-                selectRole(selectedRole, streamOption = null) {
-                    this.role = selectedRole;
-                    if (selectedRole === 'audio') {
-                        this.streaming = null;
-                        this.screen = 'list';
-                    } else if (streamOption) {
-                        this.streaming = streamOption;
-                        this.screen = 'list';
-                    }
-                },
-                toggleAccordion(label) {
-                    this.collapsedBands[label] = !this.collapsedBands[label];
-                },
-                isStepChecked(id) {
-                    return this.checkedSteps.includes(id);
-                },
-                toggleStep(id) {
-                    const idx = this.checkedSteps.indexOf(id);
-                    if (idx > -1) {
-                        this.checkedSteps.splice(idx, 1);
-                    } else {
-                        this.checkedSteps.push(id);
-                        this.justChecked = id;
-                        setTimeout(() => { this.justChecked = null; }, 600);
-                        try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
-                    }
-                },
-                openTroubleshooter(step) {
-                    this.activeHelpStep = step;
-                    this.flowNode = 'start';
-                },
-                handleFlowAction(target) {
-                    this.flowNode = target;
-                },
-                handleResolution(type) {
-                    if (type === 'success' && this.activeHelpStep) {
-                        if (!this.checkedSteps.includes(this.activeHelpStep.id)) {
-                            this.checkedSteps.push(this.activeHelpStep.id);
-                        }
-                    }
-                    this.activeHelpStep = null;
-                },
-                async finalizeSession() {
-                    // Format the date using hyphens to prevent EmailJS/HTML entity escaping on subject lines
-                    const rawDateString = new Date().toLocaleDateString('en-GB');
-                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
-                    
-                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
-                    
-                    this.filteredBands.forEach(band => {
-                        band.steps.forEach(step => {
-                            const done = this.isStepChecked(step.id) ? '[DONE]' : '[MISSING]';
-                            reportText += `${done} ${step.text}\n`;
-                        });
-                    });
-
-                    // Initialise EmailJS Client using explicit credential configurations
-                    emailjs.init("6bJZROd4I9Q_p-uKx");
-
-                    try {
-                        await emailjs.send("service_767ih1c", "template_vpq8sqe", {
-                            report_content: reportText,
-                            subject_date: formattedSubjectDate,
-                            operator_name: this.currentName
-                        });
-                        console.log("Report transmitted successfully via EmailJS Link Array.");
-                    } catch (error) {
-                        console.error("EmailJS payload transfer failure:", error);
-                        alert("Automatic background transmission route timed out. Please copy and deliver manually.");
-                    }
-
-                    this.screen = 'summary';
-                },
-                copyReport() {
-                    const rawDateString = new Date().toLocaleDateString('en-GB');
-                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
-                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
-                    
-                    this.filteredBands.forEach(band => {
-                        band.steps.forEach(step => {
-                            const done = this.isStepChecked(step.id) ? '[DONE]' : '[MISSING]';
-                            reportText += `${done} ${step.text}\n`;
-                        });
-                    });
-
-                    const el = document.createElement('textarea');
-                    el.value = reportText;
-                    document.body.appendChild(el);
-                    el.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(el);
-                    
-                    this.copySuccess = true;
-                    setTimeout(() => { this.copySuccess = false; }, 2000);
-                },
-                resetApp() {
-                    this.screen = 'home';
-                    this.checkedSteps = [];
-                    this.role = null;
-                    this.streaming = null;
-                }
+                selectUser(n) { this.currentName = n; this.screen = 'role'; },
+                selectRole(r, s=null) { this.role = r; this.streaming = s; this.screen = 'list'; },
+                toggleStep(id) { const i = this.checkedSteps.indexOf(id); i > -1 ? this.checkedSteps.splice(i, 1) : this.checkedSteps.push(id); },
+                isStepChecked(id) { return this.checkedSteps.includes(id); },
+                resetApp() { this.screen = 'home'; this.checkedSteps = []; },
+                addName() { if (this.newName && !this.teamMembers.includes(this.newName)) { this.teamMembers.push(this.newName); this.newName = ''; } }
             }
         }).mount('#app');
     </script>
