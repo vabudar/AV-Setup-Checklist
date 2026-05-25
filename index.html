@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>AV Setup Checklist</title>
     
     <!-- === WEB APP / FULL SCREEN MAGIC === -->
@@ -12,8 +12,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="icon" type="image/png" href="icon.png">
+    
+    <!-- Force Chrome/iOS square parsing by explicitly defining sizes -->
+    <link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
     <!-- =================================== -->
 
     <!-- Tailwind CSS for styling -->
@@ -126,7 +129,8 @@
                 <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <button @click="selectRole('visuals')" class="w-full h-auto min-h-[120px] bg-black/10 border border-white/10 p-6 text-left flex justify-between items-center active:bg-white/10 hover:border-white/30 transition-colors group">
+            <!-- FIX: Re-linked to transition directly to stream query screen rather than breaking -->
+            <button @click="screen = 'streaming'" class="w-full h-auto min-h-[120px] bg-black/10 border border-white/10 p-6 text-left flex justify-between items-center active:bg-white/10 hover:border-white/30 transition-colors group">
                 <div class="flex flex-col justify-center h-full">
                     <div class="text-2xl font-semibold mb-1 flex items-center gap-3">
                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
@@ -625,12 +629,12 @@
             'audio-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
             'vis-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
             'audio-3': { 'start': { text: "Did the racks turn on when you hit the switches?", options: [{ label: "No, dead", target: "escalate" }, { label: "Yes", target: "resolved" }]}, 'resolved': { type: 'success', text: "Power is flowing.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Check the breaker panel. If tripped, alert building management.", actionText: "Alert Lead & Skip" } },
-            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { fill: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
+            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { label: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
             'audio-5': { 'start': { text: "Did you hear the amps 'click' on?", options: [{ label: "No", target: "rack" }, { label: "Yes", target: "resolved" }]}, 'rack': { text: "Check the specific amp power buttons in the rack. Are they toggled on?", options: [{ label: "Toggled them. Fixed!", target: "resolved" }, { label: "Still no click/lights", target: "escalate" }]}, 'resolved': { type: 'success', text: "Amps are live.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Amps are not receiving power.", actionText: "Alert Lead & Skip" } },
             'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
             'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
             'vis-3': {
-                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", stroke: "status_check" }]},
+                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", target: "status_check" }]},
                 'power_check': { text: "Check the main wall switch behind the equipment rack. Is it flipped off?", options: [{ label: "Yes, it was off", target: "turn_on_wall" }, { label: "No, it's on", target: "escalate_power" }]},
                 'turn_on_wall': { text: "Flip it up. Wait 30s. Did it turn on?", options: [{ label: "Yes! Working.", target: "resolved" }, { label: "No, still dead.", target: "escalate_power" }]},
                 'status_check': { text: "Is the 'TEMP' or 'LAMP' indicator blinking red?", options: [{ label: "Yes", target: "escalate_temp" }, { label: "No", target: "input_check" }]},
