@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AV Setup Checklist</title>
     
+    <!-- === WEB APP / FULL SCREEN MAGIC === -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#525E5E">
+    <!-- iOS specific tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
+    <!-- =================================== -->
+
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Vue.js for dynamic interactivity -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- EmailJS Browser SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -64,6 +73,7 @@
 
     <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#525E5E]">
         
+        <!-- Offline Fallback Cloud Status Bar -->
         <div class="absolute top-3 right-4 z-40 pointer-events-none opacity-40">
             <div class="flex items-center gap-1.5 text-xs font-mono text-[#30D158]">
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
@@ -71,6 +81,7 @@
             </div>
         </div>
 
+        <!-- SCREEN: HOME -->
         <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-screen justify-between">
             <div class="p-8 flex-1 pt-12">
                 <p class="font-mono text-[11px] tracking-[0.18em] text-gray-300 uppercase mb-6">AV Team · Pre-Service</p>
@@ -94,6 +105,7 @@
             </div>
         </div>
 
+        <!-- SCREEN: ROLE SELECTION -->
         <div v-if="screen === 'role'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-start animate-fade-in">
             <button @click="screen = 'home'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -114,7 +126,7 @@
                 <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <button @click="screen = 'streaming'" class="w-full h-auto min-h-[120px] bg-black/10 border border-white/10 p-6 text-left flex justify-between items-center active:bg-white/10 hover:border-white/30 transition-colors group">
+            <button @click="selectRole('visuals')" class="w-full h-auto min-h-[120px] bg-black/10 border border-white/10 p-6 text-left flex justify-between items-center active:bg-white/10 hover:border-white/30 transition-colors group">
                 <div class="flex flex-col justify-center h-full">
                     <div class="text-2xl font-semibold mb-1 flex items-center gap-3">
                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
@@ -126,6 +138,7 @@
             </button>
         </div>
 
+        <!-- SCREEN: STREAMING QUESTION -->
         <div v-if="screen === 'streaming'" class="p-8 pt-12 flex-1 min-h-screen animate-fade-in">
             <button @click="screen = 'role'" class="mb-8 text-gray-300 hover:text-white self-start flex items-center gap-2 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -146,6 +159,7 @@
             </div>
         </div>
 
+        <!-- SCREEN: CHECKLIST WORKSPACE -->
         <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-screen animate-fade-in">
             <div class="sticky top-0 bg-[#525E5E] border-b border-white/10 z-10 px-5 pt-12 pb-4 shadow-xl">
                 <div class="flex items-center justify-between mb-3">
@@ -170,6 +184,7 @@
             <div class="px-4 pb-40 flex-1">
                 <div v-for="band in filteredBands" :key="band.label" class="mb-2">
                     
+                    <!-- Collapsible Section Accordion Bar -->
                     <div @click="toggleAccordion(band.label)" class="font-mono text-[11px] tracking-[0.2em] text-white/50 uppercase flex items-center justify-between mt-8 mb-4 font-semibold cursor-pointer select-none group">
                         <div class="flex items-center gap-3 flex-1">
                             <span class="group-hover:text-white/80 transition-colors">{{ band.label }}</span>
@@ -181,6 +196,7 @@
                         </div>
                     </div>
 
+                    <!-- Step Cards -->
                     <div v-if="!collapsedBands[band.label]" class="animate-fade-in">
                         <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
                             <div :class="['flex items-stretch rounded-xl overflow-hidden transition-all duration-300 relative', 
@@ -199,6 +215,7 @@
                                         </div>
                                         <p :class="['text-[15px] leading-snug font-medium tracking-normal transition-colors', isStepChecked(step.id) ? 'line-through text-white/40' : 'text-white']">{{ step.text }}</p>
                                         
+                                        <!-- Bold, Indented Notes -->
                                         <p v-if="step.note" :class="['mt-2 text-xs border-l-2 border-white/20 pl-2 font-bold transition-opacity', isStepChecked(step.id) ? 'opacity-30' : 'opacity-85 text-amber-200']">
                                             {{ step.note }}
                                         </p>
@@ -224,6 +241,7 @@
             </div>
         </div>
 
+        <!-- SCREEN: COMPLETE REPORT SUMMARY -->
         <div v-if="screen === 'summary'" class="p-8 pt-12 flex flex-col flex-1 min-h-screen justify-center text-center animate-fade-in">
             <p class="font-mono text-[11px] text-[#30D158] uppercase mb-4 font-bold tracking-widest">Setup Complete</p>
             <h1 class="text-[34px] font-light mb-12">Nicely done,<br />{{ currentName }}.</h1>
@@ -244,6 +262,7 @@
             </div>
         </div>
 
+        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="activeHelpStep = null"></div>
             
@@ -257,12 +276,14 @@
                     </button>
                 </div>
 
+                <!-- Bold Indented Setup Context Notice inside help portal -->
                 <div v-if="activeHelpStep.note" class="bg-amber-100/10 border-l-4 border-amber-400 p-3.5 rounded-lg mb-4 text-xs font-bold leading-relaxed text-amber-100 flex items-start gap-2">
                     <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                     <span>Note: {{ activeHelpStep.note }}</span>
                 </div>
 
-                <div v-if="activeHelpStep.why" class="bg-5C858A border border-[#7BC5C1]/30 rounded-2xl p-5 mb-4">
+                <!-- Explicit Purpose Section (Only visible if purpose was provided) -->
+                <div v-if="activeHelpStep.why" class="bg-[#5C858A]/30 border border-[#7BC5C1]/30 rounded-2xl p-5 mb-4">
                     <h3 class="font-mono text-[11px] tracking-widest text-[#7BC5C1] uppercase font-bold mb-3 flex items-center">
                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
                         The Purpose
@@ -270,6 +291,7 @@
                     <p class="text-white/90 text-[15px] leading-relaxed">{{ activeHelpStep.why }}</p>
                 </div>
 
+                <!-- Diagnostic Step Machine -->
                 <div class="animate-fade-in flex flex-col h-full bg-[#3A1B1B]/40 border border-[#FF453A]/30 rounded-2xl p-5 mb-8">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-mono text-[11px] tracking-widest text-[#FF453A] uppercase font-bold flex items-center">
@@ -307,6 +329,7 @@
 
     </div>
 
+    <!-- Vue Setup Engine Containing your Full Flowchart Databases -->
     <script>
         const INITIAL_TEAM = [
             "Ver-se", "Tim", "Andy", "Johnny", "Titi", 
@@ -410,7 +433,7 @@
                 { 
                     id: 'audio-14', 
                     text: 'Grab headset mics and leave in the vestry and chat to the leader', 
-                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am before the countdown has been and gone.",
+                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.",
                     note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!",
                     time: "09:40" 
                 },
@@ -607,7 +630,7 @@
             'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
             'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
             'vis-3': {
-                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", target: "status_check" }]},
+                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", stroke: "status_check" }]},
                 'power_check': { text: "Check the main wall switch behind the equipment rack. Is it flipped off?", options: [{ label: "Yes, it was off", target: "turn_on_wall" }, { label: "No, it's on", target: "escalate_power" }]},
                 'turn_on_wall': { text: "Flip it up. Wait 30s. Did it turn on?", options: [{ label: "Yes! Working.", target: "resolved" }, { label: "No, still dead.", target: "escalate_power" }]},
                 'status_check': { text: "Is the 'TEMP' or 'LAMP' indicator blinking red?", options: [{ label: "Yes", target: "escalate_temp" }, { label: "No", target: "input_check" }]},
@@ -749,12 +772,41 @@
                     }
                     this.activeHelpStep = null;
                 },
-                finalizeSession() {
+                async finalizeSession() {
+                    // Format the date using hyphens to prevent EmailJS/HTML entity escaping on subject lines
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
+                    
+                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
+                    
+                    this.filteredBands.forEach(band => {
+                        band.steps.forEach(step => {
+                            const done = this.isStepChecked(step.id) ? '[DONE]' : '[MISSING]';
+                            reportText += `${done} ${step.text}\n`;
+                        });
+                    });
+
+                    // Initialise EmailJS Client using explicit credential configurations
+                    emailjs.init("6bJZROd4I9Q_p-uKx");
+
+                    try {
+                        await emailjs.send("service_767ih1c", "template_vpq8sqe", {
+                            report_content: reportText,
+                            subject_date: formattedSubjectDate,
+                            operator_name: this.currentName
+                        });
+                        console.log("Report transmitted successfully via EmailJS Link Array.");
+                    } catch (error) {
+                        console.error("EmailJS payload transfer failure:", error);
+                        alert("Automatic background transmission route timed out. Please copy and deliver manually.");
+                    }
+
                     this.screen = 'summary';
                 },
                 copyReport() {
-                    const today = new Date().toLocaleDateString();
-                    let reportText = `AV SETUP FINAL REPORT - ${today}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
+                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
                     
                     this.filteredBands.forEach(band => {
                         band.steps.forEach(step => {
