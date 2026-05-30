@@ -47,23 +47,6 @@
 <body class="text-slate-800 selection:bg-brand-green/20">
 
     <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#F4F7F2] shadow-2xl">
-        
-        <!-- INTRO/SPLASH SCREEN (PULSING LOGO) -->
-        <div v-if="isLoading" class="fixed inset-0 bg-brand-green z-50 flex flex-col items-center justify-center animate-fade-in">
-            <div class="flex flex-col items-center gap-6 select-none">
-                <!-- SVG Logo with Inverted White Color -->
-                <img 
-                    src="Slide2.SVG" 
-                    alt="The Tron Church Logo" 
-                    class="w-40 h-auto filter invert brightness-0 drop-shadow-md animate-pulse"
-                    onerror="this.style.display='none';"
-                />
-                <div class="text-center text-white">
-                    <h2 class="text-[10px] text-emerald-300 font-mono tracking-[0.3em] uppercase mb-1">Pre-Service Setup</h2>
-                    <h1 class="text-2xl font-bold tracking-[0.2em] font-gillsans uppercase">THE TRON CHURCH</h1>
-                </div>
-            </div>
-        </div>
 
         <!-- Header Bar -->
         <div class="bg-brand-green h-16 flex items-center justify-between px-5 shadow-sm sticky top-0 z-30">
@@ -764,8 +747,7 @@
 
                     // Physical Simulator Layout Parameters
                     selectedOutput: 4, 
-                    showAllRoutes: true, // Default to true so they see the entire Sunday configuration instantly
-                    isLoading: true // Initial load animation helper
+                    showAllRoutes: true // Default to true so they see the entire Sunday configuration instantly
                 }
             },
             computed: {
@@ -841,12 +823,6 @@
                             return "Select an Output button on the white paper tape to see its correct mapping.";
                     }
                 }
-            },
-            mounted() {
-                // Smoothly dismiss the loading splash panel after 1.5 seconds
-                setTimeout(() => {
-                    this.isLoading = false;
-                }, 1500);
             },
             methods: {
                 selectUser(name) {
