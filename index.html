@@ -48,6 +48,23 @@
 
     <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#F4F7F2] shadow-2xl">
         
+        <!-- INTRO/SPLASH SCREEN (PULSING LOGO) -->
+        <div v-if="isLoading" class="fixed inset-0 bg-brand-green z-50 flex flex-col items-center justify-center animate-fade-in">
+            <div class="flex flex-col items-center gap-6 select-none">
+                <!-- SVG Logo with Inverted White Color -->
+                <img 
+                    src="Slide2.SVG" 
+                    alt="The Tron Church Logo" 
+                    class="w-40 h-auto filter invert brightness-0 drop-shadow-md animate-pulse"
+                    onerror="this.style.display='none';"
+                />
+                <div class="text-center text-white">
+                    <h2 class="text-[10px] text-emerald-300 font-mono tracking-[0.3em] uppercase mb-1">Pre-Service Setup</h2>
+                    <h1 class="text-2xl font-bold tracking-[0.2em] font-gillsans uppercase">THE TRON CHURCH</h1>
+                </div>
+            </div>
+        </div>
+
         <!-- Header Bar -->
         <div class="bg-brand-green h-16 flex items-center justify-between px-5 shadow-sm sticky top-0 z-30">
             <button @click="resetApp" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
@@ -304,7 +321,20 @@
                     </button>
                 </div>
 
-                <!-- Indented Note Details Inside Help Modal -->
+                <!-- 1. The Purpose (Placed above the note and highlighted for prominence) -->
+                <div v-if="activeHelpStep.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md">
+                    <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
+                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                            <line x1="12" x2="12.01" y1="17" y2="17"/>
+                        </svg>
+                        The Purpose
+                    </h3>
+                    <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
+                </div>
+
+                <!-- 2. Indented Note Details Inside Help Modal -->
                 <div v-if="activeHelpStep.note" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs">
                     <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                     <span>Note: {{ activeHelpStep.note }}</span>
@@ -312,34 +342,22 @@
 
                 <!-- PHYSICAL VIRTUAL MATRIX SWITCHER WIDGET (ONLY for step vis-6 matrix setup) -->
                 <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in">
-                    
-                    <!-- Dynamic Controller Toggle for "Show All" color couplings -->
-                    <div class="flex items-center justify-between mb-4 bg-slate-50 border border-slate-200 p-3 rounded-2xl">
-                        <div class="flex flex-col">
-                            <span class="text-xs font-bold text-slate-800">Display Modes</span>
-                            <span class="text-[10px] text-slate-400 font-medium font-mono">Show all pairs or isolate one</span>
-                        </div>
-                        <div class="flex gap-1.5">
-                            <button @click="toggleShowAll(true)"
-                                    :class="['px-3 py-1.5 rounded-xl text-[10px] font-bold font-mono transition-all', 
-                                             showAllRoutes ? 'bg-brand-green text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-100']">
-                                SHOW ALL MAPPINGS
-                            </button>
-                            <button @click="toggleShowAll(false)"
-                                    :class="['px-3 py-1.5 rounded-xl text-[10px] font-bold font-mono transition-all', 
-                                             !showAllRoutes ? 'bg-rose-600 text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-100']">
-                                ISOLATION
-                            </button>
-                        </div>
-                    </div>
 
                     <!-- Hardware Replica Chassis container -->
                     <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full">
                         
-                        <!-- Top Bezel Info -->
-                        <div class="flex justify-between items-center text-[8px] text-slate-500 font-bold mb-3 uppercase tracking-wider">
-                            <span class="text-slate-400">KRAMER 4x4 SEAMLESS MATRIX</span>
-                            <span class="bg-amber-500/90 text-slate-950 font-black px-1.5 py-0.5 rounded text-[7px] tracking-wide">MATRIX</span>
+                        <!-- Top Bezel Info & Small "Show All" toggle button aligned in the top right -->
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="flex items-center gap-1.5">
+                                <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded text-[8px] tracking-wide uppercase">MATRIX</span>
+                            </div>
+                            <!-- Small, clean toggle button in the top right -->
+                            <button @click="toggleShowAll(!showAllRoutes)"
+                                    :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
+                                             showAllRoutes ? 'bg-brand-green border-brand-green text-white' : 'bg-[#242831] border-slate-700 text-slate-400 hover:text-white']">
+                                <span :class="['h-1.5 w-1.5 rounded-full', showAllRoutes ? 'bg-emerald-300' : 'bg-slate-500']"></span>
+                                Show All
+                            </button>
                         </div>
 
                         <!-- Top Tape Row (Output Labels) -->
@@ -411,26 +429,6 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Route Mapped Text Feedback -->
-                    <div class="mt-3.5 bg-brand-green/10 border border-brand-green/20 rounded-xl p-3.5 text-xs text-brand-green font-semibold">
-                        <div class="flex items-center gap-2 mb-1">
-                            <svg class="w-4 h-4 text-brand-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                            <span class="uppercase tracking-wider text-[10px] font-mono font-bold">Signal Mapped Route</span>
-                        </div>
-                        <p class="text-slate-700 leading-relaxed">
-                            {{ switcherGuideText }}
-                        </p>
-                    </div>
-
-                </div>
-
-                <!-- Explicit Purpose Section -->
-                <div v-if="activeHelpStep.why" class="bg-brand-green/5 border border-brand-green/20 rounded-2xl p-5 mb-4">
-                    <h3 class="font-mono text-[11px] tracking-widest text-brand-green uppercase font-bold mb-3 flex items-center">
-                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-                        The Purpose
-                    </h3>
-                    <p class="text-slate-700 text-[15px] leading-relaxed">{{ activeHelpStep.why }}</p>
                 </div>
 
                 <!-- Interactive Diagnostic Wizard (Only if NOT the switcher diagram) -->
@@ -554,7 +552,7 @@
                 },
                 { 
                     id: 'audio-13', 
-                    text: 'Test YouTube video for sound level', 
+                    text: 'Test YouTube video for sound level font size', 
                     why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!"
                 },
                 { 
@@ -767,6 +765,7 @@
                     // Physical Simulator Layout Parameters
                     selectedOutput: 4, 
                     showAllRoutes: true, // Default to true so they see the entire Sunday configuration instantly
+                    isLoading: true // Initial load animation helper
                 }
             },
             computed: {
@@ -843,6 +842,12 @@
                     }
                 }
             },
+            mounted() {
+                // Smoothly dismiss the loading splash panel after 1.5 seconds
+                setTimeout(() => {
+                    this.isLoading = false;
+                }, 1500);
+            },
             methods: {
                 selectUser(name) {
                     this.currentName = name;
@@ -904,7 +909,7 @@
 
                 // Visual Matrix Helper logic
                 selectOutput(outNum) {
-                    this.showAllRoutes = false; // Turn off master overview to isolate output clicked
+                    this.showAllRoutes = false; // Turn off master overview to isolate output clicked (switches automatically to Isolation Mode)
                     this.selectedOutput = outNum;
                     try { if (window.navigator?.vibrate) window.navigator.vibrate(20); } catch(e) {}
                 },
@@ -1016,6 +1021,3 @@
     </script>
 </body>
 </html>
-
-```
-
