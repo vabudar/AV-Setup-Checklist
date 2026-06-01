@@ -110,7 +110,6 @@
             <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Welcome, {{ currentName }}</p>
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Choose your role</h1>
             
-            <!-- Roles with expanded padding, larger icon pills, and enhanced breathing space -->
             <button @click="selectRole('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-5 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm">
                 <div class="flex items-center gap-5">
                     <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
@@ -237,10 +236,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="w-[1px] bg-slate-200/80 my-3.5"></div>
+                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id]"></div>
 
-                                    <!-- Circular Help Button -->
-                                    <button @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group">
+                                    <!-- Circular Help Button (Only shown if step has why OR flowchart) -->
+                                    <button v-if="step.why || flowchartsDatabase[step.id]" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group">
                                         <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                                         </div>
@@ -290,16 +289,16 @@
             </div>
         </div>
 
-        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER (With Embedded Matrix Switcher Virtual Assistant) -->
+        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER (With Embedded Matrix Switcher & Dynamic Video Playback) -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center">
             <div class="absolute inset-0 bg-black/40 backdrop-blur-xs" @click="activeHelpStep = null"></div>
             
-            <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-3 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-slate-200 max-h-[92vh] overflow-y-auto text-slate-800">
+            <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-3 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-slate-200 max-h-[92vh] overflow-y-auto text-slate-800 font-sans">
                 <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
 
                 <div class="flex justify-between items-start mb-4">
                     <h2 class="text-xl font-bold text-slate-900 pr-4 leading-snug">{{ activeHelpStep.text }}</h2>
-                    <button @click="activeHelpStep = null" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center">
+                    <button @click="activeHelpStep = null" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                     </button>
                 </div>
@@ -327,7 +326,7 @@
                 <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in">
 
                     <!-- Hardware Replica Chassis container -->
-                    <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full">
+                    <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
                         
                         <!-- Top Bezel Info & Small "Show All" toggle button aligned in the top right -->
                         <div class="flex justify-between items-center mb-3">
@@ -352,7 +351,7 @@
                             <div>ALL</div>
                         </div>
 
-                        <!-- OUTPUT BUTTON ROW -->
+                        <!-- OUTPUT BUTTON ROW (Sizing Reverted to 10x10 exactly) -->
                         <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
                             <button v-for="outNum in 5" :key="'out-btn-' + outNum"
                                     @click="selectOutput(outNum)"
@@ -369,7 +368,7 @@
                             <div class="text-[6.5px] tracking-widest text-slate-500 font-bold px-2 bg-[#121417]">INTERACTIVE RACK ASSISTANT</div>
                         </div>
 
-                        <!-- INPUT BUTTON ROW -->
+                        <!-- INPUT BUTTON ROW (Sizing Reverted to 10x10 exactly) -->
                         <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
                             <div v-for="inNum in 5" :key="'in-btn-' + inNum"
                                  class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
@@ -414,14 +413,14 @@
 
                 </div>
 
-                <!-- Interactive Diagnostic Wizard (Only if NOT the switcher diagram) -->
-                <div v-if="activeHelpStep.id !== 'vis-6'" class="animate-fade-in flex flex-col h-full bg-slate-50 border border-slate-200/80 rounded-2xl p-5 mb-8 shadow-sm">
+                <!-- Interactive Diagnostic Wizard (Only if step has troubleshooter defined in flowchartsDatabase) -->
+                <div v-if="flowchartsDatabase[activeHelpStep.id]" class="animate-fade-in flex flex-col h-full bg-slate-50 border border-slate-200/80 rounded-2xl p-5 mb-8 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-mono text-[10px] tracking-widest text-slate-500 uppercase font-bold flex items-center">
                             <svg class="w-4 h-4 mr-2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12(0a2.12) 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                             Diagnostic Wizard
                         </h3>
-                        <button v-if="flowNode !== 'start'" @click="flowNode = 'start'" class="text-slate-400 hover:text-slate-800 transition-colors text-[10px] font-mono uppercase flex items-center gap-1">
+                        <button v-if="flowNode !== 'start'" @click="flowNode = 'start'" class="text-slate-400 hover:text-slate-800 transition-colors text-[10px] font-mono uppercase flex items-center gap-1 cursor-pointer">
                             <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                             Back
                         </button>
@@ -438,11 +437,11 @@
                     </div>
 
                     <div class="space-y-3">
-                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-12 rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm">
+                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-12 rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm cursor-pointer">
                             {{ opt.label }}
                         </button>
                         
-                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-13 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
+                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-13 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
                             {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Tech Lead & Skip' }}
                         </button>
                     </div>
@@ -535,7 +534,7 @@
                 },
                 { 
                     id: 'audio-13', 
-                    text: 'Test YouTube video for sound level font size', 
+                    text: 'Test YouTube video for sound level', 
                     why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!"
                 },
                 { 
@@ -546,7 +545,7 @@
                 },
                 { 
                     id: 'audio-15', 
-                    text: 'Route Lomond panel & check feeds', 
+                    text: "Route Lomond panel & check feeds", 
                     why: "It's a massive pain to hear that somethings not on down there mid-service.",
                     note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs."
                 }
@@ -556,7 +555,8 @@
                 { label: 'Immediate Action', steps: [
                 { 
                     id: 'vis-pre-1', 
-                    text: "Switch on tech in Lomond"
+                    text: "Switch on tech in Lomond",
+                    why: "Do this first as it takes a little while to boot up. We do this every week."
                 }
                 ]},
                 { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
@@ -577,6 +577,10 @@
                     note: "We don’t need “Proj” if there’s a Farsi service on."
                 },
                 { 
+                    id: 'vis-farsi-mac',
+                    text: 'Grab the Farsi Mac'
+                },
+                { 
                     id: 'vis-4', 
                     text: 'Check the 2 switches on the wall are switched on'
                 },
@@ -587,12 +591,16 @@
                 { 
                     id: 'vis-6', 
                     text: 'Set up matrix switcher', 
-                    why: "This ensures all the screens are showing what they should be. In Master Mode, mappings are illuminated in matching color pairs. Tap Isolation mode or tap any output button to look closely at a single signal line.",
+                    why: "This ensures all the screens are showing what they should be.",
                     note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare."
                 },
                 { 
                     id: 'vis-7', 
                     text: 'On the Slides mac: Open up the Pre, During and Post Service slides'
+                },
+                { 
+                    id: 'vis-farsi-slides', 
+                    text: 'Open up the Farsi slides on the Farsi Mac'
                 },
                 
                 // --- STRIP CONDITIONAL HOOKS: STREAM FALSE TRACK ---
@@ -618,6 +626,7 @@
                 { 
                     id: 'vis-ns-4', 
                     text: 'On Streaming Mac: Open OBS', 
+                    why: "This is for the sound person to gauge that the sound level is correct.",
                     branch: 'no'
                 },
 
@@ -648,7 +657,7 @@
                 // Non-Streaming Transition Steps
                 { 
                     id: 'vis-ns-t1', 
-                    text: "Start Breeze translate", 
+                    text: "Hit 'Start' Breeze translate", 
                     branch: 'no'
                 },
                 { 
@@ -703,25 +712,115 @@
         };
 
         const FLOWCHARTS = {
-            'audio-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
-            'vis-pre-1': { 'start': { text: "Is the Lomond rack powering up?", options: [{ label: "No signs of life", target: "power" }, { label: "Yes, but stuck/frozen", target: "reboot" }] }, 'power': { text: "Check the wall plug and the main switch on the rack. Are they on?", options: [{ label: "Turned them on. Fixed!", target: "resolved" }, { label: "Still no power", target: "escalate" }] }, 'reboot': { text: "Hard reset: unplug the main rack power, wait 10 seconds, plug it back in. Did it boot?", options: [{ label: "Yes, booting now", target: "resolved" }, { label: "No, still frozen", target: "escalate" }] }, 'resolved': { type: 'success', text: "Great. Remember to give it a few minutes.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Lomond tech is unresponsive.", actionText: "Alert Lead & Skip" } },
-            'audio-3': { 'start': { text: "Did the racks turn on when you hit the switches?", options: [{ label: "No, dead", target: "escalate" }, { label: "Yes", target: "resolved" }]}, 'resolved': { type: 'success', text: "Power is flowing.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Check the breaker panel. If tripped, alert building management.", actionText: "Alert Lead & Skip" } },
-            'audio-4': { 'start': { text: "Is the sound desk powering up?", options: [{ label: "No screen/lights", target: "plug" }, { label: "Yes, but stuck on logo", target: "escalate" }]}, 'plug': { text: "Check the power switch on the BACK of the desk and the UPS floor unit.", options: [{ label: "Fixed it!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Desk is booting.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Critical failure. Sound desk is unresponsive.", actionText: "Alert Lead IMMEDIATELY" } },
-            'audio-5': { 'start': { text: "Did you hear the amps 'click' on?", options: [{ label: "No", target: "rack" }, { label: "Yes", target: "resolved" }]}, 'rack': { text: "Check the specific amp power buttons in the rack. Are they toggled on?", options: [{ label: "Toggled them. Fixed!", target: "resolved" }, { label: "Still no click/lights", target: "escalate" }]}, 'resolved': { type: 'success', text: "Amps are live.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Amps are not receiving power.", actionText: "Alert Lead & Skip" } },
-            'audio-11': { 'start': { text: "Is a mic not getting signal?", options: [{ label: "Yes, a channel is dead", target: "phantom" }, { label: "No, all good", target: "resolved" }]}, 'phantom': { text: "If it's a condenser or DI, is 48v (Phantom Power) turned on?", options: [{ label: "Turned on. Fixed!", target: "resolved" }, { label: "Still dead", target: "cable" }]}, 'cable': { text: "Swap the XLR cable. Did that fix it?", options: [{ label: "Yes, bad cable", target: "resolved" }, { label: "No", target: "escalate" }]}, 'resolved': { type: 'success', text: "All inputs verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Possible dead channel or stage box issue.", actionText: "Alert Lead" } },
-            'audio-12': { 'start': { text: "Is OBS receiving audio?", options: [{ label: "No", target: "patch" }, { label: "Yes, but too quiet/loud", target: "gain" }]}, 'patch': { text: "Check the Dante/USB patch from the desk to the Mac. Is the interface selected in OBS?", options: [{ label: "Selected it. Fixed!", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'gain': { text: "Adjust the matrix/bus output on the desk, NOT the OBS slider.", options: [{ label: "Levels are good", target: "resolved" }, { label: "Still clipping", target: "escalate" }]}, 'resolved': { type: 'success', text: "Broadcast audio verified.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "OBS audio routing failure.", actionText: "Alert Audio Lead" } },
-            'vis-3': {
-                'start': { text: "Are there any LED indicator lights on the projector chassis?", options: [{ label: "No lights at all", target: "power_check" }, { label: "Yes, lights are on", target: "status_check" }]},
-                'power_check': { text: "Check the main wall switch behind the equipment rack. Is it flipped off?", options: [{ label: "Yes, it was off", target: "turn_on_wall" }, { label: "No, it's on", target: "escalate_power" }]},
-                'turn_on_wall': { text: "Flip it up. Wait 30s. Did it turn on?", options: [{ label: "Yes! Working.", target: "resolved" }, { label: "No, still dead.", target: "escalate_power" }]},
-                'status_check': { text: "Is the 'TEMP' or 'LAMP' indicator blinking red?", options: [{ label: "Yes", target: "escalate_temp" }, { label: "No", text: "input_check" }]},
-                'input_check': { text: "Grab the remote and press 'Source' -> 'HDMI 1'.", options: [{ label: "Picture appeared!", target: "resolved" }, { label: "Still no signal", target: "escalate_signal" }]},
-                'resolved': { type: 'success', text: "Projectors are live.", actionText: "Mark Complete" },
-                'escalate_power': { type: 'escalation', text: "Hardware power failure. Alert Lead.", actionText: "Skip Task" },
-                'escalate_temp': { type: 'escalation', text: "Overheating/Lamp Failure. Alert Lead.", actionText: "Skip Task" },
-                'escalate_signal': { type: 'escalation', text: "Not receiving data from Matrix. Alert Lead.", actionText: "Skip Task" }
+            // Can't Hear Mics Flowcharts (referencing Can't Hear Mics__3.pdf)
+            'audio-7': {
+                'start': { text: "No sound on the headset? Let's check: Are the main amps switched on?", options: [{ label: "No, they were off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
+                'amps_off': { text: "Go ahead and switch the amps on. Did that bring the sound back?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still dead quiet", target: "layer" }] },
+                'layer': { text: "Are you on the correct Custom Layer? (Press both buttons on the left side of the desk so 'Custom' lights up green). Is the light active?", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, it was already on Custom", target: "sliders" }] },
+                'layer_check': { text: "Excellent. Is the mic sound coming through now?", options: [{ label: "Yes, that solved it!", target: "resolved" }, { label: "No, still dead quiet", target: "sliders" }] },
+                'sliders': { text: "Let's check the routing parameters. Are all volume sliders turned up and unmuted? (Ensure you check main desk mute, soft mute, channel mute, channel fader, and physical mic pack switch).", options: [{ label: "No, found a muted slider!", target: "sliders_check" }, { label: "Yes, unmuted & faders are up", target: "cable" }] },
+                'sliders_check': { text: "Let's test it now. Is the sound working?", options: [{ label: "Yes, beautiful sound!", target: "resolved" }, { label: "No, still no signal", target: "cable" }] },
+                'cable': { text: "Let's check physical hardware. Is the connecting cable okay? Try swapping the XLR cable.", options: [{ label: "Swapped it and now it's fixed!", target: "resolved" }, { label: "No, still dead silent", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Fantastic! Mic test successfully confirmed on-air. You are good to go!" },
+                'escalate': { type: 'escalation', text: "We have tried all standard routes. Please reference Can't Hear Mics__3.pdf or contact the Venue Lead for assistance." }
             },
-            'vis-6': { 'start': { text: "Is the Matrix panel unresponsive or blank?", options: [{ label: "Yes", target: "cycle" }, { label: "No, it's working", target: "resolved" }]}, 'cycle': { text: "Pull the power plug from the back of the matrix, wait 5s, plug in.", options: [{ label: "It reset and works", target: "resolved" }, { label: "Still dead", target: "escalate" }]}, 'resolved': { type: 'success', text: "Matrix routed.", actionText: "Mark Complete" }, 'escalate': { type: 'escalation', text: "Matrix switcher failure.", actionText: "Alert Lead" } }
+            'audio-11': {
+                'start': { text: "Let's test these band inputs! First: Are the main amps powered on?", options: [{ label: "No, they are off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
+                'amps_off': { text: "Go ahead and switch the amps on. Does the band audio come through?", options: [{ label: "Yes, that worked!", target: "resolved" }, { label: "No, still silent", target: "layer" }] },
+                'layer': { text: "No problem. Are you on the correct Custom Layer? (Press both buttons on the left of the board so 'Custom' has a green light below it).", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, confirmed on Custom", target: "sliders" }] },
+                'layer_check': { text: "Perfect. Does the band sound come through now?", options: [{ label: "Yes, working great!", target: "resolved" }, { label: "No, still nothing", target: "sliders" }] },
+                'sliders': { text: "Let's look at the desk. Are all volume faders up and unmuted? (Check main desk mute, soft mute, channel mute, channel fader, and mic pack mute).", options: [{ label: "Found a muted fader!", target: "sliders_check" }, { label: "Yes, verified unmuted & up", target: "cable" }] },
+                'sliders_check': { text: "Does the band sound come through now?", options: [{ label: "Yes, that did it!", target: "resolved" }, { label: "No, still dead", target: "cable" }] },
+                'cable': { text: "Let's check the physical lines. Is the connecting cable OK? Try swapping the line.", options: [{ label: "Swapping it resolved it!", target: "resolved" }, { label: "No, still silent", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Hooray! The band mics are checked and sounding great. You're ready!" },
+                'escalate': { type: 'escalation', text: "Looks like a possible stage box or patch bay issue. Reference Can't Hear Mics__3.pdf or get in touch with the Venue Lead." }
+            },
+            'audio-14': {
+                'start': { text: "Let's double-check the leader's mic! Are the main amps powered on?", options: [{ label: "No, they are off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
+                'amps_off': { text: "Let's toggle the amps on. Does the leader's mic work now?", options: [{ label: "Yes, working!", target: "resolved" }, { label: "No, still silent", target: "layer" }] },
+                'layer': { text: "Let's check the fader layer. Are you on the Custom Layer? (Green light active below 'Custom').", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, on Custom layer", target: "sliders" }] },
+                'layer_check': { text: "Does the leader's mic come through now?", options: [{ label: "Yes, beautiful!", target: "resolved" }, { label: "No, still quiet", target: "sliders" }] },
+                'sliders': { text: "Are all volume faders up and unmuted? (Check desk main, channel mute, and the physical slider on the pack).", options: [{ label: "Fixed a muted channel!", target: "sliders_check" }, { label: "Yes, verified unmuted", target: "cable" }] },
+                'sliders_check': { text: "Is the mic sound active now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still dead", target: "cable" }] },
+                'cable': { text: "Is the connecting cable OK?", options: [{ label: "Yes, swapping fixed it!", target: "resolved" }, { label: "No, still dead", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Perfect! The minister's mic is verified and clear." },
+                'escalate': { type: 'escalation', text: "Refer to Can't Hear Mics__3.pdf or quickly contact your Venue Lead." }
+            },
+
+            // Can't Hear Youtube Video Flowchart (referencing Can't Hear Youtube Video_2.pdf)
+            'audio-13': {
+                'start': { text: "Is the volume turned up on the video, the mixer, and on the computer?", options: [{ label: "No, adjusted them", target: "vol_check" }, { label: "Yes, all are turned up", target: "try_video" }] },
+                'vol_check': { text: "Is the sound working now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still quiet", target: "try_video" }] },
+                'try_video': { text: "Let's try a different YouTube video. Does another video play sound?", options: [{ label: "Yes, other video works!", target: "resolved" }, { label: "No, still silent", target: "fashing_light" }] },
+                'fashing_light': { text: "Are you getting a flashing light on the desk showing sound coming in?", options: [{ label: "No lights flashing", target: "escalate" }, { label: "Yes, desk shows input", target: "sliders" }] },
+                'sliders': { text: "Are all volume faders turned up and unmuted on the desk? (Check main desk mute, soft mute, channel mute, and channel fader).", options: [{ label: "No, fixed a fader!", target: "resolved" }, { label: "Yes, unmuted", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Excellent! YouTube test sound is flowing loud and clear." },
+                'escalate': { type: 'escalation', text: "Reference Can't Hear Youtube Video_2.pdf or contact the Venue Lead." }
+            },
+
+            // Lomond Stream Sound & Video Flowchart (referencing Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf)
+            'audio-15': {
+                'start': { text: "Let's check Lomond downstairs. Is 'Stream' lit up on the wall panel?", options: [{ label: "No", target: "turn_on_wall" }, { label: "Yes", target: "sound_check" }] },
+                'turn_on_wall': { text: "Switch it on at the wall panel. Fixed?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still silent", target: "sound_check" }] },
+                'sound_check': { text: "Can you hear sound coming from the Grand Hall in the Lomond room?", options: [{ label: "No", target: "matrix_check" }, { label: "Yes, sound is okay", target: "sliders" }] },
+                'sliders': { text: "Are the sliders turned up and unmuted downstairs?", options: [{ label: "No, unmuted them", target: "resolved" }, { label: "Yes, unmuted", target: "matrix_check" }] },
+                'matrix_check': { text: "Is the matrix switcher upstairs showing CAM3 as the output for Distro?", options: [{ label: "No, corrected it!", target: "camera_check" }, { label: "Yes, matrix is correct", target: "camera_check" }] },
+                'camera_check': { text: "Is there a camera shot active on 'Program' on the switcher?", options: [{ label: "No", target: "resolved" }, { label: "Yes", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Fantastic! Lomond feeds are verified and functional." },
+                'escalate': { type: 'escalation', text: "Feeds might be broken downstairs. Reference Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf or get in touch with the Venue Lead." }
+            },
+
+            // Can't Find Slides Flowcharts (referencing Can't Find Slides_2.pdf)
+            'vis-7': {
+                'start': { text: "Oh no, where are the slides? Let's check: Are you connected to the internet?", options: [{ label: "No, offline", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
+                'offline': { text: "Please verify the ethernet cable and router. Did reconnecting fix it?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still offline", target: "other_mac" }] },
+                'other_mac': { text: "Can you see the slides folder on another computer?", options: [{ label: "No", target: "dropbox" }, { label: "Yes, other mac has them", target: "refresh" }] },
+                'refresh': { text: "Try refreshing the local slides folder. Are they showing up now?", options: [{ label: "Yes, loaded!", target: "resolved" }, { label: "No, still blank", target: "dropbox" }] },
+                'dropbox': { text: "Have you gone into Dropbox via a web browser to look for the slides directly?", options: [{ label: "Yes, found them!", target: "resolved" }, { label: "No, still missing", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Hooray! Slides have been successfully loaded and ready for service." },
+                'escalate': { type: 'escalation', text: "Critical setup files are missing. Reference Can't Find Slides_2.pdf or alert the Visuals Lead." }
+            },
+            'vis-farsi-slides': {
+                'start': { text: "Let's locate the Farsi Slides! Are you connected to the internet?", options: [{ label: "No", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
+                'offline': { text: "Verify the network cable. Did internet connection restore?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still offline", target: "other_mac" }] },
+                'other_mac': { text: "Can you see the Farsi files on another computer?", options: [{ label: "No", target: "dropbox" }, { label: "Yes, they are there", target: "refresh" }] },
+                'refresh': { text: "Refresh the Farsi slides directory. Did that fix it?", options: [{ label: "Yes, synced!", target: "resolved" }, { label: "No, still blank", target: "dropbox" }] },
+                'dropbox': { text: "Log into the Dropbox web portal in a browser. Are they available there?", options: [{ label: "Yes, downloaded!", target: "resolved" }, { label: "No, still missing", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Hooray! Farsi slides are verified and loaded." },
+                'escalate': { type: 'escalation', text: "Reference Can't Find Slides_2.pdf or contact the Venue Lead." }
+            },
+
+            // ATEM Switcher Not Connecting Flowcharts (referencing ATEM Switcher Software Not Connecting_2.pdf)
+            'vis-ns-3': {
+                'start': { text: "Let's establish ATEM control. Are you connected to the local switcher ethernet network?", options: [{ label: "No, check cables", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
+                'cables': { text: "Verify the network cables on the back of the ATEM and the Mac. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "reinstall" }] },
+                'reinstall': { text: "Let's try uninstalling and reinstalling the ATEM software. Did a reboot help?", options: [{ label: "Yes, connected now!", target: "resolved" }, { label: "No, still disconnected", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Great! ATEM is fully connected." },
+                'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or get in touch with the Venue Lead." }
+            },
+            'vis-s-3': {
+                'start': { text: "Let's check the ATEM connection. Are you connected to the network?", options: [{ label: "No", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
+                'cables': { text: "Verify the switcher cables. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still quiet", target: "reinstall" }] },
+                'reinstall': { text: "Have you tried un-installing and reinstalling the software?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "escalate" }] },
+                'resolved': { type: 'success', text: "ATEM Switcher connected successfully." },
+                'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or alert the Venue Lead." }
+            },
+
+            // Breeze Not Connecting Flowcharts (referencing Breeze not connecting_2.pdf)
+            'vis-ns-t1': {
+                'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in on the browser?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
+                'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still offline", target: "lang_check" }] },
+                'lang_check': { text: "Have you changed the source language on Breeze to 'Multi-language'?", options: [{ label: "No, updated it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Breeze translation is fully active and translating. You're good to go!" },
+                'escalate': { type: 'escalation', text: "Reference Breeze not connecting_2.pdf or alert the Venue Lead." }
+            },
+            'vis-s-t1': {
+                'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
+                'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still dead", target: "lang_check" }] },
+                'lang_check': { text: "Have you changed the source language to 'Multi-language'?", options: [{ label: "No, changed it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Breeze translation active and translating. You're good to go!" },
+                'escalate': { type: 'escalation', text: "Reference Breeze not connecting_2.pdf or alert the Venue Lead." }
+            }
         };
 
         const { createApp } = Vue;
@@ -745,9 +844,10 @@
                     stepsDatabase: STEPS,
                     flowchartsDatabase: FLOWCHARTS,
 
-                    // Physical Simulator Layout Parameters
+                    // Physical Simulator Layout Parameters (Compact Sizing RESTORED)
                     selectedOutput: 4, 
-                    showAllRoutes: true // Default to true so they see the entire Sunday configuration instantly
+                    showAllRoutes: true, // Default to true so they see the Sunday layout immediately
+                    isLoading: false
                 }
             },
             computed: {
@@ -810,7 +910,7 @@
                     }
                     switch (this.selectedOutput) {
                         case 1:
-                            return "PROJ (Output 1) ➔ SPARE (Input 2). This routes your secondary backup slides or custom stage design feeds directly to the Left hand main Projector.";
+                            return "PROJ (Output 1) ➔ SPARE (Input 2). This routes your secondary auxiliary slides or custom stage design feeds directly to the Left hand main Projector.";
                         case 2:
                             return "FBACK (Output 2) ➔ CAM (Input 3). Mapped to show live camera close-ups on the band foldback screen so the worship leaders see the live service framing.";
                         case 3:
