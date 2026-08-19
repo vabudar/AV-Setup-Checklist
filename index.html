@@ -42,6 +42,15 @@
         @keyframes popIn { 0% { transform: scale(0.8); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
         @keyframes rippleOut { 0% { box-shadow: 0 0 0 0 rgba(85, 100, 98, 0.4); } 100% { box-shadow: 0 0 0 15px rgba(85, 100, 98, 0); } }
         @keyframes flashBg { 0% { background-color: rgba(85, 100, 98, 0.15); border-color: rgba(85, 100, 98, 0.3); } 100% { background-color: #ECFDF5; border-color: #A7F3D0; } }
+
+        .slide-left-enter-active, .slide-left-leave-active,
+        .slide-right-enter-active, .slide-right-leave-active {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slide-left-enter-from { opacity: 0; transform: translateX(30px); }
+        .slide-left-leave-to { opacity: 0; transform: translateX(-30px); }
+        .slide-right-enter-from { opacity: 0; transform: translateX(-30px); }
+        .slide-right-leave-to { opacity: 0; transform: translateX(30px); }
     </style>
 </head>
 <body class="text-slate-800 selection:bg-brand-green/20">
@@ -51,14 +60,12 @@
         <!-- Header Bar -->
         <div class="bg-brand-green h-16 flex items-center justify-between px-5 shadow-sm sticky top-0 z-30">
             <button @click="resetApp" class="flex items-center gap-2 hover:opacity-90 transition-opacity cursor-pointer">
-                <!-- Simplified Home Icon -->
                 <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
                 <span class="font-bold text-white text-sm tracking-wider uppercase">Central Sunday Set-Up</span>
             </button>
             
-            <!-- External SVG Logo with White Inversion over the brand green header -->
             <img 
                 src="Slide2.SVG" 
                 alt="The Tron Church Logo" 
@@ -259,7 +266,6 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
             
             <div class="space-y-3">
-                <!-- NEW LINK: Ministry Grid Dashboard -->
                 <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-slate-100 text-brand-green rounded-xl flex items-center justify-center shrink-0">
@@ -344,7 +350,7 @@
             </div>
         </div>
 
-        <!-- SCREEN: USER SELECT (FORMERLY HOME) -->
+        <!-- SCREEN: USER SELECT -->
         <div v-if="screen === 'user-select'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-between animate-fade-in">
             <div class="p-8 flex-1">
                 <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
@@ -565,16 +571,19 @@
             </div>
         </div>
 
-        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER (With Embedded Matrix Switcher & Dynamic Video Playback) -->
+        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center">
+            <!-- Background Backdrop -->
             <div class="absolute inset-0 bg-black/40 backdrop-blur-xs" @click="activeHelpStep = null"></div>
             
-            <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-3 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-slate-200 max-h-[92vh] overflow-y-auto text-slate-800 font-sans"
-                 @touchstart="handleTouchStart" @touchend="handleTouchEnd">
-                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4"></div>
+            <!-- Modal Body (flex-col so header stays fixed and content scrolls) -->
+            <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-3 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-slate-200 max-h-[92vh] flex flex-col text-slate-800 font-sans">
+                
+                <!-- Handle -->
+                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4 flex-shrink-0"></div>
 
-                <!-- Swipe/Navigation Controls -->
-                <div class="flex justify-between items-center mb-5 text-slate-400" v-if="helpSequence.length > 1">
+                <!-- Swipe/Navigation Controls (Fixed above scroll) -->
+                <div class="flex justify-between items-center mb-5 text-slate-400 flex-shrink-0" v-if="helpSequence.length > 1">
                     <button @click="navigateHelp(-1)" :disabled="currentHelpIndex === 0" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                         Prev
@@ -588,151 +597,148 @@
                     </button>
                 </div>
 
-                <div class="flex justify-between items-start mb-4">
-                    <h2 class="text-xl font-bold text-slate-900 pr-4 leading-snug">{{ activeHelpStep.text }}</h2>
-                    <button @click="activeHelpStep = null" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer flex-shrink-0">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
-                    </button>
-                </div>
-
-                <!-- 1. The Purpose (Placed above the note and highlighted for prominence) -->
-                <div v-if="activeHelpStep.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md">
-                    <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
-                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                            <line x1="12" x2="12.01" y1="17" y2="17"/>
-                        </svg>
-                        The Purpose
-                    </h3>
-                    <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
-                </div>
-
-                <!-- 2. Indented Note Details Inside Help Modal -->
-                <div v-if="activeHelpStep.note" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs">
-                    <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                    <span>Note: {{ activeHelpStep.note }}</span>
-                </div>
-
-                <!-- PHYSICAL VIRTUAL MATRIX SWITCHER WIDGET (ONLY for step vis-6 matrix setup) -->
-                <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in">
-
-                    <!-- Hardware Replica Chassis container -->
-                    <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
+                <!-- Swipe Animation Container (Listens for finger drag) -->
+                <div class="relative overflow-hidden flex-1 w-full mx-auto"
+                     @touchstart="handleDragStart" @touchmove="handleDragMove" @touchend="handleDragEnd"
+                     @mousedown="handleDragStart" @mousemove="handleDragMove" @mouseup="handleDragEnd" @mouseleave="handleDragEnd">
+                     
+                    <!-- Continuous 1:1 Swipe Track -->
+                    <div :style="swipeTrackStyle" class="flex w-full h-full items-start">
                         
-                        <!-- Top Bezel Info & Small "Show All" toggle button aligned in the top right -->
-                        <div class="flex justify-between items-center mb-3">
-                            <div class="flex items-center gap-1.5">
-                                <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded text-[8px] tracking-wide uppercase">MATRIX</span>
+                        <!-- Individual Carousel Cards -->
+                        <div v-for="(step, idx) in helpSequence" :key="step.id" 
+                             class="w-full flex-shrink-0 flex flex-col h-full overflow-y-auto overflow-x-hidden px-1 pb-6 relative">
+                                
+                            <!-- Title & Close Button -->
+                            <div class="flex justify-between items-start mb-4 sticky top-0 bg-white/95 backdrop-blur-sm z-20 pt-1 pb-2">
+                                <h2 class="text-xl font-bold text-slate-900 pr-4 leading-snug">{{ step.text }}</h2>
+                                <button @click="activeHelpStep = null" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer flex-shrink-0">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                                </button>
                             </div>
-                            <!-- Small, clean toggle button in the top right -->
-                            <button @click="toggleShowAll(!showAllRoutes)"
-                                    :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
-                                             showAllRoutes ? 'bg-brand-green border-brand-green text-white' : 'bg-[#242831] border-slate-700 text-slate-400 hover:text-white']">
-                                <span :class="['h-1.5 w-1.5 rounded-full', showAllRoutes ? 'bg-emerald-300' : 'bg-slate-500']"></span>
-                                Show All
-                            </button>
-                        </div>
 
-                        <!-- Top Tape Row (Output Labels) -->
-                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-3 select-none">
-                            <div class="border-r border-slate-200/60">PROJ</div>
-                            <div class="border-r border-slate-200/60">FBACK</div>
-                            <div class="border-r border-slate-200/60">DISTRO</div>
-                            <div class="border-r border-slate-200/60 font-extrabold">NEW PROJ</div>
-                            <div>ALL</div>
-                        </div>
-
-                        <!-- OUTPUT BUTTON ROW (Sizing Reverted to 10x10 exactly) -->
-                        <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
-                            <button v-for="outNum in 5" :key="'out-btn-' + outNum"
-                                    @click="selectOutput(outNum)"
-                                    class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-95">
-                                <!-- Glowing LED button -->
-                                <div :class="['w-4 h-4 rounded-xs transition-all duration-150', getOutputLedClass(outNum)]">
-                                </div>
-                                <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ outNum === 5 ? 'OFF' : outNum }}</span>
-                            </button>
-                        </div>
-
-                        <!-- Middle Spacer Path Line -->
-                        <div class="h-[1px] bg-slate-800/80 relative flex items-center justify-center my-3">
-                            <div class="text-[6.5px] tracking-widest text-slate-500 font-bold px-2 bg-[#121417]">INTERACTIVE RACK ASSISTANT</div>
-                        </div>
-
-                        <!-- INPUT BUTTON ROW (Sizing Reverted to 10x10 exactly) -->
-                        <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
-                            <div v-for="inNum in 5" :key="'in-btn-' + inNum"
-                                 class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
-                                <!-- Glowing LED button -->
-                                <div :class="['w-4 h-4 rounded-xs transition-all duration-200', getInputLedClass(inNum)]">
-                                </div>
-                                <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ inNum === 5 ? 'OFF' : inNum }}</span>
+                            <!-- 1. The Purpose -->
+                            <div v-if="step.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md flex-shrink-0">
+                                <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                        <line x1="12" x2="12.01" y1="17" y2="17"/>
+                                    </svg>
+                                    The Purpose
+                                </h3>
+                                <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ step.why }}</p>
                             </div>
-                        </div>
 
-                        <!-- Bottom Tape Row (Input Labels) -->
-                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-1 select-none">
-                            <div class="border-r border-slate-200/60">IMAC</div>
-                            <div class="border-r border-slate-200/60">SPARE</div>
-                            <div class="border-r border-slate-200/60">CAM</div>
-                            <div class="border-r border-slate-200/60 text-slate-400 font-light">-</div>
-                            <div>OFF</div>
-                        </div>
+                            <!-- 2. Indented Note Details -->
+                            <div v-if="step.note" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs flex-shrink-0">
+                                <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                <span>Note: {{ step.note }}</span>
+                            </div>
 
-                        <!-- Bottom Bezel Info -->
-                        <div class="flex justify-between items-center text-[7px] text-slate-500 font-bold mt-3 uppercase tracking-wider">
-                            <span>VP-424 SCALER UNIT</span>
-                            <span class="text-emerald-500 flex items-center gap-1">
-                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> BM TV STUDIO
-                            </span>
-                        </div>
+                            <!-- PHYSICAL VIRTUAL MATRIX SWITCHER WIDGET -->
+                            <div v-if="step.id === 'vis-6'" class="mb-6 flex-shrink-0">
+                                <!-- Hardware Replica Chassis container -->
+                                <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full">
+                                    
+                                    <div class="flex justify-between items-center mb-3">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded text-[8px] tracking-wide uppercase">MATRIX</span>
+                                        </div>
+                                        <button @click="toggleShowAll(!showAllRoutes)"
+                                                :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
+                                                         showAllRoutes ? 'bg-brand-green border-brand-green text-white' : 'bg-[#242831] border-slate-700 text-slate-400 hover:text-white']">
+                                            <span :class="['h-1.5 w-1.5 rounded-full', showAllRoutes ? 'bg-emerald-300' : 'bg-slate-500']"></span>
+                                            Show All
+                                        </button>
+                                    </div>
 
-                    </div>
+                                    <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-3 select-none">
+                                        <div class="border-r border-slate-200/60">PROJ</div>
+                                        <div class="border-r border-slate-200/60">FBACK</div>
+                                        <div class="border-r border-slate-200/60">DISTRO</div>
+                                        <div class="border-r border-slate-200/60 font-extrabold">NEW PROJ</div>
+                                        <div>ALL</div>
+                                    </div>
 
-                    <!-- Color Guide Legend List (Only visible in Show All Mode) -->
-                    <div v-if="showAllRoutes" class="mt-3 grid grid-cols-3 gap-1.5 font-mono text-[9px] uppercase tracking-wide text-center select-none font-bold">
-                        <div class="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-1.5 rounded-md">
-                            🟡 Out 1 ➔ In 2
-                        </div>
-                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-1.5 rounded-md">
-                            🟢 Out 2,3 ➔ In 3
-                        </div>
-                        <div class="bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 p-1.5 rounded-md">
-                            🔵 Out 4 ➔ In 1
-                        </div>
-                    </div>
+                                    <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
+                                        <button v-for="outNum in 5" :key="'out-btn-' + outNum"
+                                                @click="selectOutput(outNum)"
+                                                class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-95">
+                                            <div :class="['w-4 h-4 rounded-xs transition-all duration-150', getOutputLedClass(outNum)]">
+                                            </div>
+                                            <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ outNum === 5 ? 'OFF' : outNum }}</span>
+                                        </button>
+                                    </div>
 
-                </div>
+                                    <div class="h-[1px] bg-slate-800/80 relative flex items-center justify-center my-3">
+                                        <div class="text-[6.5px] tracking-widest text-slate-500 font-bold px-2 bg-[#121417]">INTERACTIVE RACK ASSISTANT</div>
+                                    </div>
 
-                <!-- Interactive Diagnostic Wizard (Only if step has troubleshooter defined in flowchartsDatabase) -->
-                <div v-if="flowchartsDatabase[activeHelpStep.id]" class="animate-fade-in flex flex-col h-full bg-slate-50 border border-slate-200/80 rounded-2xl p-5 mb-8 shadow-sm">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-mono text-[10px] tracking-widest text-slate-500 uppercase font-bold flex items-center">
-                            <svg class="w-4 h-4 mr-2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12(0a2.12) 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                            Diagnostic Wizard
-                        </h3>
-                        <button v-if="flowNode !== 'start'" @click="flowNode = 'start'" class="text-slate-400 hover:text-slate-800 transition-colors text-[10px] font-mono uppercase flex items-center gap-1 cursor-pointer">
-                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                            Back
-                        </button>
-                    </div>
-                    
-                    <div v-if="currentWizardNode.type !== 'escalation'" class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-xs">
-                        <div v-if="currentWizardNode.type === 'success'" class="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center mb-3 text-brand-green">
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
+                                        <div v-for="inNum in 5" :key="'in-btn-' + inNum"
+                                             class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
+                                            <div :class="['w-4 h-4 rounded-xs transition-all duration-200', getInputLedClass(inNum)]">
+                                            </div>
+                                            <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ inNum === 5 ? 'OFF' : inNum }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-1 select-none">
+                                        <div class="border-r border-slate-200/60">IMAC</div>
+                                        <div class="border-r border-slate-200/60">SPARE</div>
+                                        <div class="border-r border-slate-200/60">CAM</div>
+                                        <div class="border-r border-slate-200/60 text-slate-400 font-light">-</div>
+                                        <div>OFF</div>
+                                    </div>
+
+                                    <div class="flex justify-between items-center text-[7px] text-slate-500 font-bold mt-3 uppercase tracking-wider">
+                                        <span>VP-424 SCALER UNIT</span>
+                                        <span class="text-emerald-500 flex items-center gap-1">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> BM TV STUDIO
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div v-if="showAllRoutes" class="mt-3 grid grid-cols-3 gap-1.5 font-mono text-[9px] uppercase tracking-wide text-center select-none font-bold">
+                                    <div class="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-1.5 rounded-md">🟡 Out 1 ➔ In 2</div>
+                                    <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-1.5 rounded-md">🟢 Out 2,3 ➔ In 3</div>
+                                    <div class="bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 p-1.5 rounded-md">🔵 Out 4 ➔ In 1</div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Diagnostic Wizard -->
+                            <div v-if="flowchartsDatabase[step.id]" class="flex flex-col flex-1 bg-slate-50 border border-slate-200/80 rounded-2xl p-5 shadow-sm min-h-[300px]">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-mono text-[10px] tracking-widest text-slate-500 uppercase font-bold flex items-center">
+                                        <svg class="w-4 h-4 mr-2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12(0a2.12) 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                                        Diagnostic Wizard
+                                    </h3>
+                                    <button v-if="flowNode !== 'start'" @click="flowNode = 'start'" class="text-slate-400 hover:text-slate-800 transition-colors text-[10px] font-mono uppercase flex items-center gap-1 cursor-pointer">
+                                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                                        Restart
+                                    </button>
+                                </div>
+                                
+                                <div v-if="getWizardNode(step.id).type !== 'escalation'" class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-xs">
+                                    <div v-if="getWizardNode(step.id).type === 'success'" class="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center mb-3 text-brand-green">
+                                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    </div>
+                                    <p class="text-slate-800 text-sm leading-relaxed font-semibold">{{ getWizardNode(step.id).text }}</p>
+                                </div>
+
+                                <div class="space-y-3 mt-auto pt-2">
+                                    <button v-for="(opt, idx) in getWizardNode(step.id).options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-12 rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm cursor-pointer">
+                                        {{ opt.label }}
+                                    </button>
+                                    
+                                    <button v-if="getWizardNode(step.id).type" @click="handleResolution(getWizardNode(step.id).type, step)" :class="['w-full h-13 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', getWizardNode(step.id).type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
+                                        {{ getWizardNode(step.id).type === 'success' ? 'Mark Task Complete' : 'Alert Sound Team Leader & Skip' }}
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
-                        <p class="text-slate-800 text-sm leading-relaxed font-semibold">{{ currentWizardNode.text }}</p>
-                    </div>
-
-                    <div class="space-y-3">
-                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-12 rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm cursor-pointer">
-                            {{ opt.label }}
-                        </button>
-                        
-                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-13 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
-                            {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Sound Team Leader & Skip' }}
-                        </button>
                     </div>
                 </div>
             </div>
@@ -1138,8 +1144,9 @@
                     // Touch / Navigation properties
                     touchStartX: 0,
                     touchStartY: 0,
-                    touchEndX: 0,
-                    touchEndY: 0,
+                    isDragging: false,
+                    isScrolling: null,
+                    dragOffset: 0,
                     helpSequence: [],
                     currentHelpIndex: -1,
                     
@@ -1172,37 +1179,11 @@
                     if (this.totalSteps === 0) return 0;
                     return Math.round((this.checkedSteps.length / this.totalSteps) * 100);
                 },
-                currentWizardNode() {
-                    if (!this.activeHelpStep) return {};
-                    
-                    const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
-                        'start': {
-                            text: `Let's check the device infrastructure for "${this.activeHelpStep.text}". Is the item receiving operational line power?`,
-                            options: [
-                                { label: "Yes, it is drawing power", target: "signal_check" },
-                                { label: "No power indicators", target: "power_check" }
-                            ]
-                        },
-                        'power_check': {
-                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialise?",
-                            options: [
-                                { label: "Yes, power restored", target: "resolved" },
-                                { label: "No, still unpowered", target: "escalate_power" }
-                            ]
-                        },
-                        'signal_check': {
-                            text: `Check that all source parameters match distribution arrays. Ensure cable inputs lock. Did the configuration execute?`,
-                            options: [
-                                { label: "Yes, operational alignment complete", target: "resolved" },
-                                { label: "No signal recovery", target: "escalate_general" }
-                            ]
-                        },
-                        'resolved': { type: 'success', text: "The task loop is confirmed complete and execution was successful.", actionText: "Complete" },
-                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected.", actionText: "Escalate" },
-                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams.", actionText: "Escalate" }
+                swipeTrackStyle() {
+                    return {
+                        transform: `translateX(calc(${-this.currentHelpIndex * 100}% + ${this.dragOffset}px))`,
+                        transition: this.isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)'
                     };
-
-                    return targetTree[this.flowNode] || targetTree['start'];
                 },
                 // Plain English feedback mapping explanations for the selected Output button
                 switcherGuideText() {
@@ -1226,6 +1207,36 @@
                 }
             },
             methods: {
+                getWizardNode(stepId) {
+                    const targetTree = this.flowchartsDatabase[stepId] || {
+                        'start': {
+                            text: `Let's check the device infrastructure for this step. Is the item receiving operational line power?`,
+                            options: [
+                                { label: "Yes, it is drawing power", target: "signal_check" },
+                                { label: "No power indicators", target: "power_check" }
+                            ]
+                        },
+                        'power_check': {
+                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialise?",
+                            options: [
+                                { label: "Yes, power restored", target: "resolved" },
+                                { label: "No, still unpowered", target: "escalate_power" }
+                            ]
+                        },
+                        'signal_check': {
+                            text: `Check that all source parameters match distribution arrays. Ensure cable inputs lock. Did the configuration execute?`,
+                            options: [
+                                { label: "Yes, operational alignment complete", target: "resolved" },
+                                { label: "No signal recovery", target: "escalate_general" }
+                            ]
+                        },
+                        'resolved': { type: 'success', text: "The task loop is confirmed complete and execution was successful." },
+                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected." },
+                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams." }
+                    };
+
+                    return targetTree[this.flowNode] || targetTree['start'];
+                },
                 async submitFeedback() {
                     if (!this.feedbackText.trim()) return;
                     this.feedbackSending = true;
@@ -1262,30 +1273,64 @@
                         alert("Failed to send feedback. Please check your connection or try again later.");
                     }
                 },
-                handleTouchStart(e) {
-                    this.touchStartX = e.changedTouches[0].screenX;
-                    this.touchStartY = e.changedTouches[0].screenY;
-                },
-                handleTouchEnd(e) {
-                    this.touchEndX = e.changedTouches[0].screenX;
-                    this.touchEndY = e.changedTouches[0].screenY;
-                    this.handleSwipe();
-                },
-                handleSwipe() {
-                    const SWIPE_THRESHOLD_X = 50;
-                    const SWIPE_THRESHOLD_Y = 50;
+
+                // Mobile Touch & Desktop Drag Support (1:1 Tracking)
+                handleDragStart(e) {
+                    this.isDragging = true;
+                    this.isScrolling = null;
+                    this.dragOffset = 0;
                     
-                    const diffX = this.touchEndX - this.touchStartX;
-                    const diffY = this.touchEndY - this.touchStartY;
-                    
-                    // Only register swipe if horizontal movement exceeds vertical
-                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > SWIPE_THRESHOLD_X) {
-                        if (diffX < 0) {
-                            this.navigateHelp(1); // Swiped Left -> Next
-                        } else {
-                            this.navigateHelp(-1); // Swiped Right -> Prev
-                        }
+                    if (e.type === 'touchstart') {
+                        this.touchStartX = e.touches[0].clientX;
+                        this.touchStartY = e.touches[0].clientY;
+                    } else {
+                        this.touchStartX = e.clientX;
+                        this.touchStartY = e.clientY;
                     }
+                },
+                handleDragMove(e) {
+                    if (!this.isDragging) return;
+                    
+                    const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                    const currentY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                    
+                    const diffX = currentX - this.touchStartX;
+                    const diffY = currentY - this.touchStartY;
+                    
+                    // Determine if the user's primary intention is vertical scrolling
+                    if (this.isScrolling === null) {
+                        this.isScrolling = Math.abs(diffY) > Math.abs(diffX);
+                    }
+                    
+                    if (this.isScrolling) return; // Yield to native vertical scroll
+                    
+                    let offset = diffX;
+                    // Add "rubber band" resistance if swiping past the first or last step
+                    if ((this.currentHelpIndex === 0 && offset > 0) || 
+                        (this.currentHelpIndex === this.helpSequence.length - 1 && offset < 0)) {
+                        offset *= 0.25; 
+                    }
+                    
+                    this.dragOffset = offset;
+                },
+                handleDragEnd() {
+                    if (!this.isDragging || this.isScrolling) {
+                        this.isDragging = false;
+                        return;
+                    }
+                    
+                    this.isDragging = false;
+                    const SWIPE_THRESHOLD = 60; // minimum px required to switch page
+                    
+                    // Proceed to next page if threshold passed
+                    if (this.dragOffset < -SWIPE_THRESHOLD) {
+                        this.navigateHelp(1);
+                    } else if (this.dragOffset > SWIPE_THRESHOLD) {
+                        this.navigateHelp(-1);
+                    }
+                    
+                    // Snap visually back to center / or next card position
+                    this.dragOffset = 0;
                 },
                 navigateHelp(direction) {
                     if (this.currentHelpIndex !== -1 && this.helpSequence.length > 0) {
@@ -1293,7 +1338,7 @@
                         if (nextIndex >= 0 && nextIndex < this.helpSequence.length) {
                             this.currentHelpIndex = nextIndex;
                             this.activeHelpStep = this.helpSequence[nextIndex];
-                            this.flowNode = 'start';
+                            this.flowNode = 'start'; // Resets wizard for incoming card
                             if (this.activeHelpStep.id === 'vis-6') {
                                 this.showAllRoutes = true;
                             }
@@ -1363,6 +1408,8 @@
                     
                     this.activeHelpStep = this.helpSequence[this.currentHelpIndex] || step;
                     this.flowNode = 'start';
+                    this.swipeDirection = 'slide-left'; // Reset animation state on open
+                    
                     if (this.activeHelpStep.id === 'vis-6') {
                         this.showAllRoutes = true;
                     }
@@ -1370,11 +1417,10 @@
                 handleFlowAction(target) {
                     this.flowNode = target;
                 },
-                handleResolution(type) {
-                    // Alert was completely removed from the escalation track
-                    if (type === 'success' && this.activeHelpStep) {
-                        if (!this.checkedSteps.includes(this.activeHelpStep.id)) {
-                            this.checkedSteps.push(this.activeHelpStep.id);
+                handleResolution(type, step) {
+                    if (type === 'success' && step) {
+                        if (!this.checkedSteps.includes(step.id)) {
+                            this.checkedSteps.push(step.id);
                         }
                     }
                     this.activeHelpStep = null;
@@ -1382,7 +1428,7 @@
 
                 // Visual Matrix Helper logic
                 selectOutput(outNum) {
-                    this.showAllRoutes = false; // Turn off master overview to isolate output clicked (switches automatically to Isolation Mode)
+                    this.showAllRoutes = false; // Turn off master overview to isolate output clicked
                     this.selectedOutput = outNum;
                     try { if (window.navigator?.vibrate) window.navigator.vibrate(20); } catch(e) {}
                 },
@@ -1463,7 +1509,6 @@
                 },
                 copyReport() {
                     const rawDateString = new Date().toLocaleDateString('en-GB');
-                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
                     let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
                     
                     this.filteredBands.forEach(band => {
