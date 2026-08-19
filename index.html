@@ -50,7 +50,7 @@
 
         <!-- Header Bar -->
         <div class="bg-brand-green h-16 flex items-center justify-between px-5 shadow-sm sticky top-0 z-30">
-            <button @click="resetApp" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <button @click="resetApp" class="flex items-center gap-2 hover:opacity-90 transition-opacity cursor-pointer">
                 <!-- Simplified Home Icon -->
                 <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -67,22 +67,298 @@
             />
         </div>
 
-        <!-- SCREEN: HOME -->
-        <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-between">
-            <div class="p-8 flex-1">
-                <div class="text-center py-6 mb-4 select-none">
-                    <h2 class="text-lg text-slate-500 font-publico tracking-wide leading-none">The</h2>
-                    <h1 class="text-[44px] font-bold tracking-[0.16em] text-slate-900 font-gillsans uppercase mt-0.5 leading-none">TRON</h1>
-                    <p class="text-sm text-slate-500 font-publico tracking-wide mt-1.5 leading-none">Church</p>
+        <!-- SCREEN: NEW DASHBOARD (HOME) -->
+        <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start p-8 animate-fade-in">
+            <div class="text-center py-4 mb-6 select-none">
+                <h2 class="text-lg text-slate-500 font-publico tracking-wide leading-none">The</h2>
+                <h1 class="text-[44px] font-bold tracking-[0.16em] text-slate-900 font-gillsans uppercase mt-0.5 leading-none">TRON</h1>
+                <p class="text-sm text-slate-500 font-publico tracking-wide mt-1.5 leading-none">Church AV</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- 1. Setup Checklist -->
+                <button @click="screen = 'user-select'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                            </svg>
+                        </div>
+                        <div class="py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Setup Checklist</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Weekly service setup flows</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+
+                <!-- 2. Troubleshooting Portal -->
+                <button @click="screen = 'troubleshooting'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12(0a2.12) 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                            </svg>
+                        </div>
+                        <div class="py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Troubleshooting</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Diagnostic tools & fixes</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+
+                <!-- 3. Video Tutorials -->
+                <button @click="screen = 'tutorials'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polygon points="10 8 16 12 10 16 10 8"/>
+                            </svg>
+                        </div>
+                        <div class="py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Video Tutorials</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Learn the gear & workflows</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+
+                <!-- 4. Other Documents -->
+                <button @click="screen = 'documents'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <div class="py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Documents</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Manuals, Rosters & Guides</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Report Bug Button -->
+            <button @click="screen = 'feedback'" class="mt-10 mx-auto flex items-center justify-center gap-1.5 text-slate-400 hover:text-brand-green font-mono text-[10px] uppercase font-bold tracking-[0.15em] transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Report a Bug / Suggest Feature
+            </button>
+        </div>
+
+        <!-- SCREEN: FEEDBACK PORTAL -->
+        <div v-if="screen === 'feedback'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Feedback</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-6">Bug or Feature?</h1>
+            
+            <div class="space-y-4 flex-1 flex flex-col">
+                <input v-model="feedbackName" type="text" placeholder="Your Name (optional)" class="w-full h-14 px-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm">
+                
+                <textarea v-model="feedbackText" placeholder="Describe the bug or feature suggestion..." class="w-full flex-1 min-h-[200px] p-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm resize-none"></textarea>
+                
+                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-14 mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed')]">
+                    {{ feedbackSuccess ? 'Sent!' : (feedbackSending ? 'Sending...' : 'Send Feedback') }} 
+                    <svg v-if="!feedbackSuccess && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <svg v-if="feedbackSuccess" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: TROUBLESHOOTING PORTAL -->
+        <div v-if="screen === 'troubleshooting'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Diagnostics</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Troubleshooting</h1>
+            
+            <div class="space-y-8 pb-10">
+                <!-- Audio Issues -->
+                <div>
+                    <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Audio Issues</h2>
+                    <div class="space-y-3">
+                        <button @click="openTroubleshooter({id: 'audio-7', text: 'Headset Mic No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Headset Mic No Sound</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'audio-11', text: 'Band Mics No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Band Mics No Sound</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'audio-13', text: 'YouTube Video No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">YouTube Video No Sound</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'audio-15', text: 'Lomond Feed Not Working'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Lomond Feed Not Working</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="text-center mb-8">
+                <!-- Visual Issues -->
+                <div>
+                    <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Visual & Stream Issues</h2>
+                    <div class="space-y-3">
+                        <button @click="openTroubleshooter({id: 'vis-6', text: 'Matrix Switcher Helper'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                                <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Matrix Switcher Route Guide</span>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-7', text: 'Can\'t Find Slides'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Main Slides</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Farsi Slides</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-s-3', text: 'ATEM Not Connecting'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">ATEM Switcher Not Connecting</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-s-t1', text: 'Breeze Translate Issues'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Breeze Translate Feed Issues</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: VIDEO TUTORIALS (PLACEHOLDER) -->
+        <div v-if="screen === 'tutorials'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Training Library</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
+            
+            <div class="space-y-3">
+                <!-- NEW LINK: Ministry Grid Dashboard -->
+                <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 text-brand-green rounded-xl flex items-center justify-center shrink-0">
+                            <!-- External Link Icon -->
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Ministry Grid Dashboard</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">External Training Portal</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Matrix Router Guide</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">5 min watch</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Breeze Translate Setup</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">3 min watch</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- SCREEN: OTHER DOCUMENTS (PLACEHOLDER) -->
+        <div v-if="screen === 'documents'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Resources</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Documents</h1>
+            
+            <div class="space-y-3">
+                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">AV Team Roster Q3</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">PDF Document</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Emergency Protocols</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">PDF Document</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Audio Desk Manual</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">External Link</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- SCREEN: USER SELECT (FORMERLY HOME) -->
+        <div v-if="screen === 'user-select'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-between animate-fade-in">
+            <div class="p-8 flex-1">
+                <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back
+                </button>
+
+                <div class="text-left mb-8">
                     <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase font-bold mb-1">Pre-Service Setup</p>
-                    <h3 class="text-xl font-bold text-slate-800">Who's setting up today?</h3>
+                    <h3 class="text-2xl font-bold text-slate-900">Who's setting up today?</h3>
                 </div>
                 
                 <div class="overflow-y-auto max-h-[45vh] pr-1 space-y-2.5">
-                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full bg-white border border-slate-200/60 rounded-2xl p-4.5 text-left flex items-center justify-between hover:bg-slate-50 active:scale-[0.99] transition-all shadow-sm group">
+                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full bg-white border border-slate-200/60 rounded-2xl p-4.5 text-left flex items-center justify-between hover:bg-slate-50 active:scale-[0.99] transition-all shadow-sm group cursor-pointer">
                         <div class="flex items-center gap-4">
                             <div class="w-1.5 h-6 bg-slate-300 rounded-full group-hover:bg-brand-green transition-colors"></div>
                             <span class="text-base font-bold text-slate-800">{{ name }}</span>
@@ -94,7 +370,7 @@
             <div class="p-5 bg-white border-t border-slate-200/80 pb-8 sticky bottom-0">
                 <div class="flex gap-2">
                     <input class="flex-1 h-13 px-4 bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:bg-white rounded-xl placeholder:text-slate-400 transition-colors" placeholder="Name not shown? Add it here" v-model="newName" @keyup.enter="addName" />
-                    <button @click="addName" :disabled="!newName.trim()" class="w-13 h-13 bg-slate-800 text-white flex items-center justify-center font-bold rounded-xl disabled:opacity-30 active:scale-95 transition-transform">
+                    <button @click="addName" :disabled="!newName.trim()" class="w-13 h-13 bg-slate-800 text-white flex items-center justify-center font-bold rounded-xl disabled:opacity-30 active:scale-95 transition-transform cursor-pointer">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
                     </button>
                 </div>
@@ -103,14 +379,14 @@
 
         <!-- SCREEN: ROLE SELECTION -->
         <div v-if="screen === 'role'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
-            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors">
+            <button @click="screen = 'user-select'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
             <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Welcome, {{ currentName }}</p>
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Choose your role</h1>
             
-            <button @click="selectRole('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-5 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm">
+            <button @click="selectRole('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-5 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                 <div class="flex items-center gap-5">
                     <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
                         <svg class="w-7 h-7 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -129,7 +405,7 @@
                 </svg>
             </button>
 
-            <button @click="screen = 'streaming'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm">
+            <button @click="screen = 'streaming'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                 <div class="flex items-center gap-5">
                     <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
                         <svg class="w-7 h-7 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -151,7 +427,7 @@
 
         <!-- SCREEN: STREAMING QUESTION -->
         <div v-if="screen === 'streaming'" class="p-8 flex-1 min-h-[calc(100vh-64px)] animate-fade-in">
-            <button @click="screen = 'role'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors">
+            <button @click="screen = 'role'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
@@ -159,11 +435,11 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Are we streaming today?</h1>
             
             <div class="flex flex-col gap-4">
-                <button @click="selectRole('visuals', 'yes')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group">
+                <button @click="selectRole('visuals', 'yes')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
                     <span>Yes · Streaming Today</span>
                     <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg>
                 </button>
-                <button @click="selectRole('visuals', 'no')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group">
+                <button @click="selectRole('visuals', 'no')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
                     <span>No · In-House Only</span>
                     <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></svg>
                 </button>
@@ -174,7 +450,7 @@
         <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] animate-fade-in">
             <div class="sticky top-0 bg-[#F4F7F2]/95 backdrop-blur-md border-b border-slate-200/80 z-20 px-5 pt-4 pb-4 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
-                    <button @click="screen = 'home'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors">
+                    <button @click="screen = 'home'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                         Back
                     </button>
@@ -239,7 +515,7 @@
                                     <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id]"></div>
 
                                     <!-- Circular Help Button (Only shown if step has why OR flowchart) -->
-                                    <button v-if="step.why || flowchartsDatabase[step.id]" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group">
+                                    <button v-if="step.why || flowchartsDatabase[step.id]" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
                                         <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                                         </div>
@@ -253,7 +529,7 @@
                 </div>
 
                 <!-- Complete Button wrapped in dynamic Brand Green -->
-                <button @click="finalizeSession" :class="['w-full h-14 mt-10 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border', progressPercentage === 100 ? 'bg-brand-green border-brand-green text-white shadow-lg opacity-90 hover:opacity-100' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-900']">
+                <button @click="finalizeSession" :class="['w-full h-14 mt-10 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', progressPercentage === 100 ? 'bg-brand-green border-brand-green text-white shadow-lg opacity-90 hover:opacity-100' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-900']">
                     {{ progressPercentage === 100 ? 'Finish Setup' : 'Finish Early' }} 
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
@@ -279,11 +555,11 @@
             </div>
 
             <div class="space-y-4">
-                <button @click="resetApp" class="w-full h-14 bg-white border border-slate-200 text-slate-800 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl shadow-sm hover:bg-slate-50 active:scale-98 transition-all">
+                <button @click="resetApp" class="w-full h-14 bg-white border border-slate-200 text-slate-800 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl shadow-sm hover:bg-slate-50 active:scale-98 transition-all cursor-pointer">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                    Back
+                    Back to Menu
                 </button>
-                <button @click="copyReport" :class="['w-full h-14 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl transition-all', copySuccess ? 'bg-brand-green/10 text-brand-green border border-brand-green/30' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-950']">
+                <button @click="copyReport" :class="['w-full h-14 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl transition-all cursor-pointer', copySuccess ? 'bg-brand-green/10 text-brand-green border border-brand-green/30' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-950']">
                     {{ copySuccess ? 'Report Copied!' : 'Copy Setup Report' }}
                 </button>
             </div>
@@ -293,12 +569,28 @@
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center">
             <div class="absolute inset-0 bg-black/40 backdrop-blur-xs" @click="activeHelpStep = null"></div>
             
-            <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-3 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-slate-200 max-h-[92vh] overflow-y-auto text-slate-800 font-sans">
-                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
+            <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-3 pb-8 px-6 shadow-2xl relative z-10 animate-slide-up border-t border-slate-200 max-h-[92vh] overflow-y-auto text-slate-800 font-sans"
+                 @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4"></div>
+
+                <!-- Swipe/Navigation Controls -->
+                <div class="flex justify-between items-center mb-5 text-slate-400" v-if="helpSequence.length > 1">
+                    <button @click="navigateHelp(-1)" :disabled="currentHelpIndex === 0" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        Prev
+                    </button>
+                    <div class="flex gap-1.5 overflow-hidden max-w-[200px] justify-center">
+                        <span v-for="(step, idx) in helpSequence" :key="step.id" :class="['w-1.5 h-1.5 rounded-full transition-colors flex-shrink-0', idx === currentHelpIndex ? 'bg-brand-green scale-110' : 'bg-slate-200']"></span>
+                    </div>
+                    <button @click="navigateHelp(1)" :disabled="currentHelpIndex === helpSequence.length - 1" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
+                        Next
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
 
                 <div class="flex justify-between items-start mb-4">
                     <h2 class="text-xl font-bold text-slate-900 pr-4 leading-snug">{{ activeHelpStep.text }}</h2>
-                    <button @click="activeHelpStep = null" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer">
+                    <button @click="activeHelpStep = null" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer flex-shrink-0">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                     </button>
                 </div>
@@ -426,12 +718,9 @@
                         </button>
                     </div>
                     
-                    <div class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-xs">
+                    <div v-if="currentWizardNode.type !== 'escalation'" class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-xs">
                         <div v-if="currentWizardNode.type === 'success'" class="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center mb-3 text-brand-green">
                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        </div>
-                        <div v-if="currentWizardNode.type === 'escalation'" class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-3 text-red-600">
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
                         </div>
                         <p class="text-slate-800 text-sm leading-relaxed font-semibold">{{ currentWizardNode.text }}</p>
                     </div>
@@ -442,7 +731,7 @@
                         </button>
                         
                         <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-13 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
-                            {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Tech Lead & Skip' }}
+                            {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Sound Team Leader & Skip' }}
                         </button>
                     </div>
                 </div>
@@ -476,7 +765,7 @@
                 { 
                     id: 'audio-2', 
                     text: "Read through the handout", 
-                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
+                    why: "Everything you'll need to know for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
                     note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary."
                 },
                 { 
@@ -568,7 +857,7 @@
                 { 
                     id: 'vis-2', 
                     text: "Read the handout", 
-                    why: "Everything you'll need to know about for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
+                    why: "Everything you'll need to know for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
                     note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary."
                 },
                 { 
@@ -603,7 +892,7 @@
                     text: 'Open up the Farsi slides on the Farsi Mac'
                 },
                 
-                // --- STRIP CONDITIONAL HOOKS: STREAM FALSE TRACK ---
+                // STREAM FALSE TRACK
                 { 
                     id: 'vis-ns-1', 
                     text: 'On the Slides Mac: Open up YouTube in Chrome', 
@@ -630,7 +919,7 @@
                     branch: 'no'
                 },
 
-                // --- STRIP CONDITIONAL HOOKS: STREAM TRUE TRACK ---
+                // STREAM TRUE TRACK
                 { 
                     id: 'vis-s-1', 
                     text: 'Open OBS', 
@@ -712,7 +1001,7 @@
         };
 
         const FLOWCHARTS = {
-            // Can't Hear Mics Flowcharts (referencing Can't Hear Mics__3.pdf)
+            // Can't Hear Mics Flowcharts
             'audio-7': {
                 'start': { text: "No sound on the headset? Let's check: Are the main amps switched on?", options: [{ label: "No, they were off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
                 'amps_off': { text: "Go ahead and switch the amps on. Did that bring the sound back?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still dead quiet", target: "layer" }] },
@@ -746,8 +1035,8 @@
                 'resolved': { type: 'success', text: "Perfect! The minister's mic is verified and clear." },
                 'escalate': { type: 'escalation', text: "Refer to Can't Hear Mics__3.pdf or quickly contact your Venue Lead." }
             },
-
-            // Can't Hear Youtube Video Flowchart (referencing Can't Hear Youtube Video_2.pdf)
+            
+            // Can't Hear Youtube Video Flowchart
             'audio-13': {
                 'start': { text: "Is the volume turned up on the video, the mixer, and on the computer?", options: [{ label: "No, adjusted them", target: "vol_check" }, { label: "Yes, all are turned up", target: "try_video" }] },
                 'vol_check': { text: "Is the sound working now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still quiet", target: "try_video" }] },
@@ -758,7 +1047,7 @@
                 'escalate': { type: 'escalation', text: "Reference Can't Hear Youtube Video_2.pdf or contact the Venue Lead." }
             },
 
-            // Lomond Stream Sound & Video Flowchart (referencing Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf)
+            // Lomond Stream Sound & Video Flowchart
             'audio-15': {
                 'start': { text: "Let's check Lomond downstairs. Is 'Stream' lit up on the wall panel?", options: [{ label: "No", target: "turn_on_wall" }, { label: "Yes", target: "sound_check" }] },
                 'turn_on_wall': { text: "Switch it on at the wall panel. Fixed?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still silent", target: "sound_check" }] },
@@ -770,7 +1059,7 @@
                 'escalate': { type: 'escalation', text: "Feeds might be broken downstairs. Reference Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf or get in touch with the Venue Lead." }
             },
 
-            // Can't Find Slides Flowcharts (referencing Can't Find Slides_2.pdf)
+            // Can't Find Slides Flowcharts
             'vis-7': {
                 'start': { text: "Oh no, where are the slides? Let's check: Are you connected to the internet?", options: [{ label: "No, offline", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
                 'offline': { text: "Please verify the ethernet cable and router. Did reconnecting fix it?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still offline", target: "other_mac" }] },
@@ -790,7 +1079,7 @@
                 'escalate': { type: 'escalation', text: "Reference Can't Find Slides_2.pdf or contact the Venue Lead." }
             },
 
-            // ATEM Switcher Not Connecting Flowcharts (referencing ATEM Switcher Software Not Connecting_2.pdf)
+            // ATEM Switcher Not Connecting Flowcharts
             'vis-ns-3': {
                 'start': { text: "Let's establish ATEM control. Are you connected to the local switcher ethernet network?", options: [{ label: "No, check cables", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
                 'cables': { text: "Verify the network cables on the back of the ATEM and the Mac. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "reinstall" }] },
@@ -806,7 +1095,7 @@
                 'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or alert the Venue Lead." }
             },
 
-            // Breeze Not Connecting Flowcharts (referencing Breeze not connecting_2.pdf)
+            // Breeze Not Connecting Flowcharts
             'vis-ns-t1': {
                 'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in on the browser?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
                 'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still offline", target: "lang_check" }] },
@@ -828,7 +1117,7 @@
         createApp({
             data() {
                 return {
-                    screen: 'home',
+                    screen: 'home', // 'home' is now the central dashboard
                     currentName: null,
                     role: null,
                     streaming: null,
@@ -840,6 +1129,19 @@
                     activeHelpStep: null,
                     flowNode: 'start',
                     copySuccess: false,
+                    
+                    feedbackText: '',
+                    feedbackName: '',
+                    feedbackSending: false,
+                    feedbackSuccess: false,
+                    
+                    // Touch / Navigation properties
+                    touchStartX: 0,
+                    touchStartY: 0,
+                    touchEndX: 0,
+                    touchEndY: 0,
+                    helpSequence: [],
+                    currentHelpIndex: -1,
                     
                     stepsDatabase: STEPS,
                     flowchartsDatabase: FLOWCHARTS,
@@ -902,7 +1204,6 @@
 
                     return targetTree[this.flowNode] || targetTree['start'];
                 },
-
                 // Plain English feedback mapping explanations for the selected Output button
                 switcherGuideText() {
                     if (this.showAllRoutes) {
@@ -925,6 +1226,80 @@
                 }
             },
             methods: {
+                async submitFeedback() {
+                    if (!this.feedbackText.trim()) return;
+                    this.feedbackSending = true;
+                    this.feedbackSuccess = false;
+
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
+                    
+                    const senderName = this.feedbackName.trim() || (this.currentName ? this.currentName : "Anonymous");
+                    let emailContent = `APP FEEDBACK / BUG REPORT\nFrom: ${senderName}\nDate: ${rawDateString}\n\nMessage:\n${this.feedbackText}\n`;
+
+                    // Initialise EmailJS
+                    emailjs.init("6bJZROd4I9Q_p-uKx");
+
+                    try {
+                        await emailjs.send("service_767ih1c", "template_vpq8sqe", {
+                            report_content: emailContent,
+                            subject_date: "APP FEEDBACK - " + formattedSubjectDate,
+                            operator_name: senderName
+                        });
+                        console.log("Feedback transmitted successfully.");
+                        this.feedbackSending = false;
+                        this.feedbackSuccess = true;
+                        
+                        setTimeout(() => {
+                            this.feedbackSuccess = false;
+                            this.feedbackText = '';
+                            this.feedbackName = '';
+                            this.screen = 'home';
+                        }, 2000);
+                    } catch (error) {
+                        console.error("EmailJS payload transfer failure:", error);
+                        this.feedbackSending = false;
+                        alert("Failed to send feedback. Please check your connection or try again later.");
+                    }
+                },
+                handleTouchStart(e) {
+                    this.touchStartX = e.changedTouches[0].screenX;
+                    this.touchStartY = e.changedTouches[0].screenY;
+                },
+                handleTouchEnd(e) {
+                    this.touchEndX = e.changedTouches[0].screenX;
+                    this.touchEndY = e.changedTouches[0].screenY;
+                    this.handleSwipe();
+                },
+                handleSwipe() {
+                    const SWIPE_THRESHOLD_X = 50;
+                    const SWIPE_THRESHOLD_Y = 50;
+                    
+                    const diffX = this.touchEndX - this.touchStartX;
+                    const diffY = this.touchEndY - this.touchStartY;
+                    
+                    // Only register swipe if horizontal movement exceeds vertical
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > SWIPE_THRESHOLD_X) {
+                        if (diffX < 0) {
+                            this.navigateHelp(1); // Swiped Left -> Next
+                        } else {
+                            this.navigateHelp(-1); // Swiped Right -> Prev
+                        }
+                    }
+                },
+                navigateHelp(direction) {
+                    if (this.currentHelpIndex !== -1 && this.helpSequence.length > 0) {
+                        const nextIndex = this.currentHelpIndex + direction;
+                        if (nextIndex >= 0 && nextIndex < this.helpSequence.length) {
+                            this.currentHelpIndex = nextIndex;
+                            this.activeHelpStep = this.helpSequence[nextIndex];
+                            this.flowNode = 'start';
+                            if (this.activeHelpStep.id === 'vis-6') {
+                                this.showAllRoutes = true;
+                            }
+                        }
+                    }
+                },
                 selectUser(name) {
                     this.currentName = name;
                     this.screen = 'role';
@@ -964,17 +1339,39 @@
                     }
                 },
                 openTroubleshooter(step) {
-                    this.activeHelpStep = step;
+                    // Initialize the sequence based on the active screen
+                    if (this.screen === 'list') {
+                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note);
+                    } else if (this.screen === 'troubleshooting') {
+                        this.helpSequence = [
+                            {id: 'audio-7', text: 'Headset Mic No Sound'},
+                            {id: 'audio-11', text: 'Band Mics No Sound'},
+                            {id: 'audio-13', text: 'YouTube Video No Sound'},
+                            {id: 'audio-15', text: 'Lomond Feed Not Working'},
+                            {id: 'vis-6', text: 'Matrix Switcher Route Guide'},
+                            {id: 'vis-7', text: 'Can\'t Find Main Slides'},
+                            {id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'},
+                            {id: 'vis-s-3', text: 'ATEM Switcher Not Connecting'},
+                            {id: 'vis-s-t1', text: 'Breeze Translate Feed Issues'}
+                        ];
+                    } else {
+                        this.helpSequence = [step];
+                    }
+                    
+                    const foundIndex = this.helpSequence.findIndex(s => s.id === step.id);
+                    this.currentHelpIndex = foundIndex !== -1 ? foundIndex : 0;
+                    
+                    this.activeHelpStep = this.helpSequence[this.currentHelpIndex] || step;
                     this.flowNode = 'start';
-                    // Reset matrix simulator state when opening
-                    if (step.id === 'vis-6') {
-                        this.showAllRoutes = true; // Show master Sunday routes at start
+                    if (this.activeHelpStep.id === 'vis-6') {
+                        this.showAllRoutes = true;
                     }
                 },
                 handleFlowAction(target) {
                     this.flowNode = target;
                 },
                 handleResolution(type) {
+                    // Alert was completely removed from the escalation track
                     if (type === 'success' && this.activeHelpStep) {
                         if (!this.checkedSteps.includes(this.activeHelpStep.id)) {
                             this.checkedSteps.push(this.activeHelpStep.id);
@@ -1059,7 +1456,7 @@
                         console.log("Report transmitted successfully.");
                     } catch (error) {
                         console.error("EmailJS payload transfer failure:", error);
-                        alert("Automatic background transmission route timed out. Please copy and deliver manually.");
+                        // No alert here, silent fail and allow manual copy
                     }
 
                     this.screen = 'summary';
