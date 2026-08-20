@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,14 +55,11 @@
         <!-- Header Bar -->
         <div class="bg-brand-green h-16 flex items-center justify-between px-5 shadow-sm sticky top-0 z-30">
             <button @click="resetApp" class="flex items-center gap-2 hover:opacity-90 transition-opacity cursor-pointer">
-                <!-- Simplified Home Icon -->
                 <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
                 <span class="font-bold text-white text-sm tracking-wider uppercase">Central Sunday Set-Up</span>
             </button>
-            
-            <!-- External SVG Logo with White Inversion over the brand green header -->
             <img 
                 src="Slide2.SVG" 
                 alt="The Tron Church Logo" 
@@ -79,86 +77,59 @@
             </div>
 
             <div class="space-y-4">
-                <!-- 1. Setup Checklist -->
                 <button @click="screen = 'user-select'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                     <div class="flex items-center gap-5">
                         <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
-                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 11l3 3L22 4"/>
-                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                            </svg>
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Setup Checklist</div>
                             <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Weekly service setup flows</div>
                         </div>
                     </div>
-                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
 
-                <!-- 2. Troubleshooting Portal -->
                 <button @click="screen = 'troubleshooting'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                     <div class="flex items-center gap-5">
                         <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
-                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12(0a2.12) 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-                            </svg>
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12(0a2.12) 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Troubleshooting</div>
                             <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Diagnostic tools & fixes</div>
                         </div>
                     </div>
-                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
 
-                <!-- 3. Video Tutorials -->
                 <button @click="screen = 'tutorials'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                     <div class="flex items-center gap-5">
                         <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
-                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polygon points="10 8 16 12 10 16 10 8"/>
-                            </svg>
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Video Tutorials</div>
                             <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Learn the gear & workflows</div>
                         </div>
                     </div>
-                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
 
-                <!-- 4. Other Documents -->
                 <button @click="screen = 'documents'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                     <div class="flex items-center gap-5">
                         <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
-                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10 9 9 9 8 9"/>
-                            </svg>
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Documents</div>
                             <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Manuals, Rosters & Guides</div>
                         </div>
                     </div>
-                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
             </div>
             
-            <!-- Report Bug Button -->
             <button @click="screen = 'feedback'" class="mt-10 mx-auto flex items-center justify-center gap-1.5 text-slate-400 hover:text-brand-green font-mono text-[10px] uppercase font-bold tracking-[0.15em] transition-colors cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 Report a Bug / Suggest Feature
@@ -197,7 +168,6 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Troubleshooting</h1>
             
             <div class="space-y-8 pb-10">
-                <!-- Audio Issues -->
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Audio Issues</h2>
                     <div class="space-y-3">
@@ -219,8 +189,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Visual Issues -->
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Visual & Stream Issues</h2>
                     <div class="space-y-3">
@@ -262,11 +230,9 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
             
             <div class="space-y-3">
-                <!-- NEW LINK: Ministry Grid Dashboard -->
                 <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-slate-100 text-brand-green rounded-xl flex items-center justify-center shrink-0">
-                            <!-- External Link Icon -->
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                         </div>
                         <div>
@@ -275,7 +241,6 @@
                         </div>
                     </div>
                 </a>
-
                 <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
@@ -403,9 +368,7 @@
                         <div class="text-xs text-slate-400 mt-1.5 leading-relaxed font-medium">Mics, Amps, Sound Desk &<br/>Lomond Settings</div>
                     </div>
                 </div>
-                <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"/>
-                </svg>
+                <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
             <button @click="screen = 'streaming'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
@@ -422,9 +385,7 @@
                         <div class="text-xs text-slate-400 mt-1.5 leading-relaxed font-medium">Projectors, Switcher, Slides &<br/>Stream Setup</div>
                     </div>
                 </div>
-                <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"/>
-                </svg>
+                <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
         </div>
 
@@ -495,11 +456,9 @@
                                          isStepChecked(step.id) && justChecked !== step.id ? 'bg-emerald-50/40 border-emerald-200/60 opacity-75' : 'bg-white border-slate-200/80 hover:bg-slate-50/50']">
                                 
                                 <div class="flex items-stretch">
-                                    <!-- Brand Green left stripe on step completion -->
                                     <div :class="['w-1.5 transition-colors duration-300', isStepChecked(step.id) ? 'bg-brand-green' : 'bg-slate-300']"></div>
 
                                     <div class="flex-1 flex items-center p-4.5 cursor-pointer" @click="toggleStep(step.id)">
-                                        <!-- Checked selection state utilizing Brand Green -->
                                         <div :class="['w-6 h-6 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10',
                                                      isStepChecked(step.id) && justChecked !== step.id ? 'bg-brand-green/10 border-brand-green text-brand-green' : 'border-slate-300',
                                                      justChecked === step.id ? 'anim-pop anim-ripple bg-brand-green border-brand-green text-white' : '']">
@@ -508,7 +467,6 @@
                                         <div class="ml-4 flex-1">
                                             <p :class="['text-[15px] leading-snug font-semibold tracking-tight transition-colors', isStepChecked(step.id) ? 'line-through text-slate-400' : 'text-slate-800']">{{ step.text }}</p>
                                             
-                                            <!-- Bold, Indented Info Notes -->
                                             <p v-if="step.note" :class="['mt-2 text-xs border-l-2 pl-2 font-semibold transition-opacity', isStepChecked(step.id) ? 'opacity-30 border-slate-300 text-slate-400' : 'border-brand-green text-brand-green bg-brand-green/10 py-1 px-1.5 rounded-r-md']">
                                                 {{ step.note }}
                                             </p>
@@ -517,7 +475,6 @@
 
                                     <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id]"></div>
 
-                                    <!-- Circular Help Button (Only shown if step has why OR flowchart) -->
                                     <button v-if="step.why || flowchartsDatabase[step.id]" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
                                         <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
@@ -531,7 +488,6 @@
 
                 </div>
 
-                <!-- Complete Button wrapped in dynamic Brand Green -->
                 <button @click="finalizeSession" :class="['w-full h-14 mt-10 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', progressPercentage === 100 ? 'bg-brand-green border-brand-green text-white shadow-lg opacity-90 hover:opacity-100' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-900']">
                     {{ progressPercentage === 100 ? 'Finish Setup' : 'Finish Early' }} 
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -568,35 +524,34 @@
             </div>
         </div>
 
-        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER (With Embedded Matrix Switcher & Dynamic Drag/Swipe) -->
+        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER (With Dynamic Pull to Close anywhere, X swipes) -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center pointer-events-none">
             <!-- Background Backdrop -->
             <div class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-200 pointer-events-auto" 
                  :class="closingModal ? 'opacity-0' : 'opacity-100'" 
                  @click="closeModal"></div>
             
-            <!-- Draggable Modal Wrapper (Takes up space at bottom due to flex items-end in parent) -->
+            <!-- Draggable Modal Wrapper -->
             <div class="w-full flex justify-center relative z-10 pointer-events-none" 
                  :style="modalStyle" 
                  :class="closingModal ? 'anim-slide-down' : ''">
                  
-                <!-- Actual Modal Body -->
-                <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-0 pb-8 px-6 shadow-2xl relative animate-slide-up border-t border-slate-200 max-h-[92vh] flex flex-col text-slate-800 font-sans pointer-events-auto overflow-hidden">
+                <!-- Actual Modal Body, binds unified touch events allowing pulling from anywhere -->
+                <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-0 pb-8 px-6 shadow-2xl relative animate-slide-up border-t border-slate-200 max-h-[92vh] flex flex-col text-slate-800 font-sans pointer-events-auto overflow-hidden"
+                     @touchstart="handleModalTouchStart"
+                     @touchmove="handleModalTouchMove"
+                     @touchend="handleModalTouchEnd"
+                     @mousedown="handleModalTouchStart"
+                     @mousemove="handleModalTouchMove"
+                     @mouseup="handleModalTouchEnd"
+                     @mouseleave="handleModalTouchEnd">
                     
-                    <!-- PULL TO CLOSE HITBOX (Top handle region) -->
-                    <div class="w-full h-10 flex justify-center items-center flex-shrink-0 cursor-grab active:cursor-grabbing touch-none z-30"
-                         @touchstart="handleModalDragStart" 
-                         @touchmove="handleModalDragMove" 
-                         @touchend="handleModalDragEnd"
-                         @mousedown="handleModalDragStart" 
-                         @mousemove="handleModalDragMove" 
-                         @mouseup="handleModalDragEnd" 
-                         @mouseleave="handleModalDragEnd">
-                        <!-- Pill Handle -->
+                    <!-- PULL TO CLOSE HITBOX (Visual Handle) -->
+                    <div class="w-full h-10 flex justify-center items-center flex-shrink-0 cursor-grab active:cursor-grabbing touch-none z-30">
                         <div class="w-12 h-1.5 bg-slate-200 rounded-full pointer-events-none"></div>
                     </div>
 
-                    <!-- Swipe/Navigation Controls (Fixed above scroll) -->
+                    <!-- Swipe/Navigation Controls -->
                     <div class="flex justify-between items-center mb-5 text-slate-400 flex-shrink-0" v-if="helpSequence.length > 1">
                         <button @click="navigateHelp(-1)" :disabled="currentHelpIndex === 0" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -611,15 +566,15 @@
                         </button>
                     </div>
 
-                    <!-- Swipe Animation Container for horizontal cards (Listens for finger drag on content) -->
-                    <div class="relative flex-1 w-full mx-auto flex flex-col"
-                         @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+                    <!-- Swipe Animation Container for horizontal cards -->
+                    <div class="relative flex-1 w-full mx-auto flex flex-col pointer-events-none">
                          
-                        <!-- Continuous 1:1 Swipe Track -->
                         <div class="flex w-full h-full items-start overflow-hidden flex-1 relative flex-col">
                             
-                            <!-- Individual Carousel Cards -->
-                            <div class="w-full flex-shrink-0 flex flex-col h-full overflow-y-auto overflow-x-hidden px-1 pb-6 relative transition-all duration-300">
+                            <!-- Individual Carousel Cards Container (Visually tracked by X swipe) -->
+                            <div class="w-full flex-shrink-0 flex flex-col h-full overflow-y-auto overflow-x-hidden px-1 pb-6 relative pointer-events-auto"
+                                 ref="scrollContainer"
+                                 :style="carouselStyle">
                                     
                                 <!-- Title & Close Button -->
                                 <div class="flex justify-between items-start mb-4 sticky top-0 bg-white/95 backdrop-blur-sm z-20 pt-1 pb-2">
@@ -629,7 +584,7 @@
                                     </button>
                                 </div>
 
-                                <!-- 1. The Purpose (Placed above the note and highlighted for prominence) -->
+                                <!-- 1. The Purpose -->
                                 <div v-if="activeHelpStep.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md flex-shrink-0">
                                     <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
                                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -642,24 +597,35 @@
                                     <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
                                 </div>
 
-                                <!-- 2. Indented Note Details Inside Help Modal -->
+                                <!-- 2. Indented Note Details -->
                                 <div v-if="activeHelpStep.note" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs flex-shrink-0">
                                     <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                                     <span>Note: {{ activeHelpStep.note }}</span>
                                 </div>
+                                
+                                <!-- 3. Optional Link to YouTube/External (Identical styling to documents UI) -->
+                                <div v-if="activeHelpStep.link" class="mb-4 flex-shrink-0">
+                                    <a :href="activeHelpStep.link" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer group">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
+                                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Tron Church YouTube</h3>
+                                                <p class="text-xs text-slate-500 mt-0.5">Tap to open channel stream</p>
+                                            </div>
+                                            <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                                        </div>
+                                    </a>
+                                </div>
 
                                 <!-- PHYSICAL VIRTUAL MATRIX SWITCHER WIDGET -->
                                 <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in flex-shrink-0">
-
-                                    <!-- Hardware Replica Chassis container -->
                                     <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
-                                        
-                                        <!-- Top Bezel Info & Small "Show All" toggle button aligned in the top right -->
                                         <div class="flex justify-between items-center mb-3">
                                             <div class="flex items-center gap-1.5">
                                                 <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded text-[8px] tracking-wide uppercase">MATRIX</span>
                                             </div>
-                                            <!-- Small, clean toggle button in the top right -->
                                             <button @click="toggleShowAll(!showAllRoutes)"
                                                     :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
                                                              showAllRoutes ? 'bg-brand-green border-brand-green text-white' : 'bg-[#242831] border-slate-700 text-slate-400 hover:text-white']">
@@ -668,7 +634,6 @@
                                             </button>
                                         </div>
 
-                                        <!-- Top Tape Row (Output Labels) -->
                                         <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-3 select-none">
                                             <div class="border-r border-slate-200/60">PROJ</div>
                                             <div class="border-r border-slate-200/60">FBACK</div>
@@ -677,35 +642,27 @@
                                             <div>ALL</div>
                                         </div>
 
-                                        <!-- OUTPUT BUTTON ROW -->
                                         <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
                                             <button v-for="outNum in 5" :key="'out-btn-' + outNum"
                                                     @click="selectOutput(outNum)"
                                                     class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-95">
-                                                <!-- Glowing LED button -->
-                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-150', getOutputLedClass(outNum)]">
-                                                </div>
+                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-150', getOutputLedClass(outNum)]"></div>
                                                 <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ outNum === 5 ? 'OFF' : outNum }}</span>
                                             </button>
                                         </div>
 
-                                        <!-- Middle Spacer Path Line -->
                                         <div class="h-[1px] bg-slate-800/80 relative flex items-center justify-center my-3">
                                             <div class="text-[6.5px] tracking-widest text-slate-500 font-bold px-2 bg-[#121417]">INTERACTIVE RACK ASSISTANT</div>
                                         </div>
 
-                                        <!-- INPUT BUTTON ROW -->
                                         <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
                                             <div v-for="inNum in 5" :key="'in-btn-' + inNum"
                                                  class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
-                                                <!-- Glowing LED button -->
-                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-200', getInputLedClass(inNum)]">
-                                                </div>
+                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-200', getInputLedClass(inNum)]"></div>
                                                 <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ inNum === 5 ? 'OFF' : inNum }}</span>
                                             </div>
                                         </div>
 
-                                        <!-- Bottom Tape Row (Input Labels) -->
                                         <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-1 select-none">
                                             <div class="border-r border-slate-200/60">IMAC</div>
                                             <div class="border-r border-slate-200/60">SPARE</div>
@@ -714,7 +671,6 @@
                                             <div>OFF</div>
                                         </div>
 
-                                        <!-- Bottom Bezel Info -->
                                         <div class="flex justify-between items-center text-[7px] text-slate-500 font-bold mt-3 uppercase tracking-wider">
                                             <span>VP-424 SCALER UNIT</span>
                                             <span class="text-emerald-500 flex items-center gap-1">
@@ -724,19 +680,11 @@
 
                                     </div>
 
-                                    <!-- Color Guide Legend List (Only visible in Show All Mode) -->
                                     <div v-if="showAllRoutes" class="mt-3 grid grid-cols-3 gap-1.5 font-mono text-[9px] uppercase tracking-wide text-center select-none font-bold">
-                                        <div class="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-1.5 rounded-md">
-                                            🟡 Out 1 ➔ In 2
-                                        </div>
-                                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-1.5 rounded-md">
-                                            🟢 Out 2,3 ➔ In 3
-                                        </div>
-                                        <div class="bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 p-1.5 rounded-md">
-                                            🔵 Out 4 ➔ In 1
-                                        </div>
+                                        <div class="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-1.5 rounded-md">🟡 Out 1 ➔ In 2</div>
+                                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-1.5 rounded-md">🟢 Out 2,3 ➔ In 3</div>
+                                        <div class="bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 p-1.5 rounded-md">🔵 Out 4 ➔ In 1</div>
                                     </div>
-
                                 </div>
 
                                 <!-- Interactive Diagnostic Wizard -->
@@ -779,7 +727,7 @@
 
     </div>
 
-    <!-- Vue Setup Engine Containing your Full Flowchart Databases -->
+    <!-- Vue Setup Engine -->
     <script>
         const INITIAL_TEAM = [
             "Andy", "Izzy", "Johnny", "Melchizedek", "Neil", 
@@ -796,251 +744,65 @@
                 }
                 ]},
                 { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
-                { 
-                    id: 'audio-1', 
-                    text: 'Pray with team member(s)', 
-                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service."
-                },
-                { 
-                    id: 'audio-2', 
-                    text: "Read through the handout", 
-                    why: "Everything you'll need to know for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
-                    note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary."
-                },
-                { 
-                    id: 'audio-3', 
-                    text: 'Switch on the 2 switches on the wall', 
-                    why: "This switches everything on. You can do nothing without it."
-                },
-                { 
-                    id: 'audio-4', 
-                    text: 'Switch on the desk', 
-                    why: "This should be done first before switching on the amps."
-                },
-                { 
-                    id: 'audio-recv', 
-                    text: 'Switch on mic receivers'
-                },
-                { 
-                    id: 'audio-5', 
-                    text: 'Switch on the amps', 
-                    note: "Ensure the desk is switched on first."
-                },
-                { 
-                    id: 'audio-6', 
-                    text: 'Set up headset mics'
-                },
-                { 
-                    id: 'audio-7', 
-                    text: 'Test and adjust sound for headset mic', 
-                    why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments."
-                },
-                { 
-                    id: 'audio-8', 
-                    text: "Figure out who's on band", 
-                    why: "Do this so you know what mics to take."
-                },
-                { 
-                    id: 'audio-9', 
-                    text: "Leave spare mic pack on the speaker's glass table", 
-                    why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to."
-                },
-                { 
-                    id: 'audio-10', 
-                    text: 'Set up band mics'
-                },
-                { 
-                    id: 'audio-11', 
-                    text: 'Test and adjust all band mics', 
-                    note: "Make sure you know which mic is in which input."
-                },
-                { 
-                    id: 'audio-12', 
-                    text: 'Make sure sound is coming through on OBS', 
-                    why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service, will make for adequately loud and consistent volume throughout the stream.",
-                    note: "Aiming for yellows touching reds."
-                },
-                { 
-                    id: 'audio-13', 
-                    text: 'Test YouTube video for sound level', 
-                    why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!"
-                },
-                { 
-                    id: 'audio-14', 
-                    text: 'Grab headset mics and leave in the vestry and chat to the leader', 
-                    why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.",
-                    note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!"
-                },
-                { 
-                    id: 'audio-15', 
-                    text: "Route Lomond panel & check feeds", 
-                    why: "It's a massive pain to hear that somethings not on down there mid-service.",
-                    note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs."
-                }
+                { id: 'audio-1', text: 'Pray with team member(s)', why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service." },
+                { id: 'audio-2', text: "Read through the handout", why: "Everything you'll need to know for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.", note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary." },
+                { id: 'audio-3', text: 'Switch on the 2 switches on the wall', why: "This switches everything on. You can do nothing without it." },
+                { id: 'audio-4', text: 'Switch on the desk', why: "This should be done first before switching on the amps." },
+                { id: 'audio-recv', text: 'Switch on mic receivers' },
+                { id: 'audio-5', text: 'Switch on the amps', note: "Ensure the desk is switched on first." },
+                { id: 'audio-6', text: 'Set up headset mics' },
+                { id: 'audio-7', text: 'Test and adjust sound for headset mic', why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments." },
+                { id: 'audio-8', text: "Figure out who's on band", why: "Do this so you know what mics to take." },
+                { id: 'audio-9', text: "Leave spare mic pack on the speaker's glass table", why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to." },
+                { id: 'audio-10', text: 'Set up band mics' },
+                { id: 'audio-11', text: 'Test and adjust all band mics', note: "Make sure you know which mic is in which input." },
+                { id: 'audio-12', text: 'Make sure sound is coming through on OBS', why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service, will make for adequately loud and consistent volume throughout the stream.", note: "Aiming for yellows touching reds." },
+                { id: 'audio-13', text: 'Test YouTube video for sound level', why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!" },
+                { id: 'audio-14', text: 'Grab headset mics and leave in the vestry and chat to the leader', why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.", note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!" },
+                { id: 'audio-15', text: "Route Lomond panel & check feeds", why: "It's a massive pain to hear that somethings not on down there mid-service.", note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs." }
                 ]}
             ],
             visuals: [
                 { label: 'Immediate Action', steps: [
-                { 
-                    id: 'vis-pre-1', 
-                    text: "Switch on tech in Lomond",
-                    why: "Do this first as it takes a little while to boot up. We do this every week."
-                }
+                { id: 'vis-pre-1', text: "Switch on tech in Lomond", why: "Do this first as it takes a little while to boot up. We do this every week." }
                 ]},
                 { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
-                { 
-                    id: 'vis-1', 
-                    text: 'Pray with team member(s)', 
-                    why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service."
-                },
-                { 
-                    id: 'vis-2', 
-                    text: "Read the handout", 
-                    why: "Everything you'll need to know for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.",
-                    note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary."
-                },
-                { 
-                    id: 'vis-3', 
-                    text: 'Turn on both projectors and FBack Screen', 
-                    note: "We don’t need “Proj” if there’s a Farsi service on."
-                },
-                { 
-                    id: 'vis-farsi-mac',
-                    text: 'Grab the Farsi Mac'
-                },
-                { 
-                    id: 'vis-4', 
-                    text: 'Check the 2 switches on the wall are switched on'
-                },
-                { 
-                    id: 'vis-5', 
-                    text: 'Switch on both Macs'
-                },
-                { 
-                    id: 'vis-6', 
-                    text: 'Set up matrix switcher', 
-                    why: "This ensures all the screens are showing what they should be.",
-                    note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare."
-                },
-                { 
-                    id: 'vis-7', 
-                    text: 'On the Slides mac: Open up the Pre, During and Post Service slides'
-                },
-                { 
-                    id: 'vis-farsi-slides', 
-                    text: 'Open up the Farsi slides on the Farsi Mac'
-                },
+                { id: 'vis-1', text: 'Pray with team member(s)', why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service." },
+                { id: 'vis-2', text: "Read the handout", why: "Everything you'll need to know for the service is on this sheet. It might be the same as you always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.", note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary." },
+                { id: 'vis-3', text: 'Turn on both projectors and FBack Screen', note: "We don’t need “Proj” if there’s a Farsi service on." },
+                { id: 'vis-farsi-mac', text: 'Grab the Farsi Mac' },
+                { id: 'vis-4', text: 'Check the 2 switches on the wall are switched on' },
+                { id: 'vis-5', text: 'Switch on both Macs' },
+                { id: 'vis-6', text: 'Set up matrix switcher', why: "This ensures all the screens are showing what they should be.", note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare." },
+                { id: 'vis-7', text: 'On the Slides mac: Open up the Pre, During and Post Service slides' },
+                { id: 'vis-farsi-slides', text: 'Open up the Farsi slides on the Farsi Mac' },
                 
-                // STREAM FALSE TRACK
-                { 
-                    id: 'vis-ns-1', 
-                    text: 'On the Slides Mac: Open up YouTube in Chrome', 
-                    why: "We always do this in Chrome because the video quality seems more consistent in Chrome.",
-                    note: "Await the stream.",
-                    branch: 'no'
-                },
-                { 
-                    id: 'vis-ns-2', 
-                    text: 'Set Up Breeze Translate in Safari', 
-                    why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.",
-                    note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).",
-                    branch: 'no'
-                },
-                { 
-                    id: 'vis-ns-3', 
-                    text: 'On Streaming Mac: Open ATEM Switcher Software', 
-                    branch: 'no'
-                },
-                { 
-                    id: 'vis-ns-4', 
-                    text: 'On Streaming Mac: Open OBS', 
-                    why: "This is for the sound person to gauge that the sound level is correct.",
-                    branch: 'no'
-                },
+                { id: 'vis-ns-1', text: 'On the Slides Mac: Open up YouTube in Chrome', why: "We always do this in Chrome because the video quality seems more consistent in Chrome.", note: "Await the stream.", branch: 'no' },
+                { id: 'vis-ns-2', text: 'Set Up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", branch: 'no' },
+                { id: 'vis-ns-3', text: 'On Streaming Mac: Open ATEM Switcher Software', branch: 'no' },
+                { id: 'vis-ns-4', text: 'On Streaming Mac: Open OBS', why: "This is for the sound person to gauge that the sound level is correct.", branch: 'no' },
 
-                // STREAM TRUE TRACK
-                { 
-                    id: 'vis-s-1', 
-                    text: 'Open OBS', 
-                    branch: 'yes'
-                },
-                { 
-                    id: 'vis-s-2', 
-                    text: 'Set up the stream in Boxcast', 
-                    branch: 'yes'
-                },
-                { 
-                    id: 'vis-s-3', 
-                    text: 'Open ATEM switcher software', 
-                    branch: 'yes'
-                },
-
-                { 
-                    id: 'vis-9', 
-                    text: 'Set up your camera presets set on the camera switcher', 
-                    note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4."
-                }
+                { id: 'vis-s-1', text: 'Open OBS', branch: 'yes' },
+                { id: 'vis-s-2', text: 'Set up the stream in Boxcast', branch: 'yes' },
+                { id: 'vis-s-3', text: 'Open ATEM switcher software', branch: 'yes' },
+                { id: 'vis-9', text: 'Set up your camera presets set on the camera switcher', note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4." }
                 ]},
                 { label: '9:40 — 9:50 · Go-Time Transitions', steps: [
-                // Non-Streaming Transition Steps
-                { 
-                    id: 'vis-ns-t1', 
-                    text: "Hit 'Start' Breeze translate", 
-                    branch: 'no'
-                },
-                { 
-                    id: 'vis-ns-t2', 
-                    text: "Find stream on YouTube and play in the background", 
-                    why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.",
-                    branch: 'no'
-                },
-                { 
-                    id: 'vis-ns-t3', 
-                    text: "Play Pre-Service slides", 
-                    branch: 'no'
-                },
-                { 
-                    id: 'vis-ns-t4', 
-                    text: "Make sure MAC is Live on the cameras", 
-                    why: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.",
-                    branch: 'no'
-                },
+                { id: 'vis-ns-t1', text: "Hit 'Start' Breeze translate", branch: 'no' },
+                { id: 'vis-ns-t2', text: "Find stream on YouTube and play in the background", why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.", branch: 'no' },
+                { id: 'vis-ns-t3', text: "Play Pre-Service slides", branch: 'no' },
+                { id: 'vis-ns-t4', text: "Make sure MAC is Live on the cameras", why: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.", branch: 'no' },
 
-                // Streaming Transition Steps
-                { 
-                    id: 'vis-s-t1', 
-                    text: "Start Breeze translate", 
-                    branch: 'yes'
-                },
-                { 
-                    id: 'vis-s-t2', 
-                    text: "Play Pre-Service slides", 
-                    branch: 'yes'
-                },
-                { 
-                    id: 'vis-s-t3', 
-                    text: "Make sure MAC is Live on the cameras", 
-                    why: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.",
-                    branch: 'yes'
-                },
-                { 
-                    id: 'vis-s-t4', 
-                    text: "Start stream at 9:45", 
-                    why: "This is important as it give the other venues time to find the stream and play the stream in the background and allow adequate time to display their notices.",
-                    branch: 'yes'
-                },
-                { 
-                    id: 'vis-s-t5', 
-                    text: "Check stream is running on YouTube using your phone or browser", 
-                    why: "So you know it’s good to go.",
-                    branch: 'yes'
-                }
+                { id: 'vis-s-t1', text: "Start Breeze translate", branch: 'yes' },
+                { id: 'vis-s-t2', text: "Play Pre-Service slides", branch: 'yes' },
+                { id: 'vis-s-t3', text: "Make sure MAC is Live on the cameras", why: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.", branch: 'yes' },
+                { id: 'vis-s-t4', text: "Start stream at 9:45", why: "This is important as it give the other venues time to find the stream and play the stream in the background and allow adequate time to display their notices.", branch: 'yes' },
+                { id: 'vis-s-t5', text: "Check stream is running on YouTube using your phone or browser", why: "So you know it’s good to go.", link: "https://m.youtube.com/@TronChurch", branch: 'yes' }
                 ]}
             ]
         };
 
         const FLOWCHARTS = {
-            // Can't Hear Mics Flowcharts
             'audio-7': {
                 'start': { text: "No sound on the headset? Let's check: Are the main amps switched on?", options: [{ label: "No, they were off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
                 'amps_off': { text: "Go ahead and switch the amps on. Did that bring the sound back?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still dead quiet", target: "layer" }] },
@@ -1074,8 +836,6 @@
                 'resolved': { type: 'success', text: "Perfect! The minister's mic is verified and clear." },
                 'escalate': { type: 'escalation', text: "Refer to Can't Hear Mics__3.pdf or quickly contact your Venue Lead." }
             },
-            
-            // Can't Hear Youtube Video Flowchart
             'audio-13': {
                 'start': { text: "Is the volume turned up on the video, the mixer, and on the computer?", options: [{ label: "No, adjusted them", target: "vol_check" }, { label: "Yes, all are turned up", target: "try_video" }] },
                 'vol_check': { text: "Is the sound working now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still quiet", target: "try_video" }] },
@@ -1085,8 +845,6 @@
                 'resolved': { type: 'success', text: "Excellent! YouTube test sound is flowing loud and clear." },
                 'escalate': { type: 'escalation', text: "Reference Can't Hear Youtube Video_2.pdf or contact the Venue Lead." }
             },
-
-            // Lomond Stream Sound & Video Flowchart
             'audio-15': {
                 'start': { text: "Let's check Lomond downstairs. Is 'Stream' lit up on the wall panel?", options: [{ label: "No", target: "turn_on_wall" }, { label: "Yes", target: "sound_check" }] },
                 'turn_on_wall': { text: "Switch it on at the wall panel. Fixed?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still silent", target: "sound_check" }] },
@@ -1097,8 +855,6 @@
                 'resolved': { type: 'success', text: "Fantastic! Lomond feeds are verified and functional." },
                 'escalate': { type: 'escalation', text: "Feeds might be broken downstairs. Reference Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf or get in touch with the Venue Lead." }
             },
-
-            // Can't Find Slides Flowcharts
             'vis-7': {
                 'start': { text: "Oh no, where are the slides? Let's check: Are you connected to the internet?", options: [{ label: "No, offline", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
                 'offline': { text: "Please verify the ethernet cable and router. Did reconnecting fix it?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still offline", target: "other_mac" }] },
@@ -1117,8 +873,6 @@
                 'resolved': { type: 'success', text: "Hooray! Farsi slides are verified and loaded." },
                 'escalate': { type: 'escalation', text: "Reference Can't Find Slides_2.pdf or contact the Venue Lead." }
             },
-
-            // ATEM Switcher Not Connecting Flowcharts
             'vis-ns-3': {
                 'start': { text: "Let's establish ATEM control. Are you connected to the local switcher ethernet network?", options: [{ label: "No, check cables", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
                 'cables': { text: "Verify the network cables on the back of the ATEM and the Mac. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "reinstall" }] },
@@ -1133,8 +887,6 @@
                 'resolved': { type: 'success', text: "ATEM Switcher connected successfully." },
                 'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or alert the Venue Lead." }
             },
-
-            // Breeze Not Connecting Flowcharts
             'vis-ns-t1': {
                 'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in on the browser?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
                 'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still offline", target: "lang_check" }] },
@@ -1174,26 +926,26 @@
                     feedbackSending: false,
                     feedbackSuccess: false,
                     
-                    // Touch / Navigation properties for content (horizontal)
+                    // Unified touch tracking logic
+                    isDragging: false,
+                    isSwipingX: false,
+                    isSwipingY: false,
                     touchStartX: 0,
                     touchStartY: 0,
-                    touchEndX: 0,
-                    touchEndY: 0,
+                    swipeDragX: 0,
+                    modalDragY: 0,
+                    swipeTransition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    isAtTop: true,
+                    closingModal: false,
+                    
                     helpSequence: [],
                     currentHelpIndex: -1,
-                    
-                    // Pull to Close (vertical) properties
-                    closingModal: false,
-                    modalDragStartY: 0,
-                    modalDragY: 0,
-                    isModalDragging: false,
                     
                     stepsDatabase: STEPS,
                     flowchartsDatabase: FLOWCHARTS,
 
                     selectedOutput: 4, 
-                    showAllRoutes: true, 
-                    isLoading: false
+                    showAllRoutes: true
                 }
             },
             computed: {
@@ -1249,28 +1001,19 @@
                     return targetTree[this.flowNode] || targetTree['start'];
                 },
                 
-                // Dynamic style mapping for the downward drag action
                 modalStyle() {
                     if (this.closingModal) return {}; 
-                    
-                    if (this.isModalDragging) {
+                    if (this.isSwipingY) {
                         return { transform: `translateY(${this.modalDragY}px)`, transition: 'none' };
                     }
                     return { transform: '', transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)' };
                 },
-                
-                switcherGuideText() {
-                    if (this.showAllRoutes) {
-                        return "Master View is active. Outputs are color-matched to their inputs: Yellow connects Output 1 to Input 2, Green connects Outputs 2 & 3 to Input 3, and Blue connects Output 4 to Input 1.";
-                    }
-                    switch (this.selectedOutput) {
-                        case 1: return "PROJ (Output 1) ➔ SPARE (Input 2). This routes your secondary auxiliary slides or custom stage design feeds directly to the Left hand main Projector.";
-                        case 2: return "FBACK (Output 2) ➔ CAM (Input 3). Mapped to show live camera close-ups on the band foldback screen so the worship leaders see the live service framing.";
-                        case 3: return "DISTRO (Output 3) ➔ CAM (Input 3). Sends live master camera output downstairs into the overflow reception screens and corridors.";
-                        case 4: return "NEW PROJ (Output 4) ➔ IMAC (Input 1). This projects the primary presentation slides mac onto the Right/Center main sanctuary screen.";
-                        case 5: return "ALL / OFF (Output 5) ➔ Standard configuration is cleared. All targets will read dark. Tap Outputs 1, 2, 3 or 4 to resume standard Sunday layouts.";
-                        default: return "Select an Output button on the white paper tape to see its correct mapping.";
-                    }
+
+                carouselStyle() {
+                    return {
+                        transform: `translateX(${this.swipeDragX}px)`,
+                        transition: this.swipeTransition
+                    };
                 }
             },
             methods: {
@@ -1281,7 +1024,6 @@
 
                     const rawDateString = new Date().toLocaleDateString('en-GB');
                     const formattedSubjectDate = rawDateString.replace(/\//g, '-');
-                    
                     const senderName = this.feedbackName.trim() || (this.currentName ? this.currentName : "Anonymous");
                     let emailContent = `APP FEEDBACK / BUG REPORT\nFrom: ${senderName}\nDate: ${rawDateString}\n\nMessage:\n${this.feedbackText}\n`;
 
@@ -1309,31 +1051,104 @@
                     }
                 },
                 
-                // --- PULL DOWN TO CLOSE (VERTICAL SWIPE) ---
-                handleModalDragStart(e) {
-                    this.isModalDragging = true;
-                    this.modalDragY = 0;
-                    this.modalDragStartY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                // --- UNIFIED MODAL TOUCH & SWIPE SYSTEM ---
+                handleModalTouchStart(e) {
+                    const touch = e.type.includes('touch') ? e.touches[0] : e;
+                    this.swipeTransition = 'none'; // Direct 1:1 finger tracking
+                    this.touchStartX = touch.clientX;
+                    this.touchStartY = touch.clientY;
+                    this.isSwipingX = false;
+                    this.isSwipingY = false;
+                    this.isDragging = true;
+
+                    // Verify if the inner container is scrolled down so we don't break scrolling
+                    const scrollContainer = this.$refs.scrollContainer;
+                    this.isAtTop = scrollContainer ? scrollContainer.scrollTop <= 1 : true;
                 },
-                handleModalDragMove(e) {
-                    if (!this.isModalDragging) return;
-                    const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                    const diffY = currentY - this.modalDragStartY;
-                    // Allow pulling down, and slight rubber-band pulling up
-                    this.modalDragY = diffY > 0 ? diffY : diffY * 0.15;
-                },
-                handleModalDragEnd() {
-                    if (!this.isModalDragging) return;
-                    this.isModalDragging = false;
-                    
-                    if (this.modalDragY > 75) { 
-                        // Drag threshold met, trigger close animation and clean up
-                        this.closeModal();
-                    } else {
-                        // Spring back into place
-                        this.modalDragY = 0; 
+
+                handleModalTouchMove(e) {
+                    if (!this.isDragging) return;
+                    const touch = e.type.includes('touch') ? e.touches[0] : e;
+                    const currentX = touch.clientX;
+                    const currentY = touch.clientY;
+                    const diffX = currentX - this.touchStartX;
+                    const diffY = currentY - this.touchStartY;
+
+                    // Lock to an axis once movement exceeds a small threshold
+                    if (!this.isSwipingX && !this.isSwipingY) {
+                        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) {
+                            this.isSwipingX = true;
+                        } else if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 5) {
+                            // Only trigger vertical drag if pulling down AND at the top of scroll
+                            if (diffY > 0 && this.isAtTop) {
+                                this.isSwipingY = true;
+                            }
+                        }
+                    }
+
+                    if (this.isSwipingX) {
+                        if(e.cancelable) e.preventDefault(); // Stop native navigation/scroll
+                        let dragX = diffX;
+                        // Add elastic resistance at edges
+                        if ((this.currentHelpIndex === 0 && diffX > 0) ||
+                            (this.currentHelpIndex === this.helpSequence.length - 1 && diffX < 0)) {
+                            dragX = diffX * 0.3;
+                        }
+                        this.swipeDragX = dragX;
+                    } else if (this.isSwipingY) {
+                        if (diffY > 0) {
+                            if(e.cancelable) e.preventDefault(); // Stop native scroll
+                            this.modalDragY = diffY;
+                        }
                     }
                 },
+
+                handleModalTouchEnd(e) {
+                    if (!this.isDragging) return;
+                    this.isDragging = false;
+                    
+                    const thresholdX = 60;
+                    const thresholdY = 75;
+                    
+                    let swipedDirection = 0;
+
+                    if (this.isSwipingX) {
+                        if (this.swipeDragX > thresholdX && this.currentHelpIndex > 0) {
+                            this.navigateHelp(-1);
+                            swipedDirection = -1;
+                        } else if (this.swipeDragX < -thresholdX && this.currentHelpIndex < this.helpSequence.length - 1) {
+                            this.navigateHelp(1);
+                            swipedDirection = 1;
+                        }
+                    } else if (this.isSwipingY) {
+                        if (this.modalDragY > thresholdY) {
+                            this.closeModal();
+                        }
+                    }
+
+                    if (swipedDirection !== 0) {
+                        // Snap out of view in the opposite direction before sliding in
+                        this.swipeTransition = 'none';
+                        this.swipeDragX = swipedDirection === 1 ? (window.innerWidth || 400) : -(window.innerWidth || 400);
+                        
+                        setTimeout(() => {
+                            this.swipeTransition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+                            this.swipeDragX = 0;
+                        }, 20);
+                    } else {
+                        // Snap back if threshold not met
+                        this.swipeTransition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+                        this.swipeDragX = 0;
+                    }
+
+                    if (!this.closingModal) {
+                        this.modalDragY = 0;
+                    }
+
+                    this.isSwipingX = false;
+                    this.isSwipingY = false;
+                },
+
                 closeModal() {
                     this.closingModal = true;
                     setTimeout(() => {
@@ -1344,32 +1159,6 @@
                     }, 250);
                 },
 
-                // --- HORIZONTAL SWIPE FOR CARDS ---
-                handleTouchStart(e) {
-                    this.touchStartX = e.changedTouches[0].screenX;
-                    this.touchStartY = e.changedTouches[0].screenY;
-                },
-                handleTouchEnd(e) {
-                    this.touchEndX = e.changedTouches[0].screenX;
-                    this.touchEndY = e.changedTouches[0].screenY;
-                    this.handleSwipe();
-                },
-                handleSwipe() {
-                    const SWIPE_THRESHOLD_X = 50;
-                    const SWIPE_THRESHOLD_Y = 50;
-                    
-                    const diffX = this.touchEndX - this.touchStartX;
-                    const diffY = this.touchEndY - this.touchStartY;
-                    
-                    // Only register swipe if horizontal movement exceeds vertical
-                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > SWIPE_THRESHOLD_X) {
-                        if (diffX < 0) {
-                            this.navigateHelp(1); // Swiped Left -> Next
-                        } else {
-                            this.navigateHelp(-1); // Swiped Right -> Prev
-                        }
-                    }
-                },
                 navigateHelp(direction) {
                     if (this.currentHelpIndex !== -1 && this.helpSequence.length > 0) {
                         const nextIndex = this.currentHelpIndex + direction;
@@ -1424,7 +1213,7 @@
                 },
                 openTroubleshooter(step) {
                     if (this.screen === 'list') {
-                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note);
+                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.link);
                     } else if (this.screen === 'troubleshooting') {
                         this.helpSequence = [
                             {id: 'audio-7', text: 'Headset Mic No Sound'},
@@ -1462,7 +1251,6 @@
                     this.closeModal();
                 },
 
-                // Visual Matrix Helper logic
                 selectOutput(outNum) {
                     this.showAllRoutes = false;
                     this.selectedOutput = outNum;
@@ -1476,9 +1264,9 @@
                 },
                 getOutputLedClass(outNum) {
                     if (this.showAllRoutes) {
-                        if (outNum === 1) return 'bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'; // Yellow
-                        if (outNum === 2 || outNum === 3) return 'bg-emerald-500 border border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]'; // Green
-                        if (outNum === 4) return 'bg-cyan-400 border border-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.8)]'; // Blue
+                        if (outNum === 1) return 'bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'; 
+                        if (outNum === 2 || outNum === 3) return 'bg-emerald-500 border border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]'; 
+                        if (outNum === 4) return 'bg-cyan-400 border border-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.8)]'; 
                         return 'bg-[#180a0c] border border-stone-900';
                     } else {
                         return this.selectedOutput === outNum ? 'bg-rose-500 border border-rose-400 shadow-[0_0_12px_#f43f5e]' : 'bg-[#180a0c] border border-stone-900';
@@ -1486,20 +1274,20 @@
                 },
                 getInputLedClass(inNum) {
                     if (this.showAllRoutes) {
-                        if (inNum === 1) return 'bg-cyan-400 border border-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.8)]'; // Blue
-                        if (inNum === 2) return 'bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'; // Yellow
-                        if (inNum === 3) return 'bg-emerald-500 border border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]'; // Green
+                        if (inNum === 1) return 'bg-cyan-400 border border-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.8)]'; 
+                        if (inNum === 2) return 'bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'; 
+                        if (inNum === 3) return 'bg-emerald-500 border border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]'; 
                         return 'bg-[#180a0c] border border-stone-900';
                     } else {
                         return this.isInputActive(inNum) ? 'bg-rose-500 border border-rose-400 shadow-[0_0_12px_#f43f5e]' : 'bg-[#180a0c] border border-stone-900';
                     }
                 },
                 isInputActive(inNum) {
-                    if (this.selectedOutput === 1 && inNum === 2) return true; // Output 1 -> Input 2 (SPARE)
-                    if (this.selectedOutput === 2 && inNum === 3) return true; // Output 2 -> Input 3 (CAM)
-                    if (this.selectedOutput === 3 && inNum === 3) return true; // Output 3 -> Input 3 (CAM)
-                    if (this.selectedOutput === 4 && inNum === 1) return true; // Output 4 -> Input 1 (IMAC)
-                    if (this.selectedOutput === 5 && inNum === 5) return true; // ALL -> OFF
+                    if (this.selectedOutput === 1 && inNum === 2) return true; 
+                    if (this.selectedOutput === 2 && inNum === 3) return true; 
+                    if (this.selectedOutput === 3 && inNum === 3) return true; 
+                    if (this.selectedOutput === 4 && inNum === 1) return true; 
+                    if (this.selectedOutput === 5 && inNum === 5) return true; 
                     return false;
                 },
 
@@ -1563,3 +1351,4 @@
     </script>
 </body>
 </html>
+```
