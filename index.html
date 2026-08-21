@@ -819,15 +819,7 @@
 
         // Centralized Documents List (GitHub repo hosted PDFs)
         const REPO_DOCUMENTS = [
-            { id: 'doc-mics', title: "Can't Hear Mics Guide", filename: "Can't Hear Mics__3.pdf", path: "./Can't Hear Mics__3.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-yt', title: "Can't Hear YouTube Video", filename: "Can't Hear Youtube Video_2.pdf", path: "./Can't Hear Youtube Video_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-lomond-audio', title: "Can't Hear Stream in Lomond", filename: "Can't Hear Stream in Lomond_2.pdf", path: "./Can't Hear Stream in Lomond_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-lomond-video', title: "Can't See Stream in Lomond", filename: "Can't See Stream in Lomond_2.pdf", path: "./Can't See Stream in Lomond_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-slides', title: "Can't Find Slides Guide", filename: "Can't Find Slides_2.pdf", path: "./Can't Find Slides_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-atem', title: "ATEM Switcher Connection Guide", filename: "ATEM Switcher Software Not Connecting_2.pdf", path: "./ATEM Switcher Software Not Connecting_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-breeze', title: "Breeze Translate Guide", filename: "Breeze not connecting_2.pdf", path: "./Breeze not connecting_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-roster', title: "AV Team Roster Q3/Q4", filename: "AV_Team_Roster.pdf", path: "./AV_Team_Roster.pdf", category: "Rosters", type: "PDF Roster" },
-            { id: 'doc-emergency', title: "Sunday Service Emergency Protocols", filename: "Emergency_Protocols.pdf", path: "./Emergency_Protocols.pdf", category: "Protocols", type: "PDF Protocol" }
+            { id: 'doc-breeze-c', title: "Breeze Translate Guide", filename: "Breeze C.pdf", path: "./Breeze C.pdf", category: "Troubleshooting", type: "PDF Manual" }
         ];
 
         const STEPS = {
@@ -988,14 +980,14 @@
                 'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still offline", target: "lang_check" }] },
                 'lang_check': { text: "Have you changed the source language on Breeze to 'Multi-language'?", options: [{ label: "No, updated it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Breeze translation is fully active and translating. You're good to go!" },
-                'escalate': { type: 'escalation', text: "Reference Breeze not connecting_2.pdf or alert the Venue Lead." }
+                'escalate': { type: 'escalation', text: "Reference Breeze C.pdf or alert the Venue Lead." }
             },
             'vis-s-t1': {
                 'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
                 'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still dead", target: "lang_check" }] },
                 'lang_check': { text: "Have you changed the source language to 'Multi-language'?", options: [{ label: "No, changed it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Breeze translation active and translating. You're good to go!" },
-                'escalate': { type: 'escalation', text: "Reference Breeze not connecting_2.pdf or alert the Venue Lead." }
+                'escalate': { type: 'escalation', text: "Reference Breeze C.pdf or alert the Venue Lead." }
             }
         };
 
