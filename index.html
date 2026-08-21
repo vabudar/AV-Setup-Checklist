@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Central Sunday Set-Up</title>
     
-    <!-- Using the specific Tron Church brand green -->
+    <!-- Fix for YouTube Error 153 & Referrer verification -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- Brand green theme configuration -->
     <meta name="theme-color" content="#556462">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,7 +18,8 @@
     <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
     
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Stable Tailwind CDN & Vue 3 Script Imports -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
@@ -45,6 +49,8 @@
         @keyframes flashBg { 0% { background-color: rgba(85, 100, 98, 0.15); border-color: rgba(85, 100, 98, 0.3); } 100% { background-color: #ECFDF5; border-color: #A7F3D0; } }
 
         .anim-slide-down { animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="text-slate-800 selection:bg-brand-green/20">
@@ -67,7 +73,7 @@
             />
         </div>
 
-        <!-- SCREEN: NEW DASHBOARD (HOME) -->
+        <!-- SCREEN: DASHBOARD (HOME) -->
         <div v-if="screen === 'home'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start p-8 animate-fade-in">
             <div class="text-center py-4 mb-6 select-none">
                 <h2 class="text-lg text-slate-500 font-publico tracking-wide leading-none">The</h2>
@@ -109,7 +115,7 @@
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Video Tutorials</div>
-                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Learn the gear & workflows</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Learn gear & workflows</div>
                         </div>
                     </div>
                     <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -122,7 +128,7 @@
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Documents</div>
-                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">PDF Manuals, Guides & Protocols</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">PDF Manuals & Repo Files</div>
                         </div>
                     </div>
                     <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -170,19 +176,19 @@
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Audio Issues</h2>
                     <div class="space-y-3">
-                        <button @click="openTroubleshooter({id: 'audio-7', text: 'Headset Mic No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('audio-7')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Headset Mic No Sound</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'audio-11', text: 'Band Mics No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('audio-11')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Band Mics No Sound</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'audio-13', text: 'YouTube Video No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('audio-13')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">YouTube Video No Sound</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'audio-15', text: 'Lomond Feed Not Working'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('audio-15')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Lomond Feed Not Working</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
@@ -191,26 +197,26 @@
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Visual & Stream Issues</h2>
                     <div class="space-y-3">
-                        <button @click="openTroubleshooter({id: 'vis-6', text: 'Matrix Switcher Helper'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('vis-6')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <div class="flex items-center gap-2.5">
                                 <span class="flex h-2 w-2 rounded-full bg-emerald-400"></span>
                                 <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Matrix Switcher Route Guide</span>
                             </div>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-7', text: 'Can\'t Find Slides'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('vis-7')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Main Slides</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('vis-farsi-slides')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Farsi Slides</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-s-3', text: 'ATEM Not Connecting'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('vis-s-3')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">ATEM Switcher Not Connecting</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-s-t1', text: 'Breeze Translate Issues'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooterById('vis-s-t1')" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Breeze Translate Feed Issues</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
@@ -220,52 +226,31 @@
         </div>
 
         <!-- SCREEN: VIDEO TUTORIALS -->
-        <div v-if="screen === 'tutorials'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
-            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+        <div v-if="screen === 'tutorials'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
+            <button @click="screen = 'home'" class="mb-6 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
-            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Training Library</p>
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-1 font-bold">Training Library</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-6">Video Tutorials</h1>
             
-            <div class="space-y-3">
-                <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
+            <div class="space-y-3 pb-8">
+                <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors group">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-slate-100 text-brand-green rounded-xl flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                        <div class="w-12 h-12 bg-brand-green/10 text-brand-green group-hover:bg-brand-green group-hover:text-white rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm">Ministry Grid Dashboard</h3>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Ministry Grid Dashboard</h3>
                             <p class="text-xs text-slate-500 mt-0.5">External Training Portal</p>
                         </div>
-                    </div>
-                </a>
-                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm">Matrix Router Guide</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">5 min watch</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-xl flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm">Breeze Translate Setup</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">3 min watch</p>
-                        </div>
+                        <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </div>
                 </a>
             </div>
         </div>
 
-        <!-- SCREEN: REPOSITORY DOCUMENTS (PDF SUPPORT) -->
+        <!-- SCREEN: DOCUMENTS REPOSITORY -->
         <div v-if="screen === 'documents'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
             <button @click="screen = 'home'" class="mb-6 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -317,7 +302,6 @@
                     
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3.5">
-                            <!-- Red PDF Icon -->
                             <div class="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-300">
                                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -335,7 +319,6 @@
                         </div>
                     </div>
 
-                    <!-- Actions -->
                     <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
                         <button 
                             @click="previewPdf(doc)" 
@@ -361,7 +344,7 @@
             </div>
         </div>
 
-        <!-- SCREEN: USER SELECT (FORMERLY HOME) -->
+        <!-- SCREEN: USER SELECT -->
         <div v-if="screen === 'user-select'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-between animate-fade-in">
             <div class="p-8 flex-1 flex flex-col min-h-0">
                 <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer shrink-0">
@@ -473,7 +456,6 @@
                     </div>
                     <div class="w-16"></div>
                 </div>
-                <!-- Progress bar transitions into brand green -->
                 <div class="flex items-center gap-3">
                     <div class="flex-1 h-3 bg-slate-200/80 rounded-full overflow-hidden">
                         <div class="h-full bg-brand-green transition-all duration-300" :style="{ width: progressPercentage + '%' }"></div>
@@ -485,7 +467,6 @@
             <div class="px-4 pb-40 flex-1">
                 <div v-for="band in filteredBands" :key="band.label" class="mb-2">
                     
-                    <!-- Section Separators -->
                     <div @click="toggleAccordion(band.label)" class="font-mono text-[10px] tracking-[0.25em] text-slate-500 uppercase flex items-center justify-between mt-8 mb-4 font-bold cursor-pointer select-none group">
                         <div class="flex items-center gap-3 flex-1">
                             <span class="group-hover:text-slate-800 transition-colors">{{ band.label }}</span>
@@ -497,7 +478,6 @@
                         </div>
                     </div>
 
-                    <!-- Step Cards featuring tactile Brand Green accent stripes -->
                     <div v-if="!collapsedBands[band.label]" class="animate-fade-in space-y-3">
                         <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
                             <div :class="['flex flex-col rounded-2xl overflow-hidden transition-all duration-300 relative border shadow-sm', 
@@ -575,12 +555,10 @@
 
         <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center pointer-events-none">
-            <!-- Background Backdrop -->
             <div class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-200 pointer-events-auto" 
                  :class="closingModal ? 'opacity-0' : 'opacity-100'" 
                  @click="closeModal"></div>
             
-            <!-- Draggable Modal Wrapper -->
             <div class="w-full flex justify-center relative z-10 pointer-events-none" 
                  :style="modalStyle" 
                  :class="closingModal ? 'anim-slide-down' : ''">
@@ -594,12 +572,10 @@
                      @mouseup="handleModalTouchEnd"
                      @mouseleave="handleModalTouchEnd">
                     
-                    <!-- PULL TO CLOSE HITBOX -->
                     <div class="w-full h-10 flex justify-center items-center flex-shrink-0 cursor-grab active:cursor-grabbing touch-none z-30">
                         <div class="w-12 h-1.5 bg-slate-200 rounded-full pointer-events-none"></div>
                     </div>
 
-                    <!-- Navigation Controls -->
                     <div class="flex justify-between items-center mb-5 text-slate-400 flex-shrink-0" v-if="helpSequence.length > 1">
                         <button @click="navigateHelp(-1)" :disabled="currentHelpIndex === 0" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -620,7 +596,6 @@
                                  ref="scrollContainer"
                                  :style="carouselStyle">
                                     
-                                <!-- Title & Close -->
                                 <div class="flex justify-between items-start mb-4 sticky top-0 bg-white/95 backdrop-blur-sm z-20 pt-1 pb-2">
                                     <h2 class="text-xl font-bold text-slate-900 pr-4 leading-snug">{{ activeHelpStep.text }}</h2>
                                     <button @click="closeModal" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer flex-shrink-0">
@@ -628,7 +603,6 @@
                                     </button>
                                 </div>
 
-                                <!-- Purpose -->
                                 <div v-if="activeHelpStep.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md flex-shrink-0">
                                     <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
                                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -641,94 +615,9 @@
                                     <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
                                 </div>
 
-                                <!-- Note -->
                                 <div v-if="activeHelpStep.note" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs flex-shrink-0">
                                     <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                                     <span>Note: {{ activeHelpStep.note }}</span>
-                                </div>
-                                
-                                <!-- Link -->
-                                <div v-if="activeHelpStep.link" class="mb-4 flex-shrink-0">
-                                    <a :href="activeHelpStep.link" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer group">
-                                        <div class="flex items-center gap-4">
-                                            <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
-                                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-                                            </div>
-                                            <div class="flex-1">
-                                                <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Tron Church YouTube</h3>
-                                                <p class="text-xs text-slate-500 mt-0.5">Tap to open channel stream</p>
-                                            </div>
-                                            <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!-- MATRIX SWITCHER WIDGET -->
-                                <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in flex-shrink-0">
-                                    <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
-                                        <div class="flex justify-between items-center mb-3">
-                                            <div class="flex items-center gap-1.5">
-                                                <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded text-[8px] tracking-wide uppercase">MATRIX</span>
-                                            </div>
-                                            <button @click="toggleShowAll(!showAllRoutes)"
-                                                    :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
-                                                             showAllRoutes ? 'bg-brand-green border-brand-green text-white' : 'bg-[#242831] border-slate-700 text-slate-400 hover:text-white']">
-                                                <span :class="['h-1.5 w-1.5 rounded-full', showAllRoutes ? 'bg-emerald-300' : 'bg-slate-500']"></span>
-                                                Show All
-                                            </button>
-                                        </div>
-
-                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-3 select-none">
-                                            <div class="border-r border-slate-200/60">PROJ</div>
-                                            <div class="border-r border-slate-200/60">FBACK</div>
-                                            <div class="border-r border-slate-200/60">DISTRO</div>
-                                            <div class="border-r border-slate-200/60 font-extrabold">NEW PROJ</div>
-                                            <div>ALL</div>
-                                        </div>
-
-                                        <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
-                                            <button v-for="outNum in 5" :key="'out-btn-' + outNum"
-                                                    @click="selectOutput(outNum)"
-                                                    class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-95">
-                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-150', getOutputLedClass(outNum)]"></div>
-                                                <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ outNum === 5 ? 'OFF' : outNum }}</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="h-[1px] bg-slate-800/80 relative flex items-center justify-center my-3">
-                                            <div class="text-[6.5px] tracking-widest text-slate-500 font-bold px-2 bg-[#121417]">INTERACTIVE RACK ASSISTANT</div>
-                                        </div>
-
-                                        <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
-                                            <div v-for="inNum in 5" :key="'in-btn-' + inNum"
-                                                 class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
-                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-200', getInputLedClass(inNum)]"></div>
-                                                <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ inNum === 5 ? 'OFF' : inNum }}</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-1 select-none">
-                                            <div class="border-r border-slate-200/60">IMAC</div>
-                                            <div class="border-r border-slate-200/60">SPARE</div>
-                                            <div class="border-r border-slate-200/60">CAM</div>
-                                            <div class="border-r border-slate-200/60 text-slate-400 font-light">-</div>
-                                            <div>OFF</div>
-                                        </div>
-
-                                        <div class="flex justify-between items-center text-[7px] text-slate-500 font-bold mt-3 uppercase tracking-wider">
-                                            <span>VP-424 SCALER UNIT</span>
-                                            <span class="text-emerald-500 flex items-center gap-1">
-                                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> BM TV STUDIO
-                                            </span>
-                                        </div>
-
-                                    </div>
-
-                                    <div v-if="showAllRoutes" class="mt-3 grid grid-cols-3 gap-1.5 font-mono text-[9px] uppercase tracking-wide text-center select-none font-bold">
-                                        <div class="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-1.5 rounded-md">🟡 Out 1 ➔ In 2</div>
-                                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-1.5 rounded-md">🟢 Out 2,3 ➔ In 3</div>
-                                        <div class="bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 p-1.5 rounded-md">🔵 Out 4 ➔ In 1</div>
-                                    </div>
                                 </div>
 
                                 <!-- Diagnostic Wizard -->
@@ -751,19 +640,18 @@
                                         <p class="text-slate-800 text-sm leading-relaxed font-semibold">{{ currentWizardNode.text }}</p>
                                     </div>
 
-                                    <!-- Escalation view with direct PDF access -->
-                                    <div v-else class="bg-red-50 border border-red-200 rounded-xl p-5 mb-5 text-center flex flex-col items-center">
-                                        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-3">
+                                    <!-- Escalation View -->
+                                    <div v-else class="bg-rose-50 border border-rose-200 rounded-xl p-5 mb-5 text-center flex flex-col items-center">
+                                        <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-3">
                                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
                                         </div>
                                         <p class="text-slate-800 text-sm font-semibold mb-3">{{ currentWizardNode.text }}</p>
                                         
-                                        <!-- Quick Link to Reference PDF if matched -->
-                                        <div v-if="matchedPdf" class="w-full mt-2">
-                                            <a :href="matchedPdf.path" target="_blank" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors">
+                                        <div class="w-full mt-2" v-if="breezePdfDoc">
+                                            <button @click="previewPdf(breezePdfDoc)" class="w-full bg-white border border-rose-300 text-rose-700 py-2.5 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-100/50 transition-colors cursor-pointer shadow-xs">
                                                 <svg class="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                                Open {{ matchedPdf.filename }}
-                                            </a>
+                                                Open {{ breezePdfDoc.filename }}
+                                            </button>
                                         </div>
                                     </div>
 
@@ -802,24 +690,35 @@
                         </button>
                     </div>
                 </div>
+                
                 <div class="flex-1 bg-slate-100 relative">
-                    <iframe :src="activePdf.path" class="w-full h-full border-none"></iframe>
+                    <iframe 
+                        :src="activePdf.path" 
+                        class="w-full h-full border-0"
+                        title="PDF Preview">
+                    </iframe>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Vue Setup Engine -->
     <script>
         const INITIAL_TEAM = [
             "Andy", "Izzy", "Johnny", "Melchizedek", "Neil", 
             "Simon", "Tim", "Titi", "Ulvis", "Ver-se"
         ];
 
-        // Centralized Documents List (GitHub repo hosted PDFs)
         const REPO_DOCUMENTS = [
-            { id: 'doc-breeze-c', title: "Breeze Translate Guide", filename: "Breeze C.pdf", path: "./Breeze C.pdf", category: "Troubleshooting", type: "PDF Manual" }
+            {
+                id: 'doc-breeze-c',
+                title: 'Breeze Translate & Network Setup Guide',
+                category: 'Manuals',
+                type: 'PDF Document',
+                path: './Breeze C.pdf',
+                filename: 'Breeze C.pdf',
+                description: 'Official guide for Breeze translation system, network feeds, and troubleshooting.'
+            }
         ];
 
         const STEPS = {
@@ -900,38 +799,27 @@
                 'sliders_check': { text: "Let's test it now. Is the sound working?", options: [{ label: "Yes, beautiful sound!", target: "resolved" }, { label: "No, still no signal", target: "cable" }] },
                 'cable': { text: "Let's check physical hardware. Is the connecting cable okay? Try swapping the XLR cable.", options: [{ label: "Swapped it and now it's fixed!", target: "resolved" }, { label: "No, still dead silent", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Fantastic! Mic test successfully confirmed on-air. You are good to go!" },
-                'escalate': { type: 'escalation', text: "We have tried all standard routes. Please reference Can't Hear Mics__3.pdf or contact the Venue Lead for assistance." }
+                'escalate': { type: 'escalation', text: "We have tried all standard routes. Please reference Breeze C.pdf or contact the Venue Lead for assistance." }
             },
             'audio-11': {
                 'start': { text: "Let's test these band inputs! First: Are the main amps powered on?", options: [{ label: "No, they are off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
                 'amps_off': { text: "Go ahead and switch the amps on. Does the band audio come through?", options: [{ label: "Yes, that worked!", target: "resolved" }, { label: "No, still silent", target: "layer" }] },
                 'layer': { text: "No problem. Are you on the correct Custom Layer? (Press both buttons on the left of the board so 'Custom' has a green light below it).", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, confirmed on Custom", target: "sliders" }] },
                 'layer_check': { text: "Perfect. Does the band sound come through now?", options: [{ label: "Yes, working great!", target: "resolved" }, { label: "No, still nothing", target: "sliders" }] },
-                'sliders': { text: "Let's look at the desk. Are all volume faders up and unmuted? (Check main desk mute, soft mute, channel mute, channel fader, and mic pack mute).", options: [{ label: "Found a muted fader!", target: "sliders_check" }, { label: "Yes, verified unmuted & up", target: "cable" }] },
+                'sliders': { text: "Let's look at the desk. Are all volume faders up and unmuted?", options: [{ label: "Found a muted fader!", target: "sliders_check" }, { label: "Yes, verified unmuted & up", target: "cable" }] },
                 'sliders_check': { text: "Does the band sound come through now?", options: [{ label: "Yes, that did it!", target: "resolved" }, { label: "No, still dead", target: "cable" }] },
                 'cable': { text: "Let's check the physical lines. Is the connecting cable OK? Try swapping the line.", options: [{ label: "Swapping it resolved it!", target: "resolved" }, { label: "No, still silent", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Hooray! The band mics are checked and sounding great. You're ready!" },
-                'escalate': { type: 'escalation', text: "Looks like a possible stage box or patch bay issue. Reference Can't Hear Mics__3.pdf or get in touch with the Venue Lead." }
-            },
-            'audio-14': {
-                'start': { text: "Let's double-check the leader's mic! Are the main amps powered on?", options: [{ label: "No, they are off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
-                'amps_off': { text: "Let's toggle the amps on. Does the leader's mic work now?", options: [{ label: "Yes, working!", target: "resolved" }, { label: "No, still silent", target: "layer" }] },
-                'layer': { text: "Let's check the fader layer. Are you on the Custom Layer? (Green light active below 'Custom').", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, on Custom layer", target: "sliders" }] },
-                'layer_check': { text: "Does the leader's mic come through now?", options: [{ label: "Yes, beautiful!", target: "resolved" }, { label: "No, still quiet", target: "sliders" }] },
-                'sliders': { text: "Are all volume faders up and unmuted? (Check desk main, channel mute, and the physical slider on the pack).", options: [{ label: "Fixed a muted channel!", target: "sliders_check" }, { label: "Yes, verified unmuted", target: "cable" }] },
-                'sliders_check': { text: "Is the mic sound active now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still dead", target: "cable" }] },
-                'cable': { text: "Is the connecting cable OK?", options: [{ label: "Yes, swapping fixed it!", target: "resolved" }, { label: "No, still dead", target: "escalate" }] },
-                'resolved': { type: 'success', text: "Perfect! The minister's mic is verified and clear." },
-                'escalate': { type: 'escalation', text: "Refer to Can't Hear Mics__3.pdf or quickly contact your Venue Lead." }
+                'escalate': { type: 'escalation', text: "Looks like a possible stage box or patch bay issue. Reference Breeze C.pdf or get in touch with the Venue Lead." }
             },
             'audio-13': {
                 'start': { text: "Is the volume turned up on the video, the mixer, and on the computer?", options: [{ label: "No, adjusted them", target: "vol_check" }, { label: "Yes, all are turned up", target: "try_video" }] },
                 'vol_check': { text: "Is the sound working now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still quiet", target: "try_video" }] },
                 'try_video': { text: "Let's try a different YouTube video. Does another video play sound?", options: [{ label: "Yes, other video works!", target: "resolved" }, { label: "No, still silent", target: "fashing_light" }] },
                 'fashing_light': { text: "Are you getting a flashing light on the desk showing sound coming in?", options: [{ label: "No lights flashing", target: "escalate" }, { label: "Yes, desk shows input", target: "sliders" }] },
-                'sliders': { text: "Are all volume faders turned up and unmuted on the desk? (Check main desk mute, soft mute, channel mute, and channel fader).", options: [{ label: "No, fixed a fader!", target: "resolved" }, { label: "Yes, unmuted", target: "escalate" }] },
+                'sliders': { text: "Are all volume faders turned up and unmuted on the desk?", options: [{ label: "No, fixed a fader!", target: "resolved" }, { label: "Yes, unmuted", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Excellent! YouTube test sound is flowing loud and clear." },
-                'escalate': { type: 'escalation', text: "Reference Can't Hear Youtube Video_2.pdf or contact the Venue Lead." }
+                'escalate': { type: 'escalation', text: "Reference Breeze C.pdf or contact the Venue Lead." }
             },
             'audio-15': {
                 'start': { text: "Let's check Lomond downstairs. Is 'Stream' lit up on the wall panel?", options: [{ label: "No", target: "turn_on_wall" }, { label: "Yes", target: "sound_check" }] },
@@ -941,7 +829,7 @@
                 'matrix_check': { text: "Is the matrix switcher upstairs showing CAM3 as the output for Distro?", options: [{ label: "No, corrected it!", target: "camera_check" }, { label: "Yes, matrix is correct", target: "camera_check" }] },
                 'camera_check': { text: "Is there a camera shot active on 'Program' on the switcher?", options: [{ label: "No", target: "resolved" }, { label: "Yes", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Fantastic! Lomond feeds are verified and functional." },
-                'escalate': { type: 'escalation', text: "Feeds might be broken downstairs. Reference Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf or get in touch with the Venue Lead." }
+                'escalate': { type: 'escalation', text: "Feeds might be broken downstairs. Reference Breeze C.pdf or get in touch with the Venue Lead." }
             },
             'vis-7': {
                 'start': { text: "Oh no, where are the slides? Let's check: Are you connected to the internet?", options: [{ label: "No, offline", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
@@ -950,7 +838,7 @@
                 'refresh': { text: "Try refreshing the local slides folder. Are they showing up now?", options: [{ label: "Yes, loaded!", target: "resolved" }, { label: "No, still blank", target: "dropbox" }] },
                 'dropbox': { text: "Have you gone into Dropbox via a web browser to look for the slides directly?", options: [{ label: "Yes, found them!", target: "resolved" }, { label: "No, still missing", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Hooray! Slides have been successfully loaded and ready for service." },
-                'escalate': { type: 'escalation', text: "Critical setup files are missing. Reference Can't Find Slides_2.pdf or alert the Visuals Lead." }
+                'escalate': { type: 'escalation', text: "Critical setup files are missing. Reference Breeze C.pdf or alert the Visuals Lead." }
             },
             'vis-farsi-slides': {
                 'start': { text: "Let's locate the Farsi Slides! Are you connected to the internet?", options: [{ label: "No", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
@@ -959,27 +847,13 @@
                 'refresh': { text: "Refresh the Farsi slides directory. Did that fix it?", options: [{ label: "Yes, synced!", target: "resolved" }, { label: "No, still blank", target: "dropbox" }] },
                 'dropbox': { text: "Log into the Dropbox web portal in a browser. Are they available there?", options: [{ label: "Yes, downloaded!", target: "resolved" }, { label: "No, still missing", target: "escalate" }] },
                 'resolved': { type: 'success', text: "Hooray! Farsi slides are verified and loaded." },
-                'escalate': { type: 'escalation', text: "Reference Can't Find Slides_2.pdf or contact the Venue Lead." }
-            },
-            'vis-ns-3': {
-                'start': { text: "Let's establish ATEM control. Are you connected to the local switcher ethernet network?", options: [{ label: "No, check cables", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
-                'cables': { text: "Verify the network cables on the back of the ATEM and the Mac. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "reinstall" }] },
-                'reinstall': { text: "Let's try uninstalling and reinstalling the ATEM software. Did a reboot help?", options: [{ label: "Yes, connected now!", target: "resolved" }, { label: "No, still disconnected", target: "escalate" }] },
-                'resolved': { type: 'success', text: "Great! ATEM is fully connected." },
-                'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or get in touch with the Venue Lead." }
+                'escalate': { type: 'escalation', text: "Reference Breeze C.pdf or contact the Venue Lead." }
             },
             'vis-s-3': {
                 'start': { text: "Let's check the ATEM connection. Are you connected to the network?", options: [{ label: "No", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
                 'cables': { text: "Verify the switcher cables. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still quiet", target: "reinstall" }] },
                 'reinstall': { text: "Have you tried un-installing and reinstalling the software?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "escalate" }] },
                 'resolved': { type: 'success', text: "ATEM Switcher connected successfully." },
-                'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or alert the Venue Lead." }
-            },
-            'vis-ns-t1': {
-                'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in on the browser?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
-                'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still offline", target: "lang_check" }] },
-                'lang_check': { text: "Have you changed the source language on Breeze to 'Multi-language'?", options: [{ label: "No, updated it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
-                'resolved': { type: 'success', text: "Breeze translation is fully active and translating. You're good to go!" },
                 'escalate': { type: 'escalation', text: "Reference Breeze C.pdf or alert the Venue Lead." }
             },
             'vis-s-t1': {
@@ -1014,13 +888,12 @@
                     feedbackSending: false,
                     feedbackSuccess: false,
                     
-                    // Documents state
-                    documentsList: REPO_DOCUMENTS,
                     documentSearch: '',
                     selectedDocCategory: 'All',
+                    documentsList: REPO_DOCUMENTS,
                     activePdf: null,
 
-                    // Touch tracking logic
+                    // Unified touch tracking logic
                     isDragging: false,
                     isSwipingX: false,
                     isSwipingY: false,
@@ -1049,15 +922,17 @@
                 },
                 filteredDocuments() {
                     return this.documentsList.filter(doc => {
-                        const matchesCategory = this.selectedDocCategory === 'All' || doc.category === this.selectedDocCategory;
+                        const matchesCat = this.selectedDocCategory === 'All' || doc.category === this.selectedDocCategory;
                         const query = this.documentSearch.toLowerCase().trim();
-                        const matchesQuery = !query || doc.title.toLowerCase().includes(query) || doc.filename.toLowerCase().includes(query) || doc.category.toLowerCase().includes(query);
-                        return matchesCategory && matchesQuery;
+                        const matchesQuery = !query || 
+                            doc.title.toLowerCase().includes(query) || 
+                            doc.filename.toLowerCase().includes(query) ||
+                            doc.category.toLowerCase().includes(query);
+                        return matchesCat && matchesQuery;
                     });
                 },
-                matchedPdf() {
-                    if (!this.currentWizardNode || !this.currentWizardNode.text) return null;
-                    return this.documentsList.find(d => this.currentWizardNode.text.includes(d.filename));
+                breezePdfDoc() {
+                    return this.documentsList.find(d => d.filename.includes('Breeze')) || this.documentsList[0];
                 },
                 filteredBands() {
                     if (!this.role) return [];
@@ -1104,8 +979,8 @@
                             ]
                         },
                         'resolved': { type: 'success', text: "The task loop is confirmed complete and execution was successful.", actionText: "Complete" },
-                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected.", actionText: "Escalate" },
-                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams.", actionText: "Escalate" }
+                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected. Please consult Breeze C.pdf or contact the Lead.", actionText: "Escalate" },
+                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams. Please check Breeze C.pdf.", actionText: "Escalate" }
                     };
 
                     return targetTree[this.flowNode] || targetTree['start'];
@@ -1162,10 +1037,9 @@
                     }
                 },
                 
-                // UNIFIED MODAL TOUCH & SWIPE SYSTEM
                 handleModalTouchStart(e) {
                     const touch = e.type.includes('touch') ? e.touches[0] : e;
-                    this.swipeTransition = 'none'; 
+                    this.swipeTransition = 'none';
                     this.touchStartX = touch.clientX;
                     this.touchStartY = touch.clientY;
                     this.isSwipingX = false;
@@ -1195,7 +1069,7 @@
                     }
 
                     if (this.isSwipingX) {
-                        if(e.cancelable) e.preventDefault(); 
+                        if(e.cancelable) e.preventDefault();
                         let dragX = diffX;
                         if ((this.currentHelpIndex === 0 && diffX > 0) ||
                             (this.currentHelpIndex === this.helpSequence.length - 1 && diffX < 0)) {
@@ -1204,13 +1078,13 @@
                         this.swipeDragX = dragX;
                     } else if (this.isSwipingY) {
                         if (diffY > 0) {
-                            if(e.cancelable) e.preventDefault(); 
+                            if(e.cancelable) e.preventDefault();
                             this.modalDragY = diffY;
                         }
                     }
                 },
 
-                handleModalTouchEnd(e) {
+                handleModalTouchEnd() {
                     if (!this.isDragging) return;
                     this.isDragging = false;
                     
@@ -1314,6 +1188,20 @@
                         setTimeout(() => { this.justChecked = null; }, 600);
                         try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
                     }
+                },
+                openTroubleshooterById(id) {
+                    const titlesMap = {
+                        'audio-7': 'Headset Mic No Sound',
+                        'audio-11': 'Band Mics No Sound',
+                        'audio-13': 'YouTube Video No Sound',
+                        'audio-15': 'Lomond Feed Not Working',
+                        'vis-6': 'Matrix Switcher Route Guide',
+                        'vis-7': 'Can\'t Find Main Slides',
+                        'vis-farsi-slides': 'Can\'t Find Farsi Slides',
+                        'vis-s-3': 'ATEM Switcher Not Connecting',
+                        'vis-s-t1': 'Breeze Translate Feed Issues'
+                    };
+                    this.openTroubleshooter({ id, text: titlesMap[id] || 'Diagnostic Tool' });
                 },
                 openTroubleshooter(step) {
                     if (this.screen === 'list') {
