@@ -235,15 +235,15 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
             
             <div class="space-y-3">
-                <!-- RESTORED: Embedded Video Tutorial via App Player -->
-                <button @click="playVideo('3tEn0hfVkeA')" class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer block">
+                <!-- UPDATED: Embedded Video Tutorial Playlist via App Player -->
+                <button @click="playVideo('videoseries?list=PLOsQV2-foU10P7zQpAEtnDkeGpKFQ_CU1')" class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer block">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shrink-0">
                             <!-- Play Icon -->
                             <svg class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="font-bold text-slate-800 text-sm">Special Request Tutorial</h3>
+                            <h3 class="font-bold text-slate-800 text-sm">AV Setup Tutorial Playlist</h3>
                             <p class="text-xs text-slate-500 mt-0.5">Watch directly in the app</p>
                         </div>
                         <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
@@ -839,7 +839,7 @@
                 </button>
                 <!-- YouTube Iframe with Security Workarounds -->
                 <iframe 
-                    :src="'https://www.youtube-nocookie.com/embed/' + activeVideoId + '?autoplay=1&rel=0'" 
+                    :src="'https://www.youtube-nocookie.com/embed/' + activeVideoId + '&autoplay=1&rel=0'" 
                     class="w-full h-full border-none" 
                     referrerpolicy="strict-origin-when-cross-origin"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
