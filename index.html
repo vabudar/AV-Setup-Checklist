@@ -226,29 +226,34 @@
         </div>
 
         <!-- SCREEN: VIDEO TUTORIALS -->
-        <div v-if="screen === 'tutorials'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
-            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+        <div v-if="screen === 'tutorials'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer shrink-0">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
-            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Training Library</p>
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
+            <div class="shrink-0 mb-6">
+                <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Training Library</p>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Video Tutorials</h1>
+            </div>
             
-            <div class="space-y-3">
-                <!-- UPDATED: Embedded Video Tutorial Playlist via App Player -->
-                <button @click="playVideo('videoseries?list=PLOsQV2-foU10P7zQpAEtnDkeGpKFQ_CU1')" class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer block">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shrink-0">
-                            <!-- Play Icon -->
-                            <svg class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <div class="space-y-3 pb-8">
+                <!-- Training Videos generated from user links -->
+                <button v-for="(video, index) in tutorialVideos" :key="video.id" @click="playVideo(video.id)" class="w-full bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 active:scale-[0.98] transition-all cursor-pointer flex items-center gap-4 group text-left">
+                    <div class="relative w-28 h-16 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200/50">
+                        <img :src="'https://img.youtube.com/vi/' + video.id + '/mqdefault.jpg'" :alt="video.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/320x180/e2e8f0/64748b?text=Video+Unavailable'" />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <div class="w-8 h-8 bg-brand-green/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg group-hover:scale-110 transition-transform">
+                                <svg class="w-4 h-4 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-slate-800 text-sm">AV Setup Tutorial Playlist</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Watch directly in the app</p>
-                        </div>
-                        <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
+                    <div class="flex-1 py-1">
+                        <h3 class="font-bold text-slate-800 text-sm leading-snug group-hover:text-brand-green transition-colors line-clamp-2">{{ video.title }}</h3>
+                        <p class="text-[11px] text-slate-500 mt-1.5 line-clamp-1 font-medium">{{ video.category }}</p>
                     </div>
                 </button>
+
+                <div class="my-6 border-t border-slate-200/80"></div>
 
                 <!-- Existing Options -->
                 <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
@@ -1068,6 +1073,28 @@
                     selectedDocCategory: 'All',
                     activePdf: null,
                     activeVideoId: null,
+
+                    tutorialVideos: [
+                        { id: '7IINPKxx8cI', title: '1.1 Why We Do What We Do', category: 'Intro' },
+                        { id: '_huTFM-wh9Y', title: '1.2 Introduction to the Team', category: 'Intro' },
+                        { id: 'lsUNwGHCL50', title: '1.3 What Makes a Good Sound Team Member', category: 'Intro' },
+                        { id: 'i4CjB5ZvNoY', title: '2.0 Why Good Sound is Important and What We\'re Doing it For', category: 'Intro' },
+                        { id: 'dkDCg7AyhlQ', title: '2.1.1 Introduction to the Main KG Desk', category: 'Audio' },
+                        { id: 'YK06xpeNQdM', title: '2.1.2 Introduction to the Streaming Room', category: 'Visuals' },
+                        { id: 'RzrlaeswmME', title: '2.1.3 Introduction to the Band Area', category: 'Audio' },
+                        { id: 'rg2JJnMbwPA', title: '2.2 Introduction to Microphones', category: 'Audio' },
+                        { id: 'eCpa35Hln6s', title: '2.3 Kelvingrove Sound Desk Basics', category: 'Audio' },
+                        { id: '6cqsjkjFEh4', title: '2.4 Principles for Balancing the Band', category: 'Audio' },
+                        { id: 'bPxvkKFaCao', title: '2.5 Using EQ and Compression', category: 'Audio' },
+                        { id: 'IKU3YIJr-Ks', title: 'Sound Desk Basics Central QP Version', category: 'Audio' },
+                        { id: '4x7qC2FlvxA', title: 'Sound Desk in the Grand Hall', category: 'Audio' },
+                        { id: 'HhQyFvDNzLY', title: 'Why We Use Cameras', category: 'Visuals' },
+                        { id: 'JIqOwbrBvIg', title: 'Band Area', category: 'Visuals' },
+                        { id: 'NzjqKccCGWk', title: 'Lomond/Glasgow', category: 'Visuals' },
+                        { id: 'WWUKm5VoEHg', title: 'How to Start a Live Stream', category: 'Visuals' },
+                        { id: 'agltUVBYHlE', title: 'The Art of Cameras', category: 'Visuals' },
+                        { id: 'G2Oeo-AFvt0', title: 'Overlays', category: 'Visuals' }
+                    ],
 
                     // Touch tracking logic
                     isDragging: false,
