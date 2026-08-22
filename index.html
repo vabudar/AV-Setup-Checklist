@@ -235,6 +235,22 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Video Tutorials</h1>
             
             <div class="space-y-3">
+                <!-- RESTORED: Embedded Video Tutorial via App Player -->
+                <button @click="playVideo('3tEn0hfVkeA')" class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer block">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shrink-0">
+                            <!-- Play Icon -->
+                            <svg class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-slate-800 text-sm">Special Request Tutorial</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Watch directly in the app</p>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
+                </button>
+
+                <!-- Existing Options -->
                 <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-slate-100 text-brand-green rounded-xl flex items-center justify-center shrink-0">
@@ -813,6 +829,24 @@
                 </div>
             </div>
         </div>
+        
+        <!-- OVERLAY PANEL: IN-APP YOUTUBE PLAYER MODAL -->
+        <div v-if="activeVideoId" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
+            <div class="w-full max-w-[800px] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-slate-800">
+                <!-- Close Button overlaying the video -->
+                <button @click="activeVideoId = null" class="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md transition-colors cursor-pointer border border-white/20">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </button>
+                <!-- YouTube Iframe with Security Workarounds -->
+                <iframe 
+                    :src="'https://www.youtube-nocookie.com/embed/' + activeVideoId + '?autoplay=1&rel=0'" 
+                    class="w-full h-full border-none" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
 
     </div>
 
@@ -1033,6 +1067,7 @@
                     documentSearch: '',
                     selectedDocCategory: 'All',
                     activePdf: null,
+                    activeVideoId: null,
 
                     // Touch tracking logic
                     isDragging: false,
@@ -1194,6 +1229,9 @@
                 },
                 previewPdf(doc) {
                     this.activePdf = doc;
+                },
+                playVideo(videoId) {
+                    this.activeVideoId = videoId;
                 },
                 async submitFeedback() {
                     if (!this.feedbackText.trim()) return;
