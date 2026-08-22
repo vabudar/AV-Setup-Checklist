@@ -819,17 +819,23 @@
         </div>
         
         <!-- OVERLAY PANEL: IN-APP YOUTUBE PLAYER MODAL -->
-        <div v-if="activeVideoId" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
+        <div v-if="activeVideoId" 
+             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
+             @mousemove="wakeVideoUI" 
+             @touchstart="wakeVideoUI"
+             @click.self="activeVideoId = null">
             <div class="w-full max-w-[800px] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-slate-800">
                 
                 <!-- Backup Link if video is blocked by YouTube Copyright/Cookies -->
-                <a :href="'https://youtu.be/' + activeVideoId" target="_blank" class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-brand-green/90 hover:bg-brand-green text-white text-xs font-mono rounded-lg backdrop-blur-md transition-colors cursor-pointer border border-white/20 flex items-center gap-1.5 shadow-lg decoration-none">
+                <a :href="'https://youtu.be/' + activeVideoId" target="_blank" 
+                   :class="['absolute top-4 left-4 z-20 px-3 py-1.5 bg-brand-green/90 hover:bg-brand-green text-white text-xs font-mono rounded-lg backdrop-blur-md cursor-pointer border border-white/20 flex items-center gap-1.5 shadow-lg decoration-none transition-all duration-500', videoUIActive ? 'opacity-100' : 'opacity-0 pointer-events-none']">
                     Open in YouTube App
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                 </a>
 
                 <!-- Close Button overlaying the video -->
-                <button @click="activeVideoId = null" class="absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md transition-colors cursor-pointer border border-white/20 shadow-lg">
+                <button @click="activeVideoId = null" 
+                        :class="['absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md cursor-pointer border border-white/20 shadow-lg transition-all duration-500', videoUIActive ? 'opacity-100' : 'opacity-0 pointer-events-none']">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                 </button>
                 
@@ -1065,6 +1071,8 @@
                     activePdf: null,
                     
                     activeVideoId: null,
+                    videoUIActive: true,
+                    videoUITimer: null,
                     tutorialVideos: [
                         { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
                         { id: '_huTFM-wh9Y', title: "1.2 Introduction to the Team", category: 'Intro' },
@@ -1111,6 +1119,16 @@
             },
             mounted() {
                 this.scanGitHubRepo();
+            },
+            watch: {
+                activeVideoId(newVal) {
+                    if (newVal) {
+                        this.videoUIActive = true;
+                        this.startVideoUITimer();
+                    } else {
+                        clearTimeout(this.videoUITimer);
+                    }
+                }
             },
             computed: {
                 docCategories() {
@@ -1195,6 +1213,18 @@
                 }
             },
             methods: {
+                startVideoUITimer() {
+                    clearTimeout(this.videoUITimer);
+                    this.videoUIActive = true;
+                    this.videoUITimer = setTimeout(() => {
+                        this.videoUIActive = false;
+                    }, 3500); // 3.5s closely matches native YouTube UI fade out
+                },
+                wakeVideoUI() {
+                    if (this.activeVideoId) {
+                        this.startVideoUITimer();
+                    }
+                },
                 async scanGitHubRepo() {
                     try {
                         let owner = 'TronChurch';
