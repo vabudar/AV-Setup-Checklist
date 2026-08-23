@@ -1058,6 +1058,7 @@
                     activeHelpStep: null,
                     flowNode: 'start',
                     copySuccess: false,
+                    isPopState: false, // Tracks if a state change came from the browser back button
                     
                     feedbackText: '',
                     feedbackName: '',
@@ -1119,14 +1120,81 @@
             },
             mounted() {
                 this.scanGitHubRepo();
+
+                // Set initial state from URL if present
+                const params = new URLSearchParams(window.location.search);
+                const urlScreen = params.get('screen');
+                if (urlScreen) {
+                    this.screen = urlScreen;
+                }
+                this.replaceHistoryState({ screen: this.screen }, '?screen=' + this.screen);
+
+                // Listen for browser Back/Forward navigation
+                window.addEventListener('popstate', (e) => {
+                    this.isPopState = true;
+                    
+                    if (e.state && e.state.screen) {
+                        this.screen = e.state.screen;
+                    }
+
+                    // If history state doesn't flag a modal, ensure they are all safely closed
+                    if (!e.state?.modal) {
+                        this.activeVideoId = null;
+                        this.activePdf = null;
+                        if (this.activeHelpStep) {
+                            this.activeHelpStep = null;
+                            this.closingModal = false;
+                            this.flowNode = 'start';
+                        }
+                    }
+
+                    // Reset flag after Vue processes the reactive changes
+                    this.$nextTick(() => {
+                        this.isPopState = false;
+                    });
+                });
             },
             watch: {
+                screen(newVal) {
+                    if (!this.isPopState) {
+                        this.pushHistoryState({ screen: newVal }, '?screen=' + newVal);
+                    }
+                },
                 activeVideoId(newVal) {
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
+                        if (!this.isPopState) {
+                            this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
+                        }
                     } else {
                         clearTimeout(this.videoUITimer);
+                        if (!this.isPopState && window.history.state?.modal) {
+                            window.history.back();
+                        }
+                    }
+                },
+                activePdf(newVal) {
+                    if (newVal) {
+                        if (!this.isPopState) {
+                            this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
+                        }
+                    } else {
+                        if (!this.isPopState && window.history.state?.modal) {
+                            window.history.back();
+                        }
+                    }
+                },
+                activeHelpStep(newVal) {
+                    if (newVal && !this.closingModal) {
+                        if (!this.isPopState) {
+                            this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
+                        }
+                    } else if (!newVal) {
+                        // Triggers when modal is closed via app UI
+                        if (!this.isPopState && window.history.state?.modal) {
+                            window.history.back();
+                        }
                     }
                 }
             },
@@ -1213,17 +1281,11 @@
                 }
             },
             methods: {
-                startVideoUITimer() {
-                    clearTimeout(this.videoUITimer);
-                    this.videoUIActive = true;
-                    this.videoUITimer = setTimeout(() => {
-                        this.videoUIActive = false;
-                    }, 3500); // 3.5s closely matches native YouTube UI fade out
+                pushHistoryState(stateObj, urlQuery) {
+                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
                 },
-                wakeVideoUI() {
-                    if (this.activeVideoId) {
-                        this.startVideoUITimer();
-                    }
+                replaceHistoryState(stateObj, urlQuery) {
+                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
                 },
                 async scanGitHubRepo() {
                     try {
