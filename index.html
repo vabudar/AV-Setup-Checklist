@@ -1155,16 +1155,17 @@
                 });
             },
             watch: {
-                screen(newVal) {
-                    if (!this.isPopState) {
+                screen(newVal, oldVal) {
+                    if (!this.isPopState && newVal !== oldVal) {
                         this.pushHistoryState({ screen: newVal }, '?screen=' + newVal);
                     }
                 },
-                activeVideoId(newVal) {
+                activeVideoId(newVal, oldVal) {
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
-                        if (!this.isPopState) {
+                        // Only add to timeline if a modal wasn't already open
+                        if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else {
@@ -1174,9 +1175,10 @@
                         }
                     }
                 },
-                activePdf(newVal) {
+                activePdf(newVal, oldVal) {
                     if (newVal) {
-                        if (!this.isPopState) {
+                        // Only add to timeline if a modal wasn't already open
+                        if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else {
@@ -1185,9 +1187,10 @@
                         }
                     }
                 },
-                activeHelpStep(newVal) {
+                activeHelpStep(newVal, oldVal) {
                     if (newVal && !this.closingModal) {
-                        if (!this.isPopState) {
+                        // Only add to timeline if a modal wasn't already open
+                        if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else if (!newVal) {
