@@ -1343,6 +1343,16 @@
                 playVideo(videoId) {
                     this.activeVideoId = videoId;
                 },
+                wakeVideoUI() {
+                    this.videoUIActive = true;
+                    this.startVideoUITimer();
+                },
+                startVideoUITimer() {
+                    clearTimeout(this.videoUITimer);
+                    this.videoUITimer = setTimeout(() => {
+                        this.videoUIActive = false;
+                    }, 3500);
+                },
                 async submitFeedback() {
                     if (!this.feedbackText.trim()) return;
                     this.feedbackSending = true;
