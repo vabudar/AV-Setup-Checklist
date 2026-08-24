@@ -788,23 +788,16 @@
                         <span class="font-bold text-xs truncate">{{ activePdf.title }}</span>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
-                        <!-- Toggle Fullscreen -->
-                        <button @click="pdfFullscreen = !pdfFullscreen" class="p-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer" :title="pdfFullscreen ? 'Exit Fullscreen' : 'Fullscreen'">
-                            <svg v-if="!pdfFullscreen" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
-                        </button>
-                        <!-- Open Tab / Download -->
-                        <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors" title="Open in Browser Tab">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                        <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                         </a>
-                        <!-- Close -->
-                        <button @click="activePdf = null; pdfFullscreen = false" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full transition-colors cursor-pointer ml-1">
+                        <button @click="activePdf = null" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full transition-colors cursor-pointer">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                         </button>
                     </div>
                 </div>
                 <div class="flex-1 bg-slate-100 relative">
-                    <iframe :src="activePdf.path" class="w-full h-full border-none"></iframe>
+                    <iframe :src="pdfViewerUrl" class="w-full h-full border-none"></iframe>
                 </div>
             </div>
         </div>
@@ -1252,6 +1245,12 @@
 
                     return targetTree[this.flowNode] || targetTree['start'];
                 },
+                pdfViewerUrl() {
+                    if (!this.activePdf) return '';
+                    // Use Google Docs Viewer to bypass Safari's grey "Open" button behavior
+                    // We can now do this safely because the files are mapped directly to GitHub's raw cloud servers
+                    return `https://docs.google.com/viewer?url=${encodeURIComponent(this.activePdf.path)}&embedded=true`;
+                },
                 modalStyle() {
                     if (this.closingModal) return {}; 
                     if (this.isSwipingY) {
@@ -1275,8 +1274,8 @@
                 },
                 async scanGitHubRepo() {
                     try {
-                        let owner = 'vabudar'; // Change this to your GitHub username!
-                        let repo = 'AV-Setup-Checklist'; // Change this to your repository name!
+                        let owner = 'vabudar';
+                        let repo = 'AV-Setup-Checklist';
                         
                         const host = window.location.hostname;
                         const pathParts = window.location.pathname.split('/').filter(Boolean);
@@ -1305,13 +1304,14 @@
                                         );
 
                                         if (!exists) {
-                                            const relativePath = './' + fullPath.split('/').map(encodeURIComponent).join('/');
+                                            // Create a direct link to the raw file on GitHub so it acts like a cloud CMS
+                                            const rawPath = `https://raw.githubusercontent.com/${owner}/${repo}/main/${fullPath.split('/').map(encodeURIComponent).join('/')}`;
                                             this.documentsList.push({
                                                 id: 'gh-' + (fileObj.sha || Math.random().toString(36).substring(2, 9)),
                                                 title: cleanName,
                                                 category: 'Repository File',
                                                 type: 'PDF Document',
-                                                path: relativePath,
+                                                path: rawPath,
                                                 filename: fileName
                                             });
                                         }
