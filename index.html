@@ -821,7 +821,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="flex-1 bg-slate-100 relative">
+                <div class="flex-1 bg-slate-100 relative overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
                     <iframe :src="pdfViewerUrl" class="w-full h-full border-none"></iframe>
                 </div>
             </div>
@@ -1163,6 +1163,7 @@
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
+                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1175,10 +1176,13 @@
                 },
                 activePdf(newVal, oldVal) {
                     if (newVal) {
+                        this.toggleAppZoom(true); // Unlocks native OS pinch-to-zoom
+                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else {
+                        this.toggleAppZoom(false); // Locks app UI scale back to normal
                         this.pdfFullscreen = false;
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
@@ -1692,6 +1696,18 @@
                     this.checkedSteps = [];
                     this.role = null;
                     this.streaming = null;
+                },
+                toggleAppZoom(enable) {
+                    const viewport = document.querySelector('meta[name="viewport"]');
+                    if (viewport) {
+                        if (enable) {
+                            // Unlocks device pinch-to-zoom entirely
+                            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover');
+                        } else {
+                            // Snaps back to 1.0 scale and locks UI interactions for app feel
+                            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+                        }
+                    }
                 }
             }
         }).mount('#app');
