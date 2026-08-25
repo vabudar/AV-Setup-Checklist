@@ -320,13 +320,12 @@
 
             <!-- Documents List -->
             <div class="space-y-3 pb-8">
-                <button 
+                <div 
                     v-for="doc in filteredDocuments" 
                     :key="doc.id" 
-                    @click="previewPdf(doc)"
-                    class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 hover:shadow-md active:scale-[0.98] transition-all flex flex-col group cursor-pointer">
+                    class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-all flex flex-col group">
                     
-                    <div class="flex items-center justify-between gap-3 w-full">
+                    <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3.5">
                             <!-- Red PDF Icon -->
                             <div class="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-300">
@@ -344,9 +343,26 @@
                                 </div>
                             </div>
                         </div>
-                        <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </div>
-                </button>
+
+                    <!-- Actions -->
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                        <button 
+                            @click="previewPdf(doc)" 
+                            class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-bold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 uppercase">
+                            <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            In-App View
+                        </button>
+                        <a 
+                            :href="doc.path" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="px-3 py-1.5 bg-brand-green hover:bg-slate-800 text-white text-xs font-mono font-bold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 uppercase shadow-xs">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            Open Tab
+                        </a>
+                    </div>
+                </div>
 
                 <div v-if="filteredDocuments.length === 0" class="text-center py-12 text-slate-400">
                     <svg class="w-10 h-10 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="9" y1="15" x2="15" y1="15"/></svg>
@@ -754,10 +770,10 @@
                                         
                                         <!-- Quick Link to Reference PDF if matched -->
                                         <div v-if="matchedPdf" class="w-full mt-2">
-                                            <button @click="previewPdf(matchedPdf)" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors cursor-pointer">
+                                            <a :href="matchedPdf.path" target="_blank" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors">
                                                 <svg class="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                                View {{ matchedPdf.filename }}
-                                            </button>
+                                                Open {{ matchedPdf.filename }}
+                                            </a>
                                         </div>
                                     </div>
 
@@ -780,25 +796,18 @@
         </div>
 
         <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
-        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
-            <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
+        <div v-if="activePdf" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+            <div class="bg-white w-full max-w-[460px] h-[85vh] rounded-3xl overflow-hidden flex flex-col shadow-2xl relative">
                 <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
                         <svg class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                         <span class="font-bold text-xs truncate">{{ activePdf.title }}</span>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
-                        <!-- Toggle Fullscreen -->
-                        <button @click="pdfFullscreen = !pdfFullscreen" class="p-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer" :title="pdfFullscreen ? 'Exit Fullscreen' : 'Fullscreen'">
-                            <svg v-if="!pdfFullscreen" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
-                        </button>
-                        <!-- Open Tab / Download -->
-                        <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors" title="Open in Browser Tab">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                        <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                         </a>
-                        <!-- Close -->
-                        <button @click="activePdf = null; pdfFullscreen = false" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full transition-colors cursor-pointer ml-1">
+                        <button @click="activePdf = null" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full transition-colors cursor-pointer">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                         </button>
                     </div>
@@ -851,17 +860,8 @@
         ];
 
         // Centralized Documents List (GitHub repo hosted PDFs)
-        const REPO_DOCUMENTS = [
-            { id: 'doc-mics', title: "Can't Hear Mics Guide", filename: "Can't Hear Mics__3.pdf", path: "./Can't Hear Mics__3.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-yt', title: "Can't Hear YouTube Video", filename: "Can't Hear Youtube Video_2.pdf", path: "./Can't Hear Youtube Video_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-lomond-audio', title: "Can't Hear Stream in Lomond", filename: "Can't Hear Stream in Lomond_2.pdf", path: "./Can't Hear Stream in Lomond_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-lomond-video', title: "Can't See Stream in Lomond", filename: "Can't See Stream in Lomond_2.pdf", path: "./Can't See Stream in Lomond_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-slides', title: "Can't Find Slides Guide", filename: "Can't Find Slides_2.pdf", path: "./Can't Find Slides_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-atem', title: "ATEM Switcher Connection Guide", filename: "ATEM Switcher Software Not Connecting_2.pdf", path: "./ATEM Switcher Software Not Connecting_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-breeze', title: "Breeze Translate Guide", filename: "Breeze not connecting_2.pdf", path: "./Breeze not connecting_2.pdf", category: "Troubleshooting", type: "PDF Manual" },
-            { id: 'doc-roster', title: "AV Team Roster Q3/Q4", filename: "AV_Team_Roster.pdf", path: "./AV_Team_Roster.pdf", category: "Rosters", type: "PDF Roster" },
-            { id: 'doc-emergency', title: "Sunday Service Emergency Protocols", filename: "Emergency_Protocols.pdf", path: "./Emergency_Protocols.pdf", category: "Protocols", type: "PDF Protocol" }
-        ];
+        // Add your actual files here using the Method 1 guide
+        const REPO_DOCUMENTS = [];
 
         const STEPS = {
             audio: [
@@ -1061,7 +1061,6 @@
                     documentSearch: '',
                     selectedDocCategory: 'All',
                     activePdf: null,
-                    pdfFullscreen: false, // Track PDF fullscreen state
                     
                     activeVideoId: null,
                     videoUIActive: true,
@@ -1333,7 +1332,6 @@
                     }
                 },
                 previewPdf(doc) {
-                    this.pdfFullscreen = false;
                     this.activePdf = doc;
                 },
                 playVideo(videoId) {
