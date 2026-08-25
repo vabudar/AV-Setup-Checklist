@@ -657,6 +657,37 @@
                                     </a>
                                 </div>
 
+                                <!-- BAND ROSTER WIDGET (audio-8) - PDF DRAG & DROP METHOD -->
+                                <div v-if="activeHelpStep.id === 'audio-8'" class="mb-6 animate-fade-in flex-shrink-0">
+                                    <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+                                        <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-brand-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                                <h3 class="font-bold text-slate-800 text-sm">Monthly Band Rota</h3>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="p-5">
+                                            <div v-if="rotaPdf" class="flex flex-col items-center text-center">
+                                                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-3">
+                                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                                </div>
+                                                <p class="text-sm font-bold text-slate-800 mb-1">{{ rotaPdf.filename }}</p>
+                                                <p class="text-xs text-slate-500 mb-4">Tap below to view this month's assignments.</p>
+                                                <button @click="previewPdf(rotaPdf)" class="w-full bg-brand-green text-white font-mono font-bold uppercase tracking-wider text-xs py-3 rounded-xl shadow-sm hover:opacity-90 transition-opacity cursor-pointer">
+                                                    Open Rota PDF
+                                                </button>
+                                            </div>
+                                            
+                                            <div v-else class="text-center py-4 text-slate-400">
+                                                <svg class="w-8 h-8 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                                <p class="text-sm font-medium text-slate-500">No Rota PDF found.</p>
+                                                <p class="text-xs mt-2 leading-relaxed">Drag and drop your monthly PDF into GitHub. Make sure the filename contains the word <code class="bg-slate-100 px-1 rounded text-slate-600">Rota</code>.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- MATRIX SWITCHER WIDGET -->
                                 <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in flex-shrink-0">
                                     <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
@@ -1051,32 +1082,10 @@
                     documentSearch: '',
                     selectedDocCategory: 'All',
                     activePdf: null,
-                    pdfFullscreen: false, // Track PDF fullscreen state
+                    pdfFullscreen: false,
                     
                     activeVideoId: null,
                     videoUIActive: true,
-                    videoUITimer: null,
-                    tutorialVideos: [
-                        { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
-                        { id: '_huTFM-wh9Y', title: "1.2 Introduction to the Team", category: 'Intro' },
-                        { id: 'lsUNwGHCL50', title: "1.3 What Makes a Good Sound Team Member", category: 'Intro' },
-                        { id: 'i4CjB5ZvNoY', title: "2.0 Why Good Sound is Important and What We're Doing it For", category: 'Audio' },
-                        { id: 'dkDCg7AyhlQ', title: "2.1.1 Introduction to the Main KG Desk", category: 'Audio' },
-                        { id: 'YK06xpeNQdM', title: "2.1.2 Introduction to the Streaming Room", category: 'Audio' },
-                        { id: 'RzrlaeswmME', title: "2.1.3 Introduction to the Band Area", category: 'Audio' },
-                        { id: 'rg2JJnMbwPA', title: "2.2 Introduction to Microphones", category: 'Audio' },
-                        { id: 'eCpa35Hln6s', title: "2.3 Kelvingrove Sound Desk Basics", category: 'Audio' },
-                        { id: '6cqsjkjFEh4', title: "2.4 Principles for Balancing the Band", category: 'Audio' },
-                        { id: 'bPxvkKFaCao', title: "2.5 Using EQ and Compression", category: 'Audio' },
-                        { id: 'IKU3YIJr-Ks', title: "Sound Desk Basics Central QP Version", category: 'Audio' },
-                        { id: '4x7qC2FlvxA', title: "Sound Desk in the Grand Hall", category: 'Audio' },
-                        { id: 'HhQyFvDNzLY', title: "Why We Use Cameras", category: 'Visuals' },
-                        { id: 'JIqOwbrBvIg', title: "Band Area", category: 'Visuals' },
-                        { id: 'NzjqKccCGWk', title: "Lomond/Glasgow", category: 'Visuals' },
-                        { id: 'WWUKm5VoEHg', title: "How to Start a Live Stream", category: 'Visuals' },
-                        { id: 'agltUVBYHlE', title: "The Art of Cameras", category: 'Visuals' },
-                        { id: 'G2Oeo-AFvt0', title: "Overlays", category: 'Visuals' },
-                    ],
 
                     // Touch tracking logic
                     isDragging: false,
@@ -1184,6 +1193,13 @@
                 }
             },
             computed: {
+                rotaPdf() {
+                    return this.documentsList.find(d => 
+                        d.filename.toLowerCase().includes('rota') || 
+                        d.filename.toLowerCase().includes('band') || 
+                        d.filename.toLowerCase().includes('schedule')
+                    );
+                },
                 docCategories() {
                     const cats = this.documentsList.map(d => d.category);
                     return [...new Set(cats)];
