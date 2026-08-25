@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Central Sunday Set-Up</title>
     
+    <!-- Fix for YouTube & Referrer verification -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="theme-color" content="#556462">
     
-    <!-- Apple Web App Support -->
+    <!-- Using the specific Tron Church brand green -->
+    <meta name="theme-color" content="#556462">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
@@ -26,11 +27,14 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'IBM Plex Sans', sans-serif; background-color: #F4F7F2; overscroll-behavior-y: none; }
+        /* Set base body to Brand Green so overscroll and safe-areas match the theme */
+        body { font-family: 'IBM Plex Sans', sans-serif; background-color: #556462; overscroll-behavior-y: none; }
+        
         .font-mono { font-family: 'IBM Plex Mono', monospace; }
         .font-publico { font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
         .font-gillsans { font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; }
         
+        /* Brand color for The Tron Church */
         .bg-brand-green { background-color: #556462; }
         .text-brand-green { color: #556462; }
         .border-brand-green { border-color: #556462; }
@@ -51,10 +55,33 @@
         .anim-slide-down { animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* The Instant Splash Screen */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background-color: #556462;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="text-slate-800 selection:bg-brand-green/20">
 
+    <!-- INSTANT SPLASH SCREEN (Hides once Vue mounts) -->
+    <div id="splash-screen">
+        <img 
+            src="Slide2.SVG" 
+            alt="Tron Church Loading" 
+            class="w-32 h-auto filter invert brightness-0 animate-pulse pointer-events-none"
+            onerror="if(this.src.endsWith('Slide2.SVG')){this.src='Slide2.svg';}else{this.style.display='none';}"
+        />
+    </div>
+
+    <!-- MAIN APP CONTAINER (Off-white background) -->
     <div id="app" class="max-w-[480px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#F4F7F2] shadow-2xl">
 
         <!-- Header Bar -->
@@ -66,13 +93,12 @@
                 <span class="font-bold text-white text-sm tracking-wider uppercase">Central Sunday Set-Up</span>
             </button>
             
-            <!-- Robust Apple-friendly SVG Logo rendering -->
             <img 
                 src="Slide2.SVG" 
                 alt="The Tron Church Logo" 
                 class="w-24 h-auto opacity-95 pointer-events-none filter invert brightness-0"
                 style="-webkit-filter: invert(100%) brightness(0);"
-                onerror="this.onerror=null; this.src='Slide2.svg'; this.onerror=function(){this.style.display='none';};"
+                onerror="if(this.src.endsWith('Slide2.SVG')){this.src='Slide2.svg';}else{this.style.display='none';}"
             />
         </div>
 
@@ -158,11 +184,10 @@
                 
                 <textarea v-model="feedbackText" placeholder="Describe the bug or feature suggestion..." class="w-full flex-1 min-h-[200px] p-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm resize-none"></textarea>
                 
-                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-14 mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackError ? 'bg-red-500 border-red-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed'))]">
-                    {{ feedbackSuccess ? 'Sent!' : (feedbackError ? 'Failed. Try Again.' : (feedbackSending ? 'Sending...' : 'Send Feedback')) }} 
-                    <svg v-if="!feedbackSuccess && !feedbackError && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-14 mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed')]">
+                    {{ feedbackSuccess ? 'Sent!' : (feedbackSending ? 'Sending...' : 'Send Feedback') }} 
+                    <svg v-if="!feedbackSuccess && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     <svg v-if="feedbackSuccess" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    <svg v-if="feedbackError" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                 </button>
             </div>
         </div>
@@ -329,7 +354,7 @@
                     v-for="doc in filteredDocuments" 
                     :key="doc.id" 
                     @click="previewPdf(doc)"
-                    class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 active:scale-[0.98] transition-all flex flex-col group cursor-pointer">
+                    class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-all flex flex-col group cursor-pointer active:scale-[0.98]">
                     
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3.5">
@@ -349,6 +374,25 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                        <button 
+                            @click.stop="previewPdf(doc)" 
+                            class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-bold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 uppercase">
+                            <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            In-App View
+                        </button>
+                        <a 
+                            :href="doc.path" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            @click.stop 
+                            class="px-3 py-1.5 bg-brand-green hover:bg-slate-800 text-white text-xs font-mono font-bold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 uppercase shadow-xs">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            Open Tab
+                        </a>
                     </div>
                 </div>
 
@@ -640,7 +684,7 @@
                                     </button>
                                     <div v-else class="w-full bg-slate-100 text-slate-500 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 flex flex-col items-center justify-center gap-1">
                                         <span>No Rota Uploaded</span>
-                                        <span class="text-[9px] uppercase tracking-widest font-sans font-medium">Please add schedule to GitHub</span>
+                                        <span class="text-[9px] uppercase tracking-widest font-sans font-medium">Please drop schedule into GitHub</span>
                                     </div>
                                 </div>
 
@@ -803,6 +847,8 @@
         <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
         <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
             <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
+                
+                <!-- Header Actions -->
                 <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
                         <svg class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -813,7 +859,7 @@
                             <svg v-if="!pdfFullscreen" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
                             <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
                         </button>
-                        <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors">
+                        <a :href="activePdf.path" target="_blank" rel="noopener noreferrer" class="p-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                         </a>
                         <button @click="activePdf = null" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full transition-colors cursor-pointer">
@@ -821,9 +867,12 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- Live Cloud PDF Viewer -->
                 <div class="flex-1 bg-slate-100 relative overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
                     <iframe :src="pdfViewerUrl" class="w-full h-full border-none"></iframe>
                 </div>
+
             </div>
         </div>
         
@@ -889,10 +938,7 @@
                 { id: 'audio-5', text: 'Switch on the amps', note: "Ensure the desk is switched on first." },
                 { id: 'audio-6', text: 'Set up headset mics' },
                 { id: 'audio-7', text: 'Test and adjust sound for headset mic', why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments." },
-                
-                // Smart Rota Link Integration
-                { id: 'audio-8', text: "Figure out who's on band", isRotaLink: true },
-                
+                { id: 'audio-8', text: "Figure out who's on band", isRotaLink: true, why: "Do this so you know what mics to take." },
                 { id: 'audio-9', text: "Leave spare mic pack on the speaker's glass table", why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to." },
                 { id: 'audio-10', text: 'Set up band mics' },
                 { id: 'audio-11', text: 'Test and adjust all band mics', note: "Make sure you know which mic is in which input." },
@@ -1066,7 +1112,6 @@
                     feedbackName: '',
                     feedbackSending: false,
                     feedbackSuccess: false,
-                    feedbackError: false,
                     
                     documentsList: REPO_DOCUMENTS,
                     documentSearch: '',
@@ -1099,6 +1144,7 @@
                         { id: 'G2Oeo-AFvt0', title: "Overlays", category: 'Visuals' }
                     ],
 
+                    // Touch tracking logic for drawer modal
                     isDragging: false,
                     isSwipingX: false,
                     isSwipingY: false,
@@ -1121,8 +1167,18 @@
                 }
             },
             mounted() {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    // Gives the app 300ms to parse the layout completely, then fades out the green splash
+                    setTimeout(() => {
+                        splash.style.opacity = '0';
+                        setTimeout(() => splash.remove(), 500);
+                    }, 300);
+                }
+
                 this.scanGitHubRepo();
 
+                // Set initial state from URL if present
                 const params = new URLSearchParams(window.location.search);
                 const urlScreen = params.get('screen');
                 if (urlScreen) {
@@ -1130,13 +1186,12 @@
                 }
                 this.replaceHistoryState({ screen: this.screen }, '?screen=' + this.screen);
 
+                // Listen for browser Back/Forward navigation
                 window.addEventListener('popstate', (e) => {
                     this.isPopState = true;
-                    
                     if (e.state && e.state.screen) {
                         this.screen = e.state.screen;
                     }
-
                     if (!e.state?.modal) {
                         this.activeVideoId = null;
                         this.activePdf = null;
@@ -1147,7 +1202,6 @@
                             this.flowNode = 'start';
                         }
                     }
-
                     this.$nextTick(() => {
                         this.isPopState = false;
                     });
@@ -1163,7 +1217,6 @@
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1176,13 +1229,10 @@
                 },
                 activePdf(newVal, oldVal) {
                     if (newVal) {
-                        this.toggleAppZoom(true); // Unlocks native OS pinch-to-zoom
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else {
-                        this.toggleAppZoom(false); // Locks app UI scale back to normal
                         this.pdfFullscreen = false;
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
@@ -1214,6 +1264,10 @@
                         return matchesCategory && matchesQuery;
                     });
                 },
+                matchedPdf() {
+                    if (!this.currentWizardNode || !this.currentWizardNode.text) return null;
+                    return this.documentsList.find(d => this.currentWizardNode.text.includes(d.filename));
+                },
                 latestRotaPdf() {
                     const rotas = this.documentsList.filter(doc => 
                         doc.filename.toLowerCase().includes('rota') || 
@@ -1222,16 +1276,20 @@
                     );
                     return rotas.length > 0 ? rotas[0] : null;
                 },
-                matchedPdf() {
-                    if (!this.currentWizardNode || !this.currentWizardNode.text) return null;
-                    return this.documentsList.find(d => this.currentWizardNode.text.includes(d.filename));
-                },
                 pdfViewerUrl() {
                     if (!this.activePdf) return '';
-                    // Convert relative paths to absolute URLs for Google Docs Viewer
-                    const isAbsolute = this.activePdf.path.startsWith('http');
-                    const absoluteUrl = isAbsolute ? this.activePdf.path : new URL(this.activePdf.path, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
-                    return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+                    
+                    let absoluteUrl = this.activePdf.path;
+                    
+                    const isApple = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+                    
+                    if (isApple) {
+                        // Native Apple Viewers parse raw PDFs best, giving us full hardware pinch-to-zoom!
+                        return absoluteUrl;
+                    } else {
+                        // Android devices prefer Google Docs Viewer for seamless in-app reading
+                        return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+                    }
                 },
                 filteredBands() {
                     if (!this.role) return [];
@@ -1337,7 +1395,8 @@
                                         );
 
                                         if (!exists) {
-                                            const rawPath = `https://raw.githubusercontent.com/${owner}/${repo}/main/${fullPath.split('/').map(encodeURIComponent).join('/')}`;
+                                            // Using jsDelivr to serve raw PDFs without triggering Apple's forced-download security blocks!
+                                            const rawPath = `https://cdn.jsdelivr.net/gh/${owner}/${repo}@main/${fullPath.split('/').map(encodeURIComponent).join('/')}`;
                                             this.documentsList.push({
                                                 id: 'gh-' + (fileObj.sha || Math.random().toString(36).substring(2, 9)),
                                                 title: cleanName,
@@ -1356,7 +1415,6 @@
                     }
                 },
                 previewPdf(doc) {
-                    this.pdfFullscreen = false;
                     this.activePdf = doc;
                 },
                 playVideo(videoId) {
@@ -1376,7 +1434,6 @@
                     if (!this.feedbackText.trim()) return;
                     this.feedbackSending = true;
                     this.feedbackSuccess = false;
-                    this.feedbackError = false;
 
                     const rawDateString = new Date().toLocaleDateString('en-GB');
                     const formattedSubjectDate = rawDateString.replace(/\//g, '-');
@@ -1401,15 +1458,12 @@
                             this.screen = 'home';
                         }, 2000);
                     } catch (error) {
-                        console.error("EmailJS payload transfer failure:", error);
                         this.feedbackSending = false;
-                        this.feedbackError = true;
-                        setTimeout(() => {
-                            this.feedbackError = false;
-                        }, 3000);
+                        alert("Failed to send feedback. Please check your connection or try again later.");
                     }
                 },
                 
+                // UNIFIED MODAL TOUCH & SWIPE SYSTEM
                 handleModalTouchStart(e) {
                     const touch = e.type.includes('touch') ? e.touches[0] : e;
                     this.swipeTransition = 'none'; 
@@ -1696,18 +1750,6 @@
                     this.checkedSteps = [];
                     this.role = null;
                     this.streaming = null;
-                },
-                toggleAppZoom(enable) {
-                    const viewport = document.querySelector('meta[name="viewport"]');
-                    if (viewport) {
-                        if (enable) {
-                            // Unlocks device pinch-to-zoom entirely
-                            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover');
-                        } else {
-                            // Snaps back to 1.0 scale and locks UI interactions for app feel
-                            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
-                        }
-                    }
                 }
             }
         }).mount('#app');
