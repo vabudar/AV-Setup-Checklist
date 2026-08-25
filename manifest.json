@@ -1,24 +1,28 @@
 {
-"name": "Central Sunday Set-Up",
-"short_name": "AV Setup",
-"description": "AV Setup Checklist and Diagnostic Tools for The Tron Church",
-"start_url": "./?screen=home",
-"display": "standalone",
-"orientation": "portrait",
-"background_color": "#556462",
-"theme_color": "#556462",
-"icons": [
-{
-"src": "icon.png",
-"sizes": "192x192",
-"type": "image/png",
-"purpose": "any"
-},
-{
-"src": "icon.png",
-"sizes": "512x512",
-"type": "image/png",
-"purpose": "maskable"
-}
-]
+  "name": "AV Setup Checklist",
+  "short_name": "AV Setup",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#525E5E",
+  "theme_color": "#525E5E",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
