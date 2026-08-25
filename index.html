@@ -320,12 +320,13 @@
 
             <!-- Documents List -->
             <div class="space-y-3 pb-8">
-                <div 
+                <button 
                     v-for="doc in filteredDocuments" 
                     :key="doc.id" 
-                    class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-all flex flex-col group">
+                    @click="previewPdf(doc)"
+                    class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 hover:shadow-md active:scale-[0.98] transition-all flex flex-col group cursor-pointer">
                     
-                    <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center justify-between gap-3 w-full">
                         <div class="flex items-center gap-3.5">
                             <!-- Red PDF Icon -->
                             <div class="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-300">
@@ -343,26 +344,9 @@
                                 </div>
                             </div>
                         </div>
+                        <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </div>
-
-                    <!-- Actions -->
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-                        <button 
-                            @click="previewPdf(doc)" 
-                            class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-bold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 uppercase">
-                            <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                            In-App View
-                        </button>
-                        <a 
-                            :href="doc.path" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            class="px-3 py-1.5 bg-brand-green hover:bg-slate-800 text-white text-xs font-mono font-bold rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 uppercase shadow-xs">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                            Open Tab
-                        </a>
-                    </div>
-                </div>
+                </button>
 
                 <div v-if="filteredDocuments.length === 0" class="text-center py-12 text-slate-400">
                     <svg class="w-10 h-10 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="9" y1="15" x2="15" y1="15"/></svg>
@@ -673,6 +657,37 @@
                                     </a>
                                 </div>
 
+                                <!-- BAND ROSTER WIDGET (audio-8) - PDF DRAG & DROP METHOD -->
+                                <div v-if="activeHelpStep.id === 'audio-8'" class="mb-6 animate-fade-in flex-shrink-0">
+                                    <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+                                        <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-brand-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                                <h3 class="font-bold text-slate-800 text-sm">Monthly Band Rota</h3>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="p-5">
+                                            <div v-if="rotaPdf" class="flex flex-col items-center text-center">
+                                                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-3">
+                                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                                </div>
+                                                <p class="text-sm font-bold text-slate-800 mb-1">{{ rotaPdf.filename }}</p>
+                                                <p class="text-xs text-slate-500 mb-4">Tap below to view this month's assignments.</p>
+                                                <button @click="previewPdf(rotaPdf)" class="w-full bg-brand-green text-white font-mono font-bold uppercase tracking-wider text-xs py-3 rounded-xl shadow-sm hover:opacity-90 transition-opacity cursor-pointer">
+                                                    Open Rota PDF
+                                                </button>
+                                            </div>
+                                            
+                                            <div v-else class="text-center py-4 text-slate-400">
+                                                <svg class="w-8 h-8 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                                <p class="text-sm font-medium text-slate-500">No Rota PDF found.</p>
+                                                <p class="text-xs mt-2 leading-relaxed">Drag and drop your monthly PDF into GitHub. Make sure the filename contains the word <code class="bg-slate-100 px-1 rounded text-slate-600">Rota</code>.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- MATRIX SWITCHER WIDGET -->
                                 <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in flex-shrink-0">
                                     <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
@@ -770,10 +785,10 @@
                                         
                                         <!-- Quick Link to Reference PDF if matched -->
                                         <div v-if="matchedPdf" class="w-full mt-2">
-                                            <a :href="matchedPdf.path" target="_blank" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors">
+                                            <button @click="previewPdf(matchedPdf)" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors cursor-pointer">
                                                 <svg class="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                                Open {{ matchedPdf.filename }}
-                                            </a>
+                                                View {{ matchedPdf.filename }}
+                                            </button>
                                         </div>
                                     </div>
 
@@ -796,14 +811,20 @@
         </div>
 
         <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
-        <div v-if="activePdf" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-            <div class="bg-white w-full max-w-[460px] h-[85vh] rounded-3xl overflow-hidden flex flex-col shadow-2xl relative">
+        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
+            <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
                 <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
                         <svg class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                         <span class="font-bold text-xs truncate">{{ activePdf.title }}</span>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
+                        <!-- NEW: Fullscreen Toggle Button -->
+                        <button @click="pdfFullscreen = !pdfFullscreen" class="p-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer" title="Toggle Fullscreen">
+                            <svg v-if="!pdfFullscreen" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+                        </button>
+                        <!-- Existing Download Button -->
                         <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                         </a>
@@ -813,7 +834,7 @@
                     </div>
                 </div>
                 <div class="flex-1 bg-slate-100 relative">
-                    <iframe :src="activePdf.path" class="w-full h-full border-none"></iframe>
+                    <iframe :src="pdfViewerUrl" class="w-full h-full border-none"></iframe>
                 </div>
             </div>
         </div>
@@ -1061,31 +1082,10 @@
                     documentSearch: '',
                     selectedDocCategory: 'All',
                     activePdf: null,
+                    pdfFullscreen: false,
                     
                     activeVideoId: null,
                     videoUIActive: true,
-                    videoUITimer: null,
-                    tutorialVideos: [
-                        { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
-                        { id: '_huTFM-wh9Y', title: "1.2 Introduction to the Team", category: 'Intro' },
-                        { id: 'lsUNwGHCL50', title: "1.3 What Makes a Good Sound Team Member", category: 'Intro' },
-                        { id: 'i4CjB5ZvNoY', title: "2.0 Why Good Sound is Important and What We're Doing it For", category: 'Audio' },
-                        { id: 'dkDCg7AyhlQ', title: "2.1.1 Introduction to the Main KG Desk", category: 'Audio' },
-                        { id: 'YK06xpeNQdM', title: "2.1.2 Introduction to the Streaming Room", category: 'Audio' },
-                        { id: 'RzrlaeswmME', title: "2.1.3 Introduction to the Band Area", category: 'Audio' },
-                        { id: 'rg2JJnMbwPA', title: "2.2 Introduction to Microphones", category: 'Audio' },
-                        { id: 'eCpa35Hln6s', title: "2.3 Kelvingrove Sound Desk Basics", category: 'Audio' },
-                        { id: '6cqsjkjFEh4', title: "2.4 Principles for Balancing the Band", category: 'Audio' },
-                        { id: 'bPxvkKFaCao', title: "2.5 Using EQ and Compression", category: 'Audio' },
-                        { id: 'IKU3YIJr-Ks', title: "Sound Desk Basics Central QP Version", category: 'Audio' },
-                        { id: '4x7qC2FlvxA', title: "Sound Desk in the Grand Hall", category: 'Audio' },
-                        { id: 'HhQyFvDNzLY', title: "Why We Use Cameras", category: 'Visuals' },
-                        { id: 'JIqOwbrBvIg', title: "Band Area", category: 'Visuals' },
-                        { id: 'NzjqKccCGWk', title: "Lomond/Glasgow", category: 'Visuals' },
-                        { id: 'WWUKm5VoEHg', title: "How to Start a Live Stream", category: 'Visuals' },
-                        { id: 'agltUVBYHlE', title: "The Art of Cameras", category: 'Visuals' },
-                        { id: 'G2Oeo-AFvt0', title: "Overlays", category: 'Visuals' },
-                    ],
 
                     // Touch tracking logic
                     isDragging: false,
@@ -1193,6 +1193,13 @@
                 }
             },
             computed: {
+                rotaPdf() {
+                    return this.documentsList.find(d => 
+                        d.filename.toLowerCase().includes('rota') || 
+                        d.filename.toLowerCase().includes('band') || 
+                        d.filename.toLowerCase().includes('schedule')
+                    );
+                },
                 docCategories() {
                     const cats = this.documentsList.map(d => d.category);
                     return [...new Set(cats)];
@@ -1260,6 +1267,12 @@
 
                     return targetTree[this.flowNode] || targetTree['start'];
                 },
+                pdfViewerUrl() {
+                    if (!this.activePdf) return '';
+                    // Use Google Docs Viewer to bypass Safari's grey "Open" button behavior
+                    // We can now do this safely because the files are mapped directly to GitHub's raw cloud servers
+                    return `https://docs.google.com/viewer?url=${encodeURIComponent(this.activePdf.path)}&embedded=true`;
+                },
                 modalStyle() {
                     if (this.closingModal) return {}; 
                     if (this.isSwipingY) {
@@ -1313,13 +1326,14 @@
                                         );
 
                                         if (!exists) {
-                                            const relativePath = './' + fullPath.split('/').map(encodeURIComponent).join('/');
+                                            // Create a direct link to the raw file on GitHub so it acts like a cloud CMS
+                                            const rawPath = `https://raw.githubusercontent.com/${owner}/${repo}/main/${fullPath.split('/').map(encodeURIComponent).join('/')}`;
                                             this.documentsList.push({
                                                 id: 'gh-' + (fileObj.sha || Math.random().toString(36).substring(2, 9)),
                                                 title: cleanName,
                                                 category: 'Repository File',
                                                 type: 'PDF Document',
-                                                path: relativePath,
+                                                path: rawPath,
                                                 filename: fileName
                                             });
                                         }
@@ -1332,6 +1346,7 @@
                     }
                 },
                 previewPdf(doc) {
+                    this.pdfFullscreen = false;
                     this.activePdf = doc;
                 },
                 playVideo(videoId) {
