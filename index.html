@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Central Sunday Set-Up</title>
     
-    <!-- Fix for YouTube & Referrer verification -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    
-    <!-- Using the specific Tron Church brand green -->
     <meta name="theme-color" content="#556462">
+    
+    <!-- Apple Web App Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
     
-    <link rel="apple-touch-icon" sizes="512x512" href="icon.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+    <!-- Properly sized icons for iOS Home Screen -->
+    <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
     
-    <!-- Tailwind CSS v4 Browser CDN for native p-4.5 and shadow-xs support -->
+    <!-- Tailwind CSS v4 Browser CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -30,7 +31,6 @@
         .font-publico { font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
         .font-gillsans { font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; }
         
-        /* Brand color for The Tron Church */
         .bg-brand-green { background-color: #556462; }
         .text-brand-green { color: #556462; }
         .border-brand-green { border-color: #556462; }
@@ -65,11 +65,14 @@
                 </svg>
                 <span class="font-bold text-white text-sm tracking-wider uppercase">Central Sunday Set-Up</span>
             </button>
+            
+            <!-- Robust Apple-friendly SVG Logo rendering -->
             <img 
                 src="Slide2.SVG" 
                 alt="The Tron Church Logo" 
-                class="w-24 h-auto opacity-95 filter invert brightness-0 pointer-events-none"
-                onerror="this.style.display='none';"
+                class="w-24 h-auto opacity-95 pointer-events-none filter invert brightness-0"
+                style="-webkit-filter: invert(100%) brightness(0);"
+                onerror="this.onerror=null; this.src='Slide2.svg'; this.onerror=function(){this.style.display='none';};"
             />
         </div>
 
@@ -155,10 +158,11 @@
                 
                 <textarea v-model="feedbackText" placeholder="Describe the bug or feature suggestion..." class="w-full flex-1 min-h-[200px] p-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm resize-none"></textarea>
                 
-                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-14 mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed')]">
-                    {{ feedbackSuccess ? 'Sent!' : (feedbackSending ? 'Sending...' : 'Send Feedback') }} 
-                    <svg v-if="!feedbackSuccess && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-14 mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackError ? 'bg-red-500 border-red-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed'))]">
+                    {{ feedbackSuccess ? 'Sent!' : (feedbackError ? 'Failed. Try Again.' : (feedbackSending ? 'Sending...' : 'Send Feedback')) }} 
+                    <svg v-if="!feedbackSuccess && !feedbackError && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     <svg v-if="feedbackSuccess" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg v-if="feedbackError" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                 </button>
             </div>
         </div>
@@ -194,6 +198,7 @@
                         </button>
                     </div>
                 </div>
+                
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Visual & Stream Issues</h2>
                     <div class="space-y-3">
@@ -320,13 +325,13 @@
 
             <!-- Documents List -->
             <div class="space-y-3 pb-8">
-                <button 
+                <div 
                     v-for="doc in filteredDocuments" 
                     :key="doc.id" 
                     @click="previewPdf(doc)"
-                    class="w-full text-left bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 hover:shadow-md active:scale-[0.98] transition-all flex flex-col group cursor-pointer">
+                    class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 active:scale-[0.98] transition-all flex flex-col group cursor-pointer">
                     
-                    <div class="flex items-center justify-between gap-3 w-full">
+                    <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3.5">
                             <!-- Red PDF Icon -->
                             <div class="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-300">
@@ -344,9 +349,8 @@
                                 </div>
                             </div>
                         </div>
-                        <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </div>
-                </button>
+                </div>
 
                 <div v-if="filteredDocuments.length === 0" class="text-center py-12 text-slate-400">
                     <svg class="w-10 h-10 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="9" y1="15" x2="15" y1="15"/></svg>
@@ -516,19 +520,19 @@
                                         </div>
                                     </div>
 
-                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id]"></div>
+                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink"></div>
 
-                                    <button v-if="step.why || flowchartsDatabase[step.id]" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
+                                    <button v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
                                         <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
-                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                            <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                                         </div>
-                                        <span class="font-mono text-[8px] uppercase tracking-wider font-bold mt-1 text-slate-400 group-hover:text-slate-700">Help</span>
+                                        <span class="font-mono text-[8px] uppercase tracking-wider font-bold mt-1 text-slate-400 group-hover:text-slate-700">{{ step.isRotaLink ? 'Rota' : 'Help' }}</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <button @click="finalizeSession" :class="['w-full h-14 mt-10 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', progressPercentage === 100 ? 'bg-brand-green border-brand-green text-white shadow-lg opacity-90 hover:opacity-100' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-900']">
@@ -622,6 +626,24 @@
                                     </button>
                                 </div>
 
+                                <!-- Band Rota PDF Quick Link -->
+                                <div v-if="activeHelpStep.isRotaLink" class="bg-rose-50 border border-rose-200 rounded-2xl p-6 mb-5 text-center flex flex-col items-center shadow-sm">
+                                    <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
+                                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
+                                    </div>
+                                    <h3 class="text-slate-800 text-lg font-bold mb-2">View Sunday Rota</h3>
+                                    <p class="text-slate-500 text-sm mb-6">Open the monthly schedule to see who is on the band this morning.</p>
+                                    
+                                    <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        Open {{ latestRotaPdf.title }}
+                                    </button>
+                                    <div v-else class="w-full bg-slate-100 text-slate-500 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 flex flex-col items-center justify-center gap-1">
+                                        <span>No Rota Uploaded</span>
+                                        <span class="text-[9px] uppercase tracking-widest font-sans font-medium">Please add schedule to GitHub</span>
+                                    </div>
+                                </div>
+
                                 <!-- Purpose -->
                                 <div v-if="activeHelpStep.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md flex-shrink-0">
                                     <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
@@ -655,37 +677,6 @@
                                             <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                                         </div>
                                     </a>
-                                </div>
-
-                                <!-- BAND ROSTER WIDGET (audio-8) - PDF DRAG & DROP METHOD -->
-                                <div v-if="activeHelpStep.id === 'audio-8'" class="mb-6 animate-fade-in flex-shrink-0">
-                                    <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
-                                        <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-brand-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                                <h3 class="font-bold text-slate-800 text-sm">Monthly Band Rota</h3>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="p-5">
-                                            <div v-if="rotaPdf" class="flex flex-col items-center text-center">
-                                                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-3">
-                                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                                                </div>
-                                                <p class="text-sm font-bold text-slate-800 mb-1">{{ rotaPdf.filename }}</p>
-                                                <p class="text-xs text-slate-500 mb-4">Tap below to view this month's assignments.</p>
-                                                <button @click="previewPdf(rotaPdf)" class="w-full bg-brand-green text-white font-mono font-bold uppercase tracking-wider text-xs py-3 rounded-xl shadow-sm hover:opacity-90 transition-opacity cursor-pointer">
-                                                    Open Rota PDF
-                                                </button>
-                                            </div>
-                                            
-                                            <div v-else class="text-center py-4 text-slate-400">
-                                                <svg class="w-8 h-8 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                                <p class="text-sm font-medium text-slate-500">No Rota PDF found.</p>
-                                                <p class="text-xs mt-2 leading-relaxed">Drag and drop your monthly PDF into GitHub. Make sure the filename contains the word <code class="bg-slate-100 px-1 rounded text-slate-600">Rota</code>.</p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <!-- MATRIX SWITCHER WIDGET -->
@@ -746,7 +737,6 @@
                                                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> BM TV STUDIO
                                             </span>
                                         </div>
-
                                     </div>
 
                                     <div v-if="showAllRoutes" class="mt-3 grid grid-cols-3 gap-1.5 font-mono text-[9px] uppercase tracking-wide text-center select-none font-bold">
@@ -787,7 +777,7 @@
                                         <div v-if="matchedPdf" class="w-full mt-2">
                                             <button @click="previewPdf(matchedPdf)" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors cursor-pointer">
                                                 <svg class="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                                View {{ matchedPdf.filename }}
+                                                Open {{ matchedPdf.filename }}
                                             </button>
                                         </div>
                                     </div>
@@ -819,12 +809,10 @@
                         <span class="font-bold text-xs truncate">{{ activePdf.title }}</span>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
-                        <!-- NEW: Fullscreen Toggle Button -->
                         <button @click="pdfFullscreen = !pdfFullscreen" class="p-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer" title="Toggle Fullscreen">
                             <svg v-if="!pdfFullscreen" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
                             <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
                         </button>
-                        <!-- Existing Download Button -->
                         <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                         </a>
@@ -881,7 +869,6 @@
         ];
 
         // Centralized Documents List (GitHub repo hosted PDFs)
-        // Add your actual files here using the Method 1 guide
         const REPO_DOCUMENTS = [];
 
         const STEPS = {
@@ -902,7 +889,10 @@
                 { id: 'audio-5', text: 'Switch on the amps', note: "Ensure the desk is switched on first." },
                 { id: 'audio-6', text: 'Set up headset mics' },
                 { id: 'audio-7', text: 'Test and adjust sound for headset mic', why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments." },
-                { id: 'audio-8', text: "Figure out who's on band", why: "Do this so you know what mics to take." },
+                
+                // Smart Rota Link Integration
+                { id: 'audio-8', text: "Figure out who's on band", isRotaLink: true },
+                
                 { id: 'audio-9', text: "Leave spare mic pack on the speaker's glass table", why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to." },
                 { id: 'audio-10', text: 'Set up band mics' },
                 { id: 'audio-11', text: 'Test and adjust all band mics', note: "Make sure you know which mic is in which input." },
@@ -1070,14 +1060,14 @@
                     activeHelpStep: null,
                     flowNode: 'start',
                     copySuccess: false,
-                    isPopState: false, // Tracks if a state change came from the browser back button
+                    isPopState: false,
                     
                     feedbackText: '',
                     feedbackName: '',
                     feedbackSending: false,
                     feedbackSuccess: false,
+                    feedbackError: false,
                     
-                    // Documents state
                     documentsList: REPO_DOCUMENTS,
                     documentSearch: '',
                     selectedDocCategory: 'All',
@@ -1086,8 +1076,29 @@
                     
                     activeVideoId: null,
                     videoUIActive: true,
+                    videoUITimer: null,
+                    tutorialVideos: [
+                        { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
+                        { id: '_huTFM-wh9Y', title: "1.2 Introduction to the Team", category: 'Intro' },
+                        { id: 'lsUNwGHCL50', title: "1.3 What Makes a Good Sound Team Member", category: 'Intro' },
+                        { id: 'i4CjB5ZvNoY', title: "2.0 Why Good Sound is Important and What We're Doing it For", category: 'Audio' },
+                        { id: 'dkDCg7AyhlQ', title: "2.1.1 Introduction to the Main KG Desk", category: 'Audio' },
+                        { id: 'YK06xpeNQdM', title: "2.1.2 Introduction to the Streaming Room", category: 'Audio' },
+                        { id: 'RzrlaeswmME', title: "2.1.3 Introduction to the Band Area", category: 'Audio' },
+                        { id: 'rg2JJnMbwPA', title: "2.2 Introduction to Microphones", category: 'Audio' },
+                        { id: 'eCpa35Hln6s', title: "2.3 Kelvingrove Sound Desk Basics", category: 'Audio' },
+                        { id: '6cqsjkjFEh4', title: "2.4 Principles for Balancing the Band", category: 'Audio' },
+                        { id: 'bPxvkKFaCao', title: "2.5 Using EQ and Compression", category: 'Audio' },
+                        { id: 'IKU3YIJr-Ks', title: "Sound Desk Basics Central QP Version", category: 'Audio' },
+                        { id: '4x7qC2FlvxA', title: "Sound Desk in the Grand Hall", category: 'Audio' },
+                        { id: 'HhQyFvDNzLY', title: "Why We Use Cameras", category: 'Visuals' },
+                        { id: 'JIqOwbrBvIg', title: "Band Area", category: 'Visuals' },
+                        { id: 'NzjqKccCGWk', title: "Lomond/Glasgow", category: 'Visuals' },
+                        { id: 'WWUKm5VoEHg', title: "How to Start a Live Stream", category: 'Visuals' },
+                        { id: 'agltUVBYHlE', title: "The Art of Cameras", category: 'Visuals' },
+                        { id: 'G2Oeo-AFvt0', title: "Overlays", category: 'Visuals' }
+                    ],
 
-                    // Touch tracking logic
                     isDragging: false,
                     isSwipingX: false,
                     isSwipingY: false,
@@ -1112,7 +1123,6 @@
             mounted() {
                 this.scanGitHubRepo();
 
-                // Set initial state from URL if present
                 const params = new URLSearchParams(window.location.search);
                 const urlScreen = params.get('screen');
                 if (urlScreen) {
@@ -1120,7 +1130,6 @@
                 }
                 this.replaceHistoryState({ screen: this.screen }, '?screen=' + this.screen);
 
-                // Listen for browser Back/Forward navigation
                 window.addEventListener('popstate', (e) => {
                     this.isPopState = true;
                     
@@ -1128,10 +1137,10 @@
                         this.screen = e.state.screen;
                     }
 
-                    // If history state doesn't flag a modal, ensure they are all safely closed
                     if (!e.state?.modal) {
                         this.activeVideoId = null;
                         this.activePdf = null;
+                        this.pdfFullscreen = false;
                         if (this.activeHelpStep) {
                             this.activeHelpStep = null;
                             this.closingModal = false;
@@ -1139,7 +1148,6 @@
                         }
                     }
 
-                    // Reset flag after Vue processes the reactive changes
                     this.$nextTick(() => {
                         this.isPopState = false;
                     });
@@ -1155,7 +1163,6 @@
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1168,11 +1175,11 @@
                 },
                 activePdf(newVal, oldVal) {
                     if (newVal) {
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else {
+                        this.pdfFullscreen = false;
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
                         }
@@ -1180,12 +1187,10 @@
                 },
                 activeHelpStep(newVal, oldVal) {
                     if (newVal && !this.closingModal) {
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else if (!newVal) {
-                        // Triggers when modal is closed via app UI
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
                         }
@@ -1193,13 +1198,6 @@
                 }
             },
             computed: {
-                rotaPdf() {
-                    return this.documentsList.find(d => 
-                        d.filename.toLowerCase().includes('rota') || 
-                        d.filename.toLowerCase().includes('band') || 
-                        d.filename.toLowerCase().includes('schedule')
-                    );
-                },
                 docCategories() {
                     const cats = this.documentsList.map(d => d.category);
                     return [...new Set(cats)];
@@ -1212,9 +1210,24 @@
                         return matchesCategory && matchesQuery;
                     });
                 },
+                latestRotaPdf() {
+                    const rotas = this.documentsList.filter(doc => 
+                        doc.filename.toLowerCase().includes('rota') || 
+                        doc.filename.toLowerCase().includes('band') ||
+                        doc.filename.toLowerCase().includes('schedule')
+                    );
+                    return rotas.length > 0 ? rotas[0] : null;
+                },
                 matchedPdf() {
                     if (!this.currentWizardNode || !this.currentWizardNode.text) return null;
                     return this.documentsList.find(d => this.currentWizardNode.text.includes(d.filename));
+                },
+                pdfViewerUrl() {
+                    if (!this.activePdf) return '';
+                    // Convert relative paths to absolute URLs for Google Docs Viewer
+                    const isAbsolute = this.activePdf.path.startsWith('http');
+                    const absoluteUrl = isAbsolute ? this.activePdf.path : new URL(this.activePdf.path, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
+                    return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
                 },
                 filteredBands() {
                     if (!this.role) return [];
@@ -1267,12 +1280,6 @@
 
                     return targetTree[this.flowNode] || targetTree['start'];
                 },
-                pdfViewerUrl() {
-                    if (!this.activePdf) return '';
-                    // Use Google Docs Viewer to bypass Safari's grey "Open" button behavior
-                    // We can now do this safely because the files are mapped directly to GitHub's raw cloud servers
-                    return `https://docs.google.com/viewer?url=${encodeURIComponent(this.activePdf.path)}&embedded=true`;
-                },
                 modalStyle() {
                     if (this.closingModal) return {}; 
                     if (this.isSwipingY) {
@@ -1289,10 +1296,10 @@
             },
             methods: {
                 pushHistoryState(stateObj, urlQuery) {
-                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { }
                 },
                 replaceHistoryState(stateObj, urlQuery) {
-                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { }
                 },
                 async scanGitHubRepo() {
                     try {
@@ -1326,7 +1333,6 @@
                                         );
 
                                         if (!exists) {
-                                            // Create a direct link to the raw file on GitHub so it acts like a cloud CMS
                                             const rawPath = `https://raw.githubusercontent.com/${owner}/${repo}/main/${fullPath.split('/').map(encodeURIComponent).join('/')}`;
                                             this.documentsList.push({
                                                 id: 'gh-' + (fileObj.sha || Math.random().toString(36).substring(2, 9)),
@@ -1366,6 +1372,7 @@
                     if (!this.feedbackText.trim()) return;
                     this.feedbackSending = true;
                     this.feedbackSuccess = false;
+                    this.feedbackError = false;
 
                     const rawDateString = new Date().toLocaleDateString('en-GB');
                     const formattedSubjectDate = rawDateString.replace(/\//g, '-');
@@ -1392,11 +1399,13 @@
                     } catch (error) {
                         console.error("EmailJS payload transfer failure:", error);
                         this.feedbackSending = false;
-                        alert("Failed to send feedback. Please check your connection or try again later.");
+                        this.feedbackError = true;
+                        setTimeout(() => {
+                            this.feedbackError = false;
+                        }, 3000);
                     }
                 },
                 
-                // UNIFIED MODAL TOUCH & SWIPE SYSTEM
                 handleModalTouchStart(e) {
                     const touch = e.type.includes('touch') ? e.touches[0] : e;
                     this.swipeTransition = 'none'; 
@@ -1551,7 +1560,7 @@
                 },
                 openTroubleshooter(step) {
                     if (this.screen === 'list') {
-                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.link);
+                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.link || s.isRotaLink);
                     } else if (this.screen === 'troubleshooting') {
                         this.helpSequence = [
                             {id: 'audio-7', text: 'Headset Mic No Sound'},
