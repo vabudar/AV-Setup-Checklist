@@ -14,6 +14,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
     
+    <!-- Android Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
     <!-- Properly sized icons for iOS Home Screen -->
     <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
@@ -28,7 +31,7 @@
     
     <style>
         /* Set base body to Brand Green so overscroll and safe-areas match the theme */
-        body { font-family: 'IBM Plex Sans', sans-serif; background-color: #556462; overscroll-behavior-y: none; }
+        html, body { font-family: 'IBM Plex Sans', sans-serif; background-color: #556462 !important; overscroll-behavior-y: none; }
         
         .font-mono { font-family: 'IBM Plex Mono', monospace; }
         .font-publico { font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
