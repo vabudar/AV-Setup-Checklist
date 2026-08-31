@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Central Sunday Set-Up</title>
     
-    <!-- Fix for YouTube & Referrer verification -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    
-    <!-- Using the specific Tron Church brand green -->
     <meta name="theme-color" content="#556462">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AV Setup">
     
-    <!-- Properly sized icons for iOS Home Screen -->
     <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
     
-    <!-- Tailwind CSS v4 Browser CDN for native p-4.5 and shadow-xs support -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -32,7 +27,6 @@
         .font-publico { font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
         .font-gillsans { font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; }
         
-        /* Brand color for The Tron Church */
         .bg-brand-green { background-color: #556462; }
         .text-brand-green { color: #556462; }
         .border-brand-green { border-color: #556462; }
@@ -68,7 +62,6 @@
                 <span class="font-bold text-white text-sm tracking-wider uppercase">Central Sunday Set-Up</span>
             </button>
             
-            <!-- Robust Apple-friendly SVG Logo rendering -->
             <img 
                 src="Slide2.svg" 
                 alt="The Tron Church Logo" 
@@ -133,7 +126,7 @@
                         </div>
                         <div class="py-1">
                             <div class="text-xl font-bold text-slate-800 leading-tight">Documents</div>
-                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">PDF Manuals, Guides & Protocols</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">PDF & Word Manuals/Schedules</div>
                         </div>
                     </div>
                     <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -247,8 +240,6 @@
             </div>
             
             <div class="p-4 space-y-4 pb-12">
-                
-                <!-- Training Videos generated from user links -->
                 <button v-for="(video, index) in tutorialVideos" :key="video.id" @click="playVideo(video.id)" class="w-full bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 active:scale-[0.98] transition-all cursor-pointer flex items-center gap-4 group text-left">
                     <div class="relative w-28 h-16 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200/50">
                         <img :src="'https://img.youtube.com/vi/' + video.id + '/mqdefault.jpg'" :alt="video.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/320x180/e2e8f0/64748b?text=Video+Unavailable'" />
@@ -266,7 +257,6 @@
 
                 <div class="my-6 border-t border-slate-200/80 mx-2"></div>
 
-                <!-- External Portals -->
                 <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors mx-2">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-slate-100 text-brand-green rounded-xl flex items-center justify-center shrink-0">
@@ -281,7 +271,7 @@
             </div>
         </div>
 
-        <!-- SCREEN: REPOSITORY DOCUMENTS (PDF SUPPORT) -->
+        <!-- SCREEN: REPOSITORY DOCUMENTS -->
         <div v-if="screen === 'documents'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
             <button @click="screen = 'home'" class="mb-6 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -296,7 +286,7 @@
                     <input 
                         v-model="documentSearch" 
                         type="text" 
-                        placeholder="Search PDFs or guides..." 
+                        placeholder="Search files or guides..." 
                         class="w-full h-12 pl-11 pr-4 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm"
                     />
                     <svg class="w-4 h-4 text-slate-400 absolute left-4 top-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -334,19 +324,25 @@
                     
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3.5">
-                            <!-- Red PDF Icon -->
-                            <div class="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-300">
-                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            
+                            <!-- Dynamic Document Icon based on file type -->
+                            <div :class="['w-12 h-12 border rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:text-white', doc.isWord ? 'bg-blue-50 border-blue-100 text-blue-600 group-hover:bg-blue-600' : 'bg-rose-50 border-rose-100 text-rose-600 group-hover:bg-rose-600']">
+                                <svg v-if="doc.isWord" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="9 9 12 15 15 9"/>
+                                </svg>
+                                <svg v-else class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                                     <polyline points="14 2 14 8 20 8"/>
                                     <path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/>
                                 </svg>
                             </div>
+                            
                             <div>
                                 <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors leading-snug">{{ doc.title }}</h3>
                                 <div class="flex items-center gap-2 mt-1">
                                     <span class="font-mono text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold uppercase">{{ doc.category }}</span>
-                                    <span class="text-[11px] text-slate-400">{{ doc.type || 'PDF Document' }}</span>
+                                    <span class="text-[11px] text-slate-400">{{ doc.type || 'Document' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -354,7 +350,7 @@
                 </div>
 
                 <div v-if="filteredDocuments.length === 0" class="text-center py-12 text-slate-400">
-                    <svg class="w-10 h-10 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="9" y1="15" x2="15" y1="15"/></svg>
+                    <svg class="w-10 h-10 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                     <p class="text-sm font-medium">No documents match your filter.</p>
                 </div>
             </div>
@@ -627,21 +623,43 @@
                                     </button>
                                 </div>
 
-                                <!-- Band Rota PDF Quick Link -->
-                                <div v-if="activeHelpStep.isRotaLink" class="bg-rose-50 border border-rose-200 rounded-2xl p-6 mb-5 text-center flex flex-col items-center shadow-sm">
-                                    <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
-                                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
-                                    </div>
-                                    <h3 class="text-slate-800 text-lg font-bold mb-2">View Sunday Rota</h3>
-                                    <p class="text-slate-500 text-sm mb-6">Open the monthly schedule to see who is on the band this morning.</p>
+                                <!-- Band Rota PDF Quick Link and Dynamic List -->
+                                <div v-if="activeHelpStep.isRotaLink" class="mb-5 flex flex-col">
                                     
-                                    <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
-                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                        Open {{ latestRotaPdf.title }}
-                                    </button>
-                                    <div v-else class="w-full bg-slate-100 text-slate-500 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 flex flex-col items-center justify-center gap-1">
-                                        <span>No Rota Uploaded</span>
-                                        <span class="text-[9px] uppercase tracking-widest font-sans font-medium">Please add schedule to GitHub</span>
+                                    <!-- Dynamic 'Today's Band' parsed from Church Rota -->
+                                    <div v-if="todaysBand" class="bg-slate-50 border border-brand-green/20 rounded-2xl p-5 mb-4 shadow-sm">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <h3 class="font-mono text-[11px] tracking-widest text-brand-green uppercase font-bold flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-brand-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                                                Today's Band
+                                            </h3>
+                                            <span v-if="todaysServiceTitle" class="text-[10px] font-mono bg-brand-green/10 text-brand-green px-2 py-0.5 rounded font-bold">{{ todaysServiceTitle }}</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mb-4 font-semibold">{{ nextSundayDateFormatted }}</p>
+                                        
+                                        <div class="grid grid-cols-2 gap-2.5">
+                                            <div v-for="(person, roleName) in todaysBand" :key="roleName" class="flex flex-col bg-white border border-slate-200/70 p-3 rounded-xl shadow-xs">
+                                                <span class="font-mono text-[9px] uppercase font-bold text-slate-400 mb-0.5">{{ roleName }}</span>
+                                                <span class="font-bold text-slate-800 text-[13px] leading-tight">{{ person }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center flex flex-col items-center shadow-sm">
+                                        <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
+                                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
+                                        </div>
+                                        <h3 class="text-slate-800 text-lg font-bold mb-2">View Sunday Rota</h3>
+                                        <p class="text-slate-500 text-sm mb-6">Open the monthly schedule to see full instrument notes and speaker schedules.</p>
+                                        
+                                        <button v-if="latestRotaDoc" @click="previewPdf(latestRotaDoc)" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                            Open {{ latestRotaDoc.title }}
+                                        </button>
+                                        <div v-else class="w-full bg-white text-slate-600 py-3.5 px-4 rounded-xl text-xs font-mono font-semibold border border-rose-200 flex flex-col items-center justify-center gap-1 shadow-xs">
+                                            <span class="font-bold text-slate-800 text-sm">September Rota Data Loaded</span>
+                                            <span class="text-[10px] text-slate-400">Synced directly with Tron Music Schedule</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -767,7 +785,7 @@
                                         <p class="text-slate-800 text-sm leading-relaxed font-semibold">{{ currentWizardNode.text }}</p>
                                     </div>
 
-                                    <!-- Escalation view with direct PDF access -->
+                                    <!-- Escalation view with direct PDF/Doc access -->
                                     <div v-else class="bg-red-50 border border-red-200 rounded-xl p-5 mb-5 text-center flex flex-col items-center">
                                         <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-3">
                                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
@@ -801,12 +819,15 @@
             </div>
         </div>
 
-        <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
+        <!-- OVERLAY PANEL: IN-APP DOCUMENT VIEWER MODAL -->
         <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
             <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
                 <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
-                        <svg class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <!-- Dynamic Header Icon -->
+                        <svg v-if="activePdf.isWord" class="w-5 h-5 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="9 9 12 15 15 9"/></svg>
+                        <svg v-else class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        
                         <span class="font-bold text-xs truncate">{{ activePdf.title }}</span>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
@@ -836,20 +857,17 @@
              @click.self="activeVideoId = null">
             <div class="w-full max-w-[800px] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-slate-800">
                 
-                <!-- Backup Link if video is blocked by YouTube Copyright/Cookies -->
                 <a :href="'https://youtu.be/' + activeVideoId" target="_blank" 
                    :class="['absolute top-4 left-4 z-20 px-3 py-1.5 bg-brand-green/90 hover:bg-brand-green text-white text-xs font-mono rounded-lg backdrop-blur-md cursor-pointer border border-white/20 flex items-center gap-1.5 shadow-lg decoration-none transition-all duration-500', videoUIActive ? 'opacity-100' : 'opacity-0 pointer-events-none']">
                     Open in YouTube App
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                 </a>
 
-                <!-- Close Button overlaying the video -->
                 <button @click="activeVideoId = null" 
                         :class="['absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md cursor-pointer border border-white/20 shadow-lg transition-all duration-500', videoUIActive ? 'opacity-100' : 'opacity-0 pointer-events-none']">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                 </button>
                 
-                <!-- YouTube Iframe using No-Cookie domain to bypass Error 153 -->
                 <iframe 
                     :src="'https://www.youtube-nocookie.com/embed/' + activeVideoId + '?autoplay=1&rel=0'" 
                     class="w-full h-full border-none absolute inset-0 z-10" 
@@ -869,9 +887,47 @@
             "Simon", "Tim", "Titi", "Ulvis", "Ver-se"
         ];
 
-        // Centralized Documents List (GitHub repo hosted PDFs)
-        // Add your actual files here using the Method 1 guide
+        // Centralized Documents List
         const REPO_DOCUMENTS = [];
+
+        // Built-in Tron Church Music Rota Data parsed directly from User Word Document
+        const BUILTIN_ROTA = [
+            {
+                "date": "2026-09-06",
+                "service": "Morning Service (Central)",
+                "band": {
+                "Piano": "Agnes Brough",
+                "French Horn": "Neil Harper",
+                "Flute": "Katie Bonanno"
+                }
+            },
+            {
+                "date": "2026-09-13",
+                "service": "Morning Service (Central)",
+                "band": {
+                "Piano": "Shayndel Goo",
+                "Violin": "Nigel Mason",
+                "Clarinet": "Emma Anderson"
+                }
+            },
+            {
+                "date": "2026-09-20",
+                "service": "Morning Service (Central)",
+                "band": {
+                "Piano": "Richard Henry",
+                "Violin": "Catherine Lobb",
+                "Oboe": "Kathryn Coombs"
+                }
+            },
+            {
+                "date": "2026-09-27",
+                "service": "Morning Service (Central)",
+                "band": {
+                "Piano": "Shayndel Goo",
+                "Flute": "Katie Bonanno"
+                }
+            }
+        ];
 
         const STEPS = {
             audio: [
@@ -1059,7 +1115,7 @@
                     activeHelpStep: null,
                     flowNode: 'start',
                     copySuccess: false,
-                    isPopState: false, // Tracks if a state change came from the browser back button
+                    isPopState: false,
                     
                     feedbackText: '',
                     feedbackName: '',
@@ -1067,7 +1123,6 @@
                     feedbackSuccess: false,
                     feedbackError: false,
                     
-                    // Documents state
                     documentsList: REPO_DOCUMENTS,
                     documentSearch: '',
                     selectedDocCategory: 'All',
@@ -1118,10 +1173,17 @@
                     flowchartsDatabase: FLOWCHARTS,
 
                     selectedOutput: 4, 
-                    showAllRoutes: true
+                    showAllRoutes: true,
+                    
+                    // JSON Rota state
+                    bandRotaData: BUILTIN_ROTA,
+                    todaysBand: null,
+                    todaysServiceTitle: null,
+                    nextSundayDateFormatted: null
                 }
             },
             mounted() {
+                this.calculateNextSunday();
                 this.scanGitHubRepo();
 
                 // Set initial state from URL if present
@@ -1140,7 +1202,6 @@
                         this.screen = e.state.screen;
                     }
 
-                    // If history state doesn't flag a modal, ensure they are all safely closed
                     if (!e.state?.modal) {
                         this.activeVideoId = null;
                         this.activePdf = null;
@@ -1152,7 +1213,6 @@
                         }
                     }
 
-                    // Reset flag after Vue processes the reactive changes
                     this.$nextTick(() => {
                         this.isPopState = false;
                     });
@@ -1168,7 +1228,6 @@
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1181,7 +1240,6 @@
                 },
                 activePdf(newVal, oldVal) {
                     if (newVal) {
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1194,12 +1252,10 @@
                 },
                 activeHelpStep(newVal, oldVal) {
                     if (newVal && !this.closingModal) {
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else if (!newVal) {
-                        // Triggers when modal is closed via app UI
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
                         }
@@ -1223,7 +1279,7 @@
                     if (!this.currentWizardNode || !this.currentWizardNode.text) return null;
                     return this.documentsList.find(d => this.currentWizardNode.text.includes(d.filename));
                 },
-                latestRotaPdf() {
+                latestRotaDoc() {
                     const rotas = this.documentsList.filter(doc => 
                         doc.filename.toLowerCase().includes('rota') || 
                         doc.filename.toLowerCase().includes('band') ||
@@ -1236,22 +1292,18 @@
                     
                     let absoluteUrl = this.activePdf.path;
                     
-                    // Clean up GitHub URLs so they serve as proper PDFs instead of forced downloads
                     if (absoluteUrl.includes('raw.githubusercontent.com')) {
                         absoluteUrl = absoluteUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh');
                         absoluteUrl = absoluteUrl.replace('/main/', '@main/');
                     } else if (!absoluteUrl.startsWith('http')) {
-                        // Handle relative local paths dynamically based on domain
                         absoluteUrl = new URL(absoluteUrl, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
                     }
 
-                    // Apple devices have a flawless native PDF viewer with built-in pinch-to-zoom!
                     const isApple = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
                     
                     if (isApple) {
                         return absoluteUrl;
                     } else {
-                        // Android strictly requires Google Docs Viewer to display PDFs inline
                         return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
                     }
                 },
@@ -1321,16 +1373,53 @@
                 }
             },
             methods: {
+                calculateNextSunday() {
+                    const d = new Date();
+                    const day = d.getDay();
+                    const diff = d.getDate() + (day === 0 ? 0 : 7 - day); 
+                    const nextSunday = new Date(d.getFullYear(), d.getMonth(), diff);
+                    
+                    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+                    this.nextSundayDateFormatted = nextSunday.toLocaleDateString('en-GB', options);
+                    
+                    this.extractTodaysBand(nextSunday);
+                },
+                
+                extractTodaysBand(targetSundayDate) {
+                    if (this.bandRotaData && Array.isArray(this.bandRotaData) && this.bandRotaData.length > 0) {
+                        const targetDate = targetSundayDate.toISOString().split('T')[0];
+                        
+                        let matchedRota = this.bandRotaData.find(rota => rota.date === targetDate);
+                        
+                        // If exact Sunday isn't found, pick the closest upcoming date or first available
+                        if (!matchedRota) {
+                            matchedRota = this.bandRotaData.find(rota => new Date(rota.date) >= targetSundayDate) || this.bandRotaData[0];
+                        }
+                        
+                        if (matchedRota) {
+                            this.todaysBand = matchedRota.band;
+                            this.todaysServiceTitle = matchedRota.service || null;
+                            return;
+                        }
+                    }
+
+                    // Empty Fallback
+                    this.todaysBand = {
+                        "Status": "No Rota Data Found"
+                    };
+                },
+                
                 pushHistoryState(stateObj, urlQuery) {
-                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) {}
                 },
                 replaceHistoryState(stateObj, urlQuery) {
-                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) {}
                 },
+                
                 async scanGitHubRepo() {
                     try {
                         let owner = 'vabudar';
-                        let repo = 'AV-Setup-Checklist'; // Fixed repo capitalization!
+                        let repo = 'AV-Setup-Checklist';
                         
                         const host = window.location.hostname;
                         const pathParts = window.location.pathname.split('/').filter(Boolean);
@@ -1345,13 +1434,17 @@
                             if (treeRes.ok) {
                                 const treeData = await treeRes.json();
                                 if (treeData.tree && Array.isArray(treeData.tree)) {
-                                    const pdfFiles = treeData.tree
-                                        .filter(item => item.type === 'blob' && item.path.toLowerCase().endsWith('.pdf'));
+                                    
+                                    // Fetch PDFs AND Word Documents (.doc, .docx)
+                                    const validExts = ['.pdf', '.doc', '.docx'];
+                                    const documentFiles = treeData.tree
+                                        .filter(item => item.type === 'blob' && validExts.some(ext => item.path.toLowerCase().endsWith(ext)));
 
-                                    pdfFiles.forEach(fileObj => {
+                                    documentFiles.forEach(fileObj => {
                                         const fullPath = fileObj.path;
                                         const fileName = fullPath.split('/').pop();
-                                        const cleanName = fileName.replace(/\.pdf$/i, '');
+                                        const isWord = fileName.toLowerCase().endsWith('.doc') || fileName.toLowerCase().endsWith('.docx');
+                                        let cleanName = fileName.replace(/\.pdf$/i, '').replace(/\.docx?$/i, '');
                                         
                                         const exists = this.documentsList.some(d => 
                                             d.filename.toLowerCase() === fileName.toLowerCase() ||
@@ -1364,12 +1457,27 @@
                                                 id: 'gh-' + (fileObj.sha || Math.random().toString(36).substring(2, 9)),
                                                 title: cleanName,
                                                 category: 'Repository File',
-                                                type: 'PDF Document',
+                                                type: isWord ? 'Word Document' : 'PDF Document',
                                                 path: rawPath,
-                                                filename: fileName
+                                                filename: fileName,
+                                                isWord: isWord
                                             });
                                         }
                                     });
+                                    
+                                    // Fetch remote JSON Rota File if present
+                                    const jsonFile = treeData.tree.find(item => item.path.toLowerCase() === 'rota.json' || item.path.toLowerCase() === 'band.json');
+                                    if (jsonFile) {
+                                        const rawJsonPath = `https://raw.githubusercontent.com/${owner}/${repo}/main/${jsonFile.path}`;
+                                        const jsonRes = await fetch(rawJsonPath);
+                                        if (jsonRes.ok) {
+                                            const fetched = await jsonRes.json();
+                                            if (Array.isArray(fetched) && fetched.length > 0) {
+                                                this.bandRotaData = fetched;
+                                                this.calculateNextSunday();
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1428,7 +1536,6 @@
                     }
                 },
                 
-                // UNIFIED MODAL TOUCH & SWIPE SYSTEM
                 handleModalTouchStart(e) {
                     const touch = e.type.includes('touch') ? e.touches[0] : e;
                     this.swipeTransition = 'none'; 
