@@ -650,7 +650,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                         Open {{ latestRotaPdf.title }}
@@ -900,11 +900,7 @@
                     note: "Help: Use the control pad on the right hand side of the control panel to change the inputs. The panel should show 313 on the first three inputs.",
                     imageName: "Reception TVs Control Panel"
                 },
-                { 
-                    id: 'audio-pre-1', 
-                    text: "Switch on tech in Lomond", 
-                    why: "Do this first as it takes a little while to boot up."
-                }
+                { id: 'audio-pre-1', text: "Switch on tech in Lomond", why: "Do this first as it takes a little while to boot up." }
                 ]},
                 { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
                 { id: 'audio-1', text: 'Pray with team member(s)', why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service." },
@@ -1263,6 +1259,10 @@
                         doc.filename.toLowerCase().includes('band') ||
                         doc.filename.toLowerCase().includes('schedule')
                     );
+                    
+                    // Sort descending so later months (e.g. Sep over Aug) appear first
+                    rotas.sort((a, b) => b.filename.localeCompare(a.filename));
+                    
                     return rotas.length > 0 ? rotas[0] : null;
                 },
                 todaysBand() {
@@ -1390,12 +1390,43 @@
                         if (res.ok) {
                             this.rotaData = await res.json();
                         } else {
-                            // Fallback to the September mock data derived from your Word document
+                            // Fallback to the accurate mock data from Morning Service (C)
                             this.rotaData = [
-                                { "date": "2026-09-06", "service": "Morning Service (Central)", "band": { "Piano": "Muyao Attia", "Violin": "Beccy Amer", "French Horn": "Naomi Lawther", "Bass": "Christ Amer" } },
-                                { "date": "2026-09-13", "service": "Morning Service (Central)", "band": { "Piano": "Myrto Paton", "Violin": "Matt Wilkinson" } },
-                                { "date": "2026-09-20", "service": "Morning Service (Central)", "band": { "Piano": "Michael Topping", "Violin": "Beccy Amer", "Bass": "Christ Amer" } },
-                                { "date": "2026-09-27", "service": "Morning Service (Central)", "band": { "Piano": "Katie Torrens", "Viola": "Ruth Whillis" } }
+                                {
+                                    "date": "2026-09-06",
+                                    "service": "Morning Service (Central)",
+                                    "band": {
+                                        "Piano": "Agnes Brough",
+                                        "French Horn": "Neil Harper",
+                                        "Flute": "Katie Bonanno"
+                                    }
+                                },
+                                {
+                                    "date": "2026-09-13",
+                                    "service": "Morning Service (Central)",
+                                    "band": {
+                                        "Piano": "Shayndel Goo",
+                                        "Violin": "Nigel Mason",
+                                        "Clarinet": "Emma Anderson"
+                                    }
+                                },
+                                {
+                                    "date": "2026-09-20",
+                                    "service": "Morning Service (Central)",
+                                    "band": {
+                                        "Piano": "Richard Henry",
+                                        "Violin": "Catherine Lobb",
+                                        "Oboe": "Kathryn Coombs"
+                                    }
+                                },
+                                {
+                                    "date": "2026-09-27",
+                                    "service": "Morning Service (Central)",
+                                    "band": {
+                                        "Piano": "Shayndel Goo",
+                                        "Flute": "Katie Bonanno"
+                                    }
+                                }
                             ];
                         }
                     } catch (e) {
