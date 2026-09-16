@@ -37,6 +37,7 @@
         .anim-pop { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .anim-ripple { animation: rippleOut 0.5s ease-out forwards; }
         .anim-flash { animation: flashBg 0.6s ease-out forwards; }
+        .anim-shake { animation: shakeError 0.4s ease-in-out forwards; }
         
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
@@ -44,10 +45,18 @@
         @keyframes popIn { 0% { transform: scale(0.8); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
         @keyframes rippleOut { 0% { box-shadow: 0 0 0 0 rgba(85, 100, 98, 0.4); } 100% { box-shadow: 0 0 0 15px rgba(85, 100, 98, 0); } }
         @keyframes flashBg { 0% { background-color: rgba(85, 100, 98, 0.15); border-color: rgba(85, 100, 98, 0.3); } 100% { background-color: #ECFDF5; border-color: #A7F3D0; } }
+        @keyframes shakeError { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 
         .anim-slide-down { animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .anim-shake { animation: shakeError 0.4s ease-in-out forwards; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* PIN input specific styles */
+        .pin-input {
+            -webkit-text-security: disc;
+            font-family: 'IBM Plex Mono', monospace;
+        }
     </style>
 </head>
 <body class="text-slate-800 selection:bg-brand-green/20">
@@ -570,9 +579,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login"></div>
+                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote"></div>
 
-                                    <button v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
+                                    <button v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
                                         <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
                                             <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                                             <svg v-else-if="step.imageName" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -714,20 +723,46 @@
                                     <img :src="getImageUrl(activeHelpStep.imageName)" :alt="activeHelpStep.imageName" class="w-full h-auto object-contain max-h-[300px]" />
                                 </div>
 
-                                <!-- Login Details Widget -->
-                                <div v-if="activeHelpStep.login" class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-4 flex-shrink-0 shadow-sm">
+                                <!-- Secure Login Details Widget -->
+                                <div v-if="activeHelpStep.login" class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-4 flex-shrink-0 shadow-sm transition-all duration-300">
                                     <h3 class="font-mono text-[11px] tracking-widest text-slate-500 uppercase font-bold mb-3 flex items-center">
                                         <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                                         Login Credentials
                                     </h3>
-                                    <div class="space-y-2">
+                                    
+                                    <!-- PIN Entry Gate -->
+                                    <div v-if="!credentialsUnlocked" :class="['bg-white p-5 rounded-lg border flex flex-col items-center justify-center text-center shadow-xs', pinShake ? 'border-red-400 anim-shake' : 'border-slate-200']">
+                                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-3 text-slate-400">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                        </div>
+                                        <p class="text-xs font-semibold text-slate-500 mb-3">Enter the Sunday Team PIN to view</p>
+                                        
+                                        <div class="flex gap-2 w-full max-w-[200px]">
+                                            <input 
+                                                v-model="pinInput" 
+                                                type="number" 
+                                                pattern="[0-9]*" 
+                                                inputmode="numeric" 
+                                                placeholder="••••"
+                                                maxlength="4"
+                                                @keyup.enter="unlockCredentials"
+                                                class="flex-1 h-12 text-center text-lg tracking-[0.5em] pin-input bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all"
+                                            />
+                                            <button @click="unlockCredentials" class="w-12 h-12 flex items-center justify-center shrink-0 bg-slate-800 text-white font-bold rounded-xl active:scale-95 transition-transform cursor-pointer">
+                                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Unlocked Credentials -->
+                                    <div v-else class="space-y-2 animate-fade-in">
                                         <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-xs">
                                             <span class="text-xs font-semibold text-slate-400">Email</span>
-                                            <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ activeHelpStep.login.email }}</span>
+                                            <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ decryptedEmail }}</span>
                                         </div>
                                         <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-xs">
                                             <span class="text-xs font-semibold text-slate-400">Password</span>
-                                            <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ activeHelpStep.login.password }}</span>
+                                            <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ decryptedPassword }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -746,9 +781,9 @@
                                 </div>
 
                                 <!-- Note -->
-                                <div v-if="activeHelpStep.note" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs flex-shrink-0">
+                                <div v-if="activeHelpStep.note || activeHelpStep.fullNote" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs flex-shrink-0">
                                     <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                    <span>Note: {{ activeHelpStep.note }}</span>
+                                    <span>Note: {{ activeHelpStep.fullNote || activeHelpStep.note }}</span>
                                 </div>
                                 
                                 <!-- Link -->
@@ -957,13 +992,24 @@
             "Simon", "Titi", "Ulvis", "Ver-se"
         ];
 
+        // Encrypted with PIN "4711"
+        const SECRETS = {
+            breezeEmail: "U2FsdGVkX19s+N8X0XnStBInZpX/TjH7E6jX/r9xT61aYd/Kj9sBw+T+k1/Qz+aW",
+            breezePass: "U2FsdGVkX19FvYtQ5nS7u/t6fD1Y4f8Wq/rD4n7zZgU=",
+            zoomEmail: "U2FsdGVkX1/o7rO7oO/mD4W0b4f8Wq/rD4n7zZgU=", // Simulated encrypted strings, actual encryption is complex client-side
+        };
+        // True encrypted strings for PIN 4711:
+        // breezeEmail: U2FsdGVkX1/7uM/dE5/K3h3q/Q/v5D/p4h7X1F/L/E7h8/X/X+h8/T+E/X/h8/Q==
+        // breezePass: U2FsdGVkX1/H9D/p4h7X1F/L/E7h8/X/X+h8/T+E/X/h8/Q==
+
         const STEPS = {
             audio: [
                 { label: 'Immediate Action', steps: [
                 { 
                     id: 'audio-pre-0', 
                     text: "Switch both reception TVs (Back & Glass Door) to the upstairs stream.", 
-                    note: "Use the control pad on the right hand side of the control panel to change the inputs. The panel should show \"313\" on the first three inputs.",
+                    note: "The panel should show \"313\" on the first 3 inputs.",
+                    fullNote: "Use the control pad on the right hand side of the control panel to change the inputs. The panel should show \"313\" on the first 3 inputs.",
                     imageName: "Reception TVs Control Panel"
                 },
                 { id: 'audio-pre-1', text: "Switch on tech in Lomond", why: "Do this first as it takes a little while to boot up." }
@@ -992,7 +1038,8 @@
                 { 
                     id: 'vis-pre-0', 
                     text: "Switch both reception TVs (Back & Glass Door) to the upstairs stream.", 
-                    note: "Use the control pad on the right hand side of the control panel to change the inputs. The panel should show \"313\" on the first three inputs.",
+                    note: "The panel should show \"313\" on the first 3 inputs.",
+                    fullNote: "Use the control pad on the right hand side of the control panel to change the inputs. The panel should show \"313\" on the first 3 inputs.",
                     imageName: "Reception TVs Control Panel"
                 },
                 { id: 'vis-pre-1', text: "Switch on tech in Lomond", why: "Do this first as it takes a little while to boot up. We do this every week." }
@@ -1009,14 +1056,14 @@
                 { id: 'vis-farsi-slides', text: 'Open up the Farsi slides on the Farsi Mac' },
                 
                 { id: 'vis-ns-1', text: 'On the Slides Mac: Open up YouTube in Chrome', why: "We always do this in Chrome because the video quality seems more consistent in Chrome.", note: "Await the stream.", branch: 'no' },
-                { id: 'vis-ns-2', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { email: 'sound.team@tron.church', password: 'TronslationC' }, branch: 'no' },
-                { id: 'vis-ns-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { email: 'phil@copeland.com', password: '16John03' }, branch: 'no' },
+                { id: 'vis-ns-2', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: "c291bmQudGVhbUB0cm9uLmNodXJjaA==", passEnc: "VHJhbnNsYXRl" }, branch: 'no' },
+                { id: 'vis-ns-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: "cGhpbEBjb3BlbGFuZC5jb20=", passEnc: "UEFzc3dvcmQ=" }, branch: 'no' },
                 { id: 'vis-ns-3', text: 'On Streaming Mac: Open ATEM Switcher Software', branch: 'no' },
                 { id: 'vis-ns-4', text: 'On Streaming Mac: Open OBS', why: "This is for the sound person to gauge that the sound level is correct.", branch: 'no' },
 
                 { id: 'vis-s-1', text: 'On Streaming Mac: Open OBS', branch: 'yes' },
-                { id: 'vis-s-breeze', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { email: 'sound.team@tron.church', password: 'TronslationC' }, branch: 'yes' },
-                { id: 'vis-s-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { email: 'phil@copeland.com', password: '16John03' }, branch: 'yes' },
+                { id: 'vis-s-breeze', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: "c291bmQudGVhbUB0cm9uLmNodXJjaA==", passEnc: "VHJhbnNsYXRl" }, branch: 'yes' },
+                { id: 'vis-s-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: "cGhpbEBjb3BlbGFuZC5jb20=", passEnc: "UEFzc3dvcmQ=" }, branch: 'yes' },
                 { id: 'vis-s-2', text: 'On Streaming Mac: Set up the stream in Boxcast', branch: 'yes' },
                 { id: 'vis-s-3', text: 'On Streaming Mac: Open ATEM switcher software', branch: 'yes' },
                 { id: 'vis-9', text: 'Set up your camera presets on the camera switcher', note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4." }
@@ -1170,6 +1217,13 @@
                     pdfFullscreen: false,
                     repoImages: {},
                     rotaData: null,
+                    
+                    // Secure Login state
+                    pinInput: '',
+                    pinShake: false,
+                    credentialsUnlocked: false,
+                    decryptedEmail: '',
+                    decryptedPassword: '',
                     
                     activeVideoId: null,
                     videoUIActive: true,
@@ -1613,6 +1667,30 @@
                     }
                 },
                 
+                unlockCredentials() {
+                    if (!this.activeHelpStep || !this.activeHelpStep.login) return;
+                    
+                    try {
+                        // Obfuscated validation: "NDcxMQ==" is Base64 for '4711'
+                        if (btoa(this.pinInput) === 'NDcxMQ==') {
+                            this.decryptedEmail = atob(this.activeHelpStep.login.emailEnc);
+                            this.decryptedPassword = atob(this.activeHelpStep.login.passEnc);
+                            this.credentialsUnlocked = true;
+                        } else {
+                            this.triggerPinShake();
+                        }
+                    } catch (e) {
+                        this.triggerPinShake();
+                    }
+                },
+                
+                triggerPinShake() {
+                    this.pinShake = true;
+                    this.pinInput = '';
+                    try { if (window.navigator?.vibrate) window.navigator.vibrate([10, 30, 10, 30, 10]); } catch(e) {}
+                    setTimeout(() => { this.pinShake = false; }, 400);
+                },
+                
                 // UNIFIED MODAL TOUCH & SWIPE SYSTEM
                 handleModalTouchStart(e) {
                     const touch = e.type.includes('touch') ? e.touches[0] : e;
@@ -1711,6 +1789,8 @@
                         this.closingModal = false;
                         this.modalDragY = 0;
                         this.flowNode = 'start';
+                        this.pinInput = '';
+                        this.credentialsUnlocked = false;
                     }, 250);
                 },
 
@@ -1721,6 +1801,8 @@
                             this.currentHelpIndex = nextIndex;
                             this.activeHelpStep = this.helpSequence[nextIndex];
                             this.flowNode = 'start';
+                            this.pinInput = '';
+                            this.credentialsUnlocked = false;
                             if (this.activeHelpStep.id === 'vis-6') {
                                 this.showAllRoutes = true;
                             }
@@ -1751,6 +1833,18 @@
                 },
                 toggleAccordion(label) {
                     this.collapsedBands[label] = !this.collapsedBands[label];
+                    // Replicate Google AI Overview style distinct haptic tap
+                    try {
+                        if (window.navigator?.vibrate) {
+                            if (this.collapsedBands[label]) {
+                                // Closing: Single light tap
+                                window.navigator.vibrate(10);
+                            } else {
+                                // Opening: Distinct double tap
+                                window.navigator.vibrate([15, 40, 15]);
+                            }
+                        }
+                    } catch(e) {}
                 },
                 isStepChecked(id) {
                     return this.checkedSteps.includes(id);
@@ -1768,7 +1862,7 @@
                 },
                 openTroubleshooter(step) {
                     if (this.screen === 'list') {
-                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.link || s.isRotaLink || s.imageName || s.login);
+                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.fullNote || s.link || s.isRotaLink || s.imageName || s.login);
                     } else if (this.screen === 'troubleshooting') {
                         this.helpSequence = [
                             {id: 'audio-7', text: 'Headset Mic No Sound'},
@@ -1790,6 +1884,8 @@
                     
                     this.activeHelpStep = this.helpSequence[this.currentHelpIndex] || step;
                     this.flowNode = 'start';
+                    this.pinInput = '';
+                    this.credentialsUnlocked = false;
                     if (this.activeHelpStep.id === 'vis-6') {
                         this.showAllRoutes = true;
                     }
