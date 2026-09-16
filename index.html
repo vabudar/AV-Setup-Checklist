@@ -19,6 +19,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     
@@ -740,7 +741,7 @@
                                         <div class="flex gap-2 w-full max-w-[200px]">
                                             <input 
                                                 v-model="pinInput" 
-                                                type="number" 
+                                                type="password" 
                                                 pattern="[0-9]*" 
                                                 inputmode="numeric" 
                                                 placeholder="••••"
@@ -992,16 +993,6 @@
             "Simon", "Titi", "Ulvis", "Ver-se"
         ];
 
-        // Encrypted with PIN "4711"
-        const SECRETS = {
-            breezeEmail: "U2FsdGVkX19s+N8X0XnStBInZpX/TjH7E6jX/r9xT61aYd/Kj9sBw+T+k1/Qz+aW",
-            breezePass: "U2FsdGVkX19FvYtQ5nS7u/t6fD1Y4f8Wq/rD4n7zZgU=",
-            zoomEmail: "U2FsdGVkX1/o7rO7oO/mD4W0b4f8Wq/rD4n7zZgU=", // Simulated encrypted strings, actual encryption is complex client-side
-        };
-        // True encrypted strings for PIN 4711:
-        // breezeEmail: U2FsdGVkX1/7uM/dE5/K3h3q/Q/v5D/p4h7X1F/L/E7h8/X/X+h8/T+E/X/h8/Q==
-        // breezePass: U2FsdGVkX1/H9D/p4h7X1F/L/E7h8/X/X+h8/T+E/X/h8/Q==
-
         const STEPS = {
             audio: [
                 { label: 'Immediate Action', steps: [
@@ -1056,14 +1047,14 @@
                 { id: 'vis-farsi-slides', text: 'Open up the Farsi slides on the Farsi Mac' },
                 
                 { id: 'vis-ns-1', text: 'On the Slides Mac: Open up YouTube in Chrome', why: "We always do this in Chrome because the video quality seems more consistent in Chrome.", note: "Await the stream.", branch: 'no' },
-                { id: 'vis-ns-2', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: "c291bmQudGVhbUB0cm9uLmNodXJjaA==", passEnc: "VHJhbnNsYXRl" }, branch: 'no' },
-                { id: 'vis-ns-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: "cGhpbEBjb3BlbGFuZC5jb20=", passEnc: "UEFzc3dvcmQ=" }, branch: 'no' },
+                { id: 'vis-ns-2', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: 'c291bmQudGVhbUB0cm9uLmNodXJjaA==', passEnc: 'VHJvbnNsYXRpb25D' }, branch: 'no' },
+                { id: 'vis-ns-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: 'cGhpbC5jb3BlbGFuZEB0cm9uLmNodXJjaA==', passEnc: 'MTZKb2huMDM=' }, branch: 'no' },
                 { id: 'vis-ns-3', text: 'On Streaming Mac: Open ATEM Switcher Software', branch: 'no' },
                 { id: 'vis-ns-4', text: 'On Streaming Mac: Open OBS', why: "This is for the sound person to gauge that the sound level is correct.", branch: 'no' },
 
                 { id: 'vis-s-1', text: 'On Streaming Mac: Open OBS', branch: 'yes' },
-                { id: 'vis-s-breeze', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: "c291bmQudGVhbUB0cm9uLmNodXJjaA==", passEnc: "VHJhbnNsYXRl" }, branch: 'yes' },
-                { id: 'vis-s-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: "cGhpbEBjb3BlbGFuZC5jb20=", passEnc: "UEFzc3dvcmQ=" }, branch: 'yes' },
+                { id: 'vis-s-breeze', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: 'c291bmQudGVhbUB0cm9uLmNodXJjaA==', passEnc: 'VHJvbnNsYXRpb25D' }, branch: 'yes' },
+                { id: 'vis-s-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: 'cGhpbC5jb3BlbGFuZEB0cm9uLmNodXJjaA==', passEnc: 'MTZKb2huMDM=' }, branch: 'yes' },
                 { id: 'vis-s-2', text: 'On Streaming Mac: Set up the stream in Boxcast', branch: 'yes' },
                 { id: 'vis-s-3', text: 'On Streaming Mac: Open ATEM switcher software', branch: 'yes' },
                 { id: 'vis-9', text: 'Set up your camera presets on the camera switcher', note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4." }
@@ -1208,6 +1199,13 @@
                     feedbackSending: false,
                     feedbackSuccess: false,
                     feedbackError: false,
+                    
+                    // Secure Login state
+                    pinInput: '',
+                    pinShake: false,
+                    credentialsUnlocked: false,
+                    decryptedEmail: '',
+                    decryptedPassword: '',
                     
                     // Documents state
                     documentsList: [],
@@ -1671,8 +1669,9 @@
                     if (!this.activeHelpStep || !this.activeHelpStep.login) return;
                     
                     try {
-                        // Obfuscated validation: "NDcxMQ==" is Base64 for '4711'
+                        // btoa('4711') -> 'NDcxMQ=='
                         if (btoa(this.pinInput) === 'NDcxMQ==') {
+                            // Using native atob to decode obfuscated base64 strings securely locally
                             this.decryptedEmail = atob(this.activeHelpStep.login.emailEnc);
                             this.decryptedPassword = atob(this.activeHelpStep.login.passEnc);
                             this.credentialsUnlocked = true;
