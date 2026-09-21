@@ -49,7 +49,6 @@
         @keyframes shakeError { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 
         .anim-slide-down { animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .anim-shake { animation: shakeError 0.4s ease-in-out forwards; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -455,7 +454,7 @@
             <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Welcome, {{ currentName }}</p>
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Choose your role</h1>
             
-            <button @click="selectRole('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-5 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+            <button @click="prepareRoleSelection('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-5 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                 <div class="flex items-center gap-5">
                     <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
                         <svg class="w-7 h-7 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -472,7 +471,7 @@
                 <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <button @click="screen = 'streaming'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+            <button @click="prepareRoleSelection('visuals')" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
                 <div class="flex items-center gap-5">
                     <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
                         <svg class="w-7 h-7 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -496,15 +495,15 @@
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back
             </button>
-            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Visuals Setup</p>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">{{ roleToSelect === 'audio' ? 'Audio Setup' : 'Visuals Setup' }}</p>
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Are we streaming today?</h1>
             
             <div class="flex flex-col gap-4">
-                <button @click="selectRole('visuals', 'yes')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
+                <button @click="selectRole(roleToSelect, 'yes')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
                     <span>Yes · Streaming Today</span>
                     <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg>
                 </button>
-                <button @click="selectRole('visuals', 'no')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
+                <button @click="selectRole(roleToSelect, 'no')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
                     <span>No · In-House Only</span>
                     <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></svg>
                 </button>
@@ -568,27 +567,34 @@
                                         <div class="ml-4 flex-1">
                                             <p :class="['text-[15px] leading-snug font-semibold tracking-tight transition-colors', isStepChecked(step.id) ? 'line-through text-slate-400' : 'text-slate-800']">{{ step.text }}</p>
                                             
-                                            <div v-if="step.note" :class="['mt-2 text-xs border-l-2 pl-2 font-semibold transition-opacity', isStepChecked(step.id) ? 'opacity-30 border-slate-300 text-slate-400' : 'border-brand-green text-brand-green bg-brand-green/10 py-1.5 px-2 rounded-r-md']">
-                                                {{ step.note }}
-                                                <span v-if="step.phone" class="block mt-2 mb-0.5">
+                                            <div v-if="step.note || step.phone || step.multiLink" :class="['mt-2 text-xs border-l-2 pl-2 font-semibold transition-opacity', isStepChecked(step.id) ? 'opacity-30 border-slate-300 text-slate-400' : 'border-brand-green text-brand-green bg-brand-green/10 py-1.5 px-2 rounded-r-md']">
+                                                <div v-if="step.note">{{ step.note }}</div>
+                                                <div v-if="step.phone" :class="step.note ? 'mt-2 mb-0.5' : 'mb-0.5'">
                                                     <a :href="'tel:' + step.phone.replace(/\s/g, '')" @click.stop class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-brand-green/20 hover:bg-brand-green/30 text-brand-green rounded-lg transition-colors border border-brand-green/30 font-bold decoration-none cursor-pointer shadow-sm active:scale-95">
                                                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                                         Dial {{ step.phone }}
                                                     </a>
-                                                </span>
+                                                </div>
+                                                <div v-if="step.multiLink" :class="step.note || step.phone ? 'mt-2 mb-0.5' : 'mb-0.5'">
+                                                    <button @click.stop="openMultipleLinks(step.multiLink.urls)" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-brand-green/20 hover:bg-brand-green/30 text-brand-green rounded-lg transition-colors border border-brand-green/30 font-bold decoration-none cursor-pointer shadow-sm active:scale-95 w-fit text-left">
+                                                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                                        {{ step.multiLink.label }}
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote"></div>
+                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote || step.links || step.multiLink"></div>
 
-                                    <button v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
+                                    <button v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote || step.links || step.multiLink" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
                                         <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
                                             <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                                             <svg v-else-if="step.imageName" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                            <svg v-else-if="step.links && !step.why" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                                             <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                                         </div>
-                                        <span class="font-mono text-[8px] uppercase tracking-wider font-bold mt-1 text-slate-400 group-hover:text-slate-700">{{ step.isRotaLink ? 'Rota' : (step.imageName ? 'Image' : 'Help') }}</span>
+                                        <span class="font-mono text-[8px] uppercase tracking-wider font-bold mt-1 text-slate-400 group-hover:text-slate-700">{{ step.isRotaLink ? 'Rota' : (step.imageName ? 'Image' : (step.links && !step.why ? 'Links' : 'Help')) }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -787,16 +793,16 @@
                                     <span>Note: {{ activeHelpStep.fullNote || activeHelpStep.note }}</span>
                                 </div>
                                 
-                                <!-- Link -->
-                                <div v-if="activeHelpStep.link" class="mb-4 flex-shrink-0">
-                                    <a :href="activeHelpStep.link" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer group">
+                                <!-- Links -->
+                                <div v-if="activeHelpStep.links" class="mb-4 flex-shrink-0 space-y-3">
+                                    <a v-for="(linkObj, idx) in activeHelpStep.links" :key="idx" :href="linkObj.url" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer group">
                                         <div class="flex items-center gap-4">
                                             <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
                                                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
                                             </div>
                                             <div class="flex-1">
-                                                <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Tron Church YouTube</h3>
-                                                <p class="text-xs text-slate-500 mt-0.5">Tap to open channel stream</p>
+                                                <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">{{ linkObj.label }}</h3>
+                                                <p class="text-xs text-slate-500 mt-0.5">{{ linkObj.desc }}</p>
                                             </div>
                                             <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                                         </div>
@@ -1018,8 +1024,8 @@
                 { id: 'audio-9', text: "Leave spare mic pack on the speaker's glass table", why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to." },
                 { id: 'audio-10', text: 'Set up band mics' },
                 { id: 'audio-11', text: 'Test and adjust all band mics', note: "Make sure you know which mic is in which input." },
-                { id: 'audio-12', text: 'Make sure sound is coming through on OBS', why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service. This will make for adequately loud and consistent volume throughout the stream.", note: "Aiming for yellows touching reds." },
-                { id: 'audio-13', text: 'Test YouTube video for sound level', why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!" },
+                { id: 'audio-12', text: 'Make sure sound is coming through on OBS', why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service. This will make for adequately loud and consistent volume throughout the stream.", note: "Aiming for yellows touching reds.", branch: 'yes' },
+                { id: 'audio-13', text: 'Test YouTube video for sound level', why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!", branch: 'no' },
                 { id: 'audio-14', text: 'Grab headset mics and leave in the vestry and chat to the leader', why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.", note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!" },
                 { id: 'audio-15', text: "Route Lomond panel & check feeds", why: "It's a massive pain to hear that somethings not on down there mid-service.", note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs." }
                 ]}
@@ -1069,7 +1075,7 @@
                 { id: 'vis-s-t2', text: "Play Pre-Service slides", branch: 'yes' },
                 { id: 'vis-s-t3', text: "Make sure MAC is Live on the cameras", why: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.", branch: 'yes' },
                 { id: 'vis-s-t4', text: "Start stream at 9:45", why: "This is important as it give the other venues time to find the stream and play the stream in the background and allow adequate time to display their notices.", branch: 'yes' },
-                { id: 'vis-s-t5', text: "Check stream is running on YouTube using your phone or browser", why: "So you know it’s good to go.", link: "https://m.youtube.com/@TronChurch", branch: 'yes' }
+                { id: 'vis-s-t5', text: "Check stream is running on YouTube using your phone or browser", why: "So you know it’s good to go.", multiLink: { label: "Open YouTube and Tron Church Website", urls: ["https://www.youtube.com/@TronChurch", "https://www.tron.church/live"] }, links: [{ label: "YouTube Channel", desc: "Open Tron Church on YouTube", url: "https://www.youtube.com/@TronChurch" }, { label: "Tron Church Live", desc: "Open the website livestream page", url: "https://www.tron.church/live" }], branch: 'yes' }
                 ]}
             ]
         };
@@ -1183,6 +1189,7 @@
                     screen: 'home', 
                     currentName: null,
                     role: null,
+                    roleToSelect: null,
                     streaming: null,
                     newName: '',
                     teamMembers: [...INITIAL_TEAM],
@@ -1215,13 +1222,6 @@
                     pdfFullscreen: false,
                     repoImages: {},
                     rotaData: null,
-                    
-                    // Secure Login state
-                    pinInput: '',
-                    pinShake: false,
-                    credentialsUnlocked: false,
-                    decryptedEmail: '',
-                    decryptedPassword: '',
                     
                     activeVideoId: null,
                     videoUIActive: true,
@@ -1820,15 +1820,14 @@
                     this.newName = '';
                     this.screen = 'role';
                 },
-                selectRole(selectedRole, streamOption = null) {
+                prepareRoleSelection(selectedRole) {
+                    this.roleToSelect = selectedRole;
+                    this.screen = 'streaming';
+                },
+                selectRole(selectedRole, streamOption) {
                     this.role = selectedRole;
-                    if (selectedRole === 'audio') {
-                        this.streaming = null;
-                        this.screen = 'list';
-                    } else if (streamOption) {
-                        this.streaming = streamOption;
-                        this.screen = 'list';
-                    }
+                    this.streaming = streamOption;
+                    this.screen = 'list';
                 },
                 toggleAccordion(label) {
                     this.collapsedBands[label] = !this.collapsedBands[label];
@@ -1861,7 +1860,7 @@
                 },
                 openTroubleshooter(step) {
                     if (this.screen === 'list') {
-                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.fullNote || s.link || s.isRotaLink || s.imageName || s.login);
+                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.fullNote || s.links || s.isRotaLink || s.imageName || s.login);
                     } else if (this.screen === 'troubleshooting') {
                         this.helpSequence = [
                             {id: 'audio-7', text: 'Headset Mic No Sound'},
@@ -1995,6 +1994,12 @@
                     this.checkedSteps = [];
                     this.role = null;
                     this.streaming = null;
+                },
+                openMultipleLinks(urls) {
+                    if (!urls || urls.length === 0) return;
+                    urls.forEach(url => {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                    });
                 }
             }
         }).mount('#app');
