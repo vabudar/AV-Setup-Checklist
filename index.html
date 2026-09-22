@@ -548,54 +548,78 @@
                         </div>
                     </div>
 
-                    <!-- Step Cards featuring tactile Brand Green accent stripes -->
+                    <!-- Step Cards featuring tactile active expansion -->
                     <div v-if="!collapsedBands[band.label]" class="animate-fade-in space-y-3">
                         <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
-                            <div :class="['flex flex-col rounded-2xl overflow-hidden transition-all duration-300 relative border shadow-sm', 
-                                         justChecked === step.id ? 'anim-flash' : '', 
-                                         isStepChecked(step.id) && justChecked !== step.id ? 'bg-emerald-50/40 border-emerald-200/60 opacity-75' : 'bg-white border-slate-200/80 hover:bg-slate-50/50']">
+                            <div :class="[
+                                    'flex flex-col rounded-xl overflow-hidden transition-all duration-300 relative border cursor-pointer',
+                                    justChecked === step.id ? 'anim-flash' : '',
+                                    focusedStep === step.id ? 'border-slate-800 border-2 shadow-md bg-white' : (isStepChecked(step.id) && justChecked !== step.id ? 'bg-emerald-50/30 border-emerald-200/60 opacity-75 shadow-sm' : 'bg-white border-slate-200/80 hover:bg-slate-50/50 shadow-sm')
+                                 ]"
+                                 @click="handleRowClick(step.id)">
                                 
-                                <div class="flex items-stretch">
-                                    <div :class="['w-1.5 transition-colors duration-300', isStepChecked(step.id) ? 'bg-brand-green' : 'bg-slate-300']"></div>
+                                <div class="flex items-start p-4.5">
+                                    <!-- Checkbox -->
+                                    <div @click.stop="toggleStep(step.id, true)"
+                                         :class="['w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10 mt-0.5',
+                                                  isStepChecked(step.id) && justChecked !== step.id ? 'bg-brand-green border-brand-green text-white' : (focusedStep === step.id ? 'border-slate-500 hover:border-slate-700 bg-white' : 'border-slate-300 hover:border-slate-400 bg-white'),
+                                                  justChecked === step.id ? 'anim-pop anim-ripple bg-brand-green border-brand-green text-white' : '']">
+                                        <svg v-if="isStepChecked(step.id)" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="ml-4 flex-1">
+                                        <p :class="['text-[15px] leading-snug font-semibold tracking-tight transition-colors', isStepChecked(step.id) ? 'line-through text-slate-400' : 'text-slate-800']">{{ step.text }}</p>
+                                        
+                                        <!-- Expanded Information (Smooth Accordion) -->
+                                        <div class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+                                             :class="focusedStep === step.id ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
+                                            <div class="overflow-hidden">
+                                                <div class="pt-3 space-y-2.5 pb-1 opacity-0 transition-opacity duration-300"
+                                                     :class="focusedStep === step.id ? 'opacity-100 delay-150' : 'opacity-0'">
+                                                    
+                                                    <!-- Note Box -->
+                                                    <div v-if="step.note || step.fullNote" class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-[13px] text-slate-600 font-medium">
+                                                        {{ step.fullNote || step.note }}
+                                                    </div>
 
-                                    <div class="flex-1 flex items-center p-4.5 cursor-pointer" @click="toggleStep(step.id)">
-                                        <div :class="['w-6 h-6 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10',
-                                                     isStepChecked(step.id) && justChecked !== step.id ? 'bg-brand-green/10 border-brand-green text-brand-green' : 'border-slate-300',
-                                                     justChecked === step.id ? 'anim-pop anim-ripple bg-brand-green border-brand-green text-white' : '']">
-                                            <svg v-if="isStepChecked(step.id)" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        </div>
-                                        <div class="ml-4 flex-1">
-                                            <p :class="['text-[15px] leading-snug font-semibold tracking-tight transition-colors', isStepChecked(step.id) ? 'line-through text-slate-400' : 'text-slate-800']">{{ step.text }}</p>
-                                            
-                                            <div v-if="step.note || step.phone || step.multiLink" :class="['mt-2 text-xs border-l-2 pl-2 font-semibold transition-opacity', isStepChecked(step.id) ? 'opacity-30 border-slate-300 text-slate-400' : 'border-brand-green text-brand-green bg-brand-green/10 py-1.5 px-2 rounded-r-md']">
-                                                <div v-if="step.note">{{ step.note }}</div>
-                                                <div v-if="step.phone" :class="step.note ? 'mt-2 mb-0.5' : 'mb-0.5'">
-                                                    <a :href="'tel:' + step.phone.replace(/\s/g, '')" @click.stop class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-brand-green/20 hover:bg-brand-green/30 text-brand-green rounded-lg transition-colors border border-brand-green/30 font-bold decoration-none cursor-pointer shadow-sm active:scale-95">
-                                                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                                        Dial {{ step.phone }}
-                                                    </a>
-                                                </div>
-                                                <div v-if="step.multiLink" :class="step.note || step.phone ? 'mt-2 mb-0.5' : 'mb-0.5'">
-                                                    <button @click.stop="openMultipleLinks(step.multiLink.urls)" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-brand-green/20 hover:bg-brand-green/30 text-brand-green rounded-lg transition-colors border border-brand-green/30 font-bold decoration-none cursor-pointer shadow-sm active:scale-95 w-fit text-left">
-                                                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                                                        {{ step.multiLink.label }}
-                                                    </button>
+                                                    <!-- Phone / MultiLink Inline Controls -->
+                                                    <div v-if="step.phone || step.multiLink" class="flex flex-wrap gap-2 pt-1">
+                                                        <div v-if="step.phone">
+                                                            <a :href="'tel:' + step.phone.replace(/\s/g, '')" @click.stop class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-95">
+                                                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                                                Dial {{ step.phone }}
+                                                            </a>
+                                                        </div>
+                                                        <div v-if="step.multiLink">
+                                                            <button @click.stop="openMultipleLinks(step.multiLink.urls)" class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-95 text-left">
+                                                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                                                {{ step.multiLink.label }}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Action Button for diagnostic flows, images, logins, matrix, why -->
+                                                    <div v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.links || step.id === 'vis-6'" class="pt-1">
+                                                        <button @click.stop="openTroubleshooter(step)" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors border border-slate-200 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-95">
+                                                            <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                                            <svg v-else-if="step.imageName" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                                            <svg v-else-if="step.links && !step.why && !flowchartsDatabase[step.id]" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                                            <svg v-else-if="step.why && !flowchartsDatabase[step.id]" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                                                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                                            <span v-if="step.isRotaLink">View Rota</span>
+                                                            <span v-else-if="step.imageName">View Image Reference</span>
+                                                            <span v-else-if="step.login">View Login Details</span>
+                                                            <span v-else-if="step.links && !step.why && !flowchartsDatabase[step.id]">Open Links</span>
+                                                            <span v-else-if="step.id === 'vis-6'">Open Matrix Guide</span>
+                                                            <span v-else-if="step.why && !flowchartsDatabase[step.id]">Why Do We Do This?</span>
+                                                            <span v-else>Open Diagnostic Wizard</span>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="w-[1px] bg-slate-200/80 my-3.5" v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote || step.links || step.multiLink"></div>
-
-                                    <button v-if="step.why || flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.fullNote || step.links || step.multiLink" @click.stop="openTroubleshooter(step)" class="w-16 flex flex-col items-center justify-center transition-colors group cursor-pointer">
-                                        <div :class="['w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm border', isStepChecked(step.id) ? 'bg-slate-100 border-slate-200 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-brand-green/10 group-hover:text-brand-green group-hover:border-brand-green/30']">
-                                            <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                                            <svg v-else-if="step.imageName" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                                            <svg v-else-if="step.links && !step.why" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                        </div>
-                                        <span class="font-mono text-[8px] uppercase tracking-wider font-bold mt-1 text-slate-400 group-hover:text-slate-700">{{ step.isRotaLink ? 'Rota' : (step.imageName ? 'Image' : (step.links && !step.why ? 'Links' : 'Help')) }}</span>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -787,12 +811,6 @@
                                     <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
                                 </div>
 
-                                <!-- Note -->
-                                <div v-if="activeHelpStep.note || activeHelpStep.fullNote" class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl mb-4 text-xs font-semibold leading-relaxed text-amber-900 flex items-start gap-2 shadow-xs flex-shrink-0">
-                                    <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                    <span>Note: {{ activeHelpStep.fullNote || activeHelpStep.note }}</span>
-                                </div>
-                                
                                 <!-- Links -->
                                 <div v-if="activeHelpStep.links" class="mb-4 flex-shrink-0 space-y-3">
                                     <a v-for="(linkObj, idx) in activeHelpStep.links" :key="idx" :href="linkObj.url" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer group">
@@ -1195,6 +1213,7 @@
                     teamMembers: [...INITIAL_TEAM],
                     checkedSteps: [],
                     justChecked: null,
+                    focusedStep: null,
                     collapsedBands: {},
                     activeHelpStep: null,
                     flowNode: 'start',
@@ -1312,6 +1331,11 @@
                 screen(newVal, oldVal) {
                     if (!this.isPopState && newVal !== oldVal) {
                         this.pushHistoryState({ screen: newVal }, '?screen=' + newVal);
+                    }
+                    if (newVal === 'list') {
+                        this.$nextTick(() => {
+                            this.focusFirstUncheckedStep();
+                        });
                     }
                 },
                 activeVideoId(newVal, oldVal) {
@@ -1844,10 +1868,19 @@
                         }
                     } catch(e) {}
                 },
+                handleRowClick(id) {
+                    // Toggle accordion for this step
+                    this.focusedStep = this.focusedStep === id ? null : id;
+                    
+                    // Click anywhere in box checks it, but never unchecks it
+                    if (!this.isStepChecked(id)) {
+                        this.toggleStep(id, false);
+                    }
+                },
                 isStepChecked(id) {
                     return this.checkedSteps.includes(id);
                 },
-                toggleStep(id) {
+                toggleStep(id, autoAdvance = true) {
                     const idx = this.checkedSteps.indexOf(id);
                     if (idx > -1) {
                         this.checkedSteps.splice(idx, 1);
@@ -1856,7 +1889,24 @@
                         this.justChecked = id;
                         setTimeout(() => { this.justChecked = null; }, 600);
                         try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
+                        
+                        if (autoAdvance) {
+                            setTimeout(() => {
+                                this.focusFirstUncheckedStep();
+                            }, 300);
+                        }
                     }
+                },
+                focusFirstUncheckedStep() {
+                    for (let band of this.filteredBands) {
+                        for (let step of band.steps) {
+                            if (!this.checkedSteps.includes(step.id)) {
+                                this.focusedStep = step.id;
+                                return;
+                            }
+                        }
+                    }
+                    this.focusedStep = null;
                 },
                 openTroubleshooter(step) {
                     if (this.screen === 'list') {
