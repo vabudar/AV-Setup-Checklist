@@ -17,7 +17,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
     
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -216,11 +216,11 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-6">Bug or Feature?</h1>
             
             <div class="space-y-4 flex-1 flex flex-col">
-                <input v-model="feedbackName" type="text" placeholder="Your Name (optional)" class="w-full h-14 px-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm">
+                <input v-model="feedbackName" type="text" placeholder="Your Name (optional)" class="w-full h-[52px] px-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm">
                 
                 <textarea v-model="feedbackText" placeholder="Describe the bug or feature suggestion..." class="w-full flex-1 min-h-[200px] p-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm resize-none"></textarea>
                 
-                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-14 mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed')]">
+                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-[52px] mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed')]">
                     {{ feedbackSuccess ? 'Sent!' : (feedbackSending ? 'Sending...' : 'Send Feedback') }} 
                     <svg v-if="!feedbackSuccess && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     <svg v-if="feedbackSuccess" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -241,19 +241,19 @@
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Audio Issues</h2>
                     <div class="space-y-3">
-                        <button @click="openTroubleshooter({id: 'audio-7', text: 'Headset Mic No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'audio-7', text: 'Headset Mic No Sound'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Headset Mic No Sound</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'audio-11', text: 'Band Mics No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'audio-11', text: 'Band Mics No Sound'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Band Mics No Sound</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'audio-13', text: 'YouTube Video No Sound'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'audio-13', text: 'YouTube Video No Sound'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">YouTube Video No Sound</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'audio-15', text: 'Lomond Feed Not Working'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'audio-15', text: 'Lomond Feed Not Working'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Lomond Feed Not Working</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
@@ -263,26 +263,26 @@
                 <div>
                     <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Visual & Stream Issues</h2>
                     <div class="space-y-3">
-                        <button @click="openTroubleshooter({id: 'vis-6', text: 'Matrix Switcher Helper'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'vis-6', text: 'Matrix Switcher Helper'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <div class="flex items-center gap-2.5">
                                 <span class="flex h-2 w-2 rounded-full bg-emerald-400"></span>
                                 <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Matrix Switcher Route Guide</span>
                             </div>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-7', text: 'Can\'t Find Slides'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'vis-7', text: 'Can\'t Find Slides'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Main Slides</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Farsi Slides</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-s-3', text: 'ATEM Not Connecting'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'vis-s-3', text: 'ATEM Not Connecting'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">ATEM Switcher Not Connecting</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button @click="openTroubleshooter({id: 'vis-s-t1', text: 'Breeze Translate Issues'})" class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                        <button @click="openTroubleshooter({id: 'vis-s-t1', text: 'Breeze Translate Issues'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
                             <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Breeze Translate Feed Issues</span>
                             <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
@@ -354,14 +354,14 @@
                 <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar text-[11px] font-mono font-bold uppercase">
                     <button 
                         @click="selectedDocCategory = 'All'" 
-                        :class="['px-3.5 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap border', selectedDocCategory === 'All' ? 'bg-brand-green text-white border-brand-green shadow-xs' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50']">
+                        :class="['px-3.5 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap border', selectedDocCategory === 'All' ? 'bg-brand-green text-white border-brand-green shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50']">
                         All Files
                     </button>
                     <button 
                         v-for="cat in docCategories" 
                         :key="cat" 
                         @click="selectedDocCategory = cat" 
-                        :class="['px-3.5 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap border', selectedDocCategory === cat ? 'bg-brand-green text-white border-brand-green shadow-xs' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50']">
+                        :class="['px-3.5 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap border', selectedDocCategory === cat ? 'bg-brand-green text-white border-brand-green shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50']">
                         {{ cat }}
                     </button>
                 </div>
@@ -426,7 +426,7 @@
                 </div>
                 
                 <div class="overflow-y-auto flex-1 pr-1 pb-4 space-y-2.5 -mr-2 pr-2">
-                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full bg-white border border-slate-200/60 rounded-2xl p-4.5 text-left flex items-center justify-between hover:bg-slate-50 active:scale-[0.99] transition-all shadow-sm group cursor-pointer">
+                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full bg-white border border-slate-200/60 rounded-2xl p-[18px] text-left flex items-center justify-between hover:bg-slate-50 active:scale-[0.99] transition-all shadow-sm group cursor-pointer">
                         <div class="flex items-center gap-4">
                             <div class="w-1.5 h-6 bg-slate-300 rounded-full group-hover:bg-brand-green transition-colors"></div>
                             <span class="text-base font-bold text-slate-800">{{ name }}</span>
@@ -437,8 +437,8 @@
             </div>
             <div class="p-5 bg-white border-t border-slate-200/80 pb-8 sticky bottom-0 shrink-0">
                 <div class="flex gap-2">
-                    <input class="flex-1 h-13 px-4 bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:bg-white rounded-xl placeholder:text-slate-400 transition-colors" placeholder="Name not shown? Add it here" v-model="newName" @keyup.enter="addName" />
-                    <button @click="addName" :disabled="!newName.trim()" class="w-13 h-13 bg-slate-800 text-white flex items-center justify-center font-bold rounded-xl disabled:opacity-30 active:scale-95 transition-transform cursor-pointer">
+                    <input class="flex-1 h-[52px] px-4 bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:bg-white rounded-xl placeholder:text-slate-400 transition-colors" placeholder="Name not shown? Add it here" v-model="newName" @keyup.enter="addName" />
+                    <button @click="addName" :disabled="!newName.trim()" class="w-[52px] h-[52px] bg-slate-800 text-white flex items-center justify-center font-bold rounded-xl disabled:opacity-30 active:scale-[0.95] transition-transform cursor-pointer">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
                     </button>
                 </div>
@@ -499,11 +499,11 @@
             <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Are we streaming today?</h1>
             
             <div class="flex flex-col gap-4">
-                <button @click="selectRole(roleToSelect, 'yes')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
+                <button @click="selectRole(roleToSelect, 'yes')" class="bg-white border border-slate-200 text-slate-800 h-[64px] rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-[0.98] hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
                     <span>Yes · Streaming Today</span>
                     <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg>
                 </button>
-                <button @click="selectRole(roleToSelect, 'no')" class="bg-white border border-slate-200 text-slate-800 h-16 rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-98 hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
+                <button @click="selectRole(roleToSelect, 'no')" class="bg-white border border-slate-200 text-slate-800 h-[64px] rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-[0.98] hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
                     <span>No · In-House Only</span>
                     <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></svg>
                 </button>
@@ -558,10 +558,10 @@
                                  ]"
                                  @click="handleRowClick(step.id)">
                                 
-                                <div class="flex items-start p-4.5">
-                                    <!-- Checkbox -->
+                                <div class="flex items-start p-[18px]">
+                                    <!-- Checkbox (Toggles state regardless of checked status) -->
                                     <div @click.stop="toggleStepCheckbox(step.id)"
-                                         :class="['w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10 mt-0.5',
+                                         :class="['w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10 mt-0.5 cursor-pointer',
                                                   isStepChecked(step.id) && justChecked !== step.id ? 'bg-brand-green border-brand-green text-white' : (focusedStep === step.id ? 'border-slate-500 hover:border-slate-800 bg-white' : 'border-slate-300 hover:border-slate-400 bg-white'),
                                                   justChecked === step.id ? 'anim-pop anim-ripple bg-brand-green border-brand-green text-white' : '']">
                                         <svg v-if="isStepChecked(step.id)" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -586,13 +586,13 @@
                                                     <!-- Phone / MultiLink Inline Controls -->
                                                     <div v-if="step.phone || step.multiLink" class="flex flex-wrap gap-2 pt-1">
                                                         <div v-if="step.phone">
-                                                            <a :href="'tel:' + step.phone.replace(/\s/g, '')" @click.stop class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-95">
+                                                            <a :href="'tel:' + step.phone.replace(/\s/g, '')" @click.stop class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-[0.95]">
                                                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                                                 Dial {{ step.phone }}
                                                             </a>
                                                         </div>
                                                         <div v-if="step.multiLink">
-                                                            <button @click.stop="openMultipleLinks(step.multiLink.urls)" class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-95 text-left">
+                                                            <button @click.stop="openMultipleLinks(step.multiLink.urls)" class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-[0.95] text-left">
                                                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                                                                 {{ step.multiLink.label }}
                                                             </button>
@@ -601,7 +601,7 @@
                                                     
                                                     <!-- Action Button for diagnostic flows, images, logins, matrix, why -->
                                                     <div v-if="hasDrawerContent(step)" class="pt-1">
-                                                        <button @click.stop="openTroubleshooter(step)" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors border border-slate-200 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-95">
+                                                        <button @click.stop="openTroubleshooter(step)" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors border border-slate-200 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-[0.95]">
                                                             <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                                                             <svg v-else-if="step.imageName" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                                                             <svg v-else-if="step.links && !step.why && !flowchartsDatabase[step.id]" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
@@ -622,7 +622,7 @@
 
                 <!-- Session Finish Actions located naturally at the end of the scroll list -->
                 <div class="mt-12 mb-8">
-                    <button v-if="progressPercentage === 100" @click="finalizeSession" class="w-full h-16 bg-brand-green text-white font-bold rounded-2xl shadow-lg hover:opacity-90 transition-all text-[15px] uppercase tracking-widest flex items-center justify-center gap-3 anim-pop cursor-pointer">
+                    <button v-if="progressPercentage === 100" @click="finalizeSession" class="w-full h-[64px] bg-brand-green text-white font-bold rounded-2xl shadow-lg hover:opacity-90 transition-all text-[15px] uppercase tracking-widest flex items-center justify-center gap-3 anim-pop cursor-pointer">
                         Finish Setup <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     </button>
                     <button v-else @click="finalizeSession" class="w-full h-14 border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-all text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer shadow-sm">
@@ -651,7 +651,7 @@
             </div>
 
             <div class="space-y-4">
-                <button @click="resetApp" class="w-full h-14 bg-white border border-slate-200 text-slate-800 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl shadow-sm hover:bg-slate-50 active:scale-98 transition-all cursor-pointer">
+                <button @click="resetApp" class="w-full h-14 bg-white border border-slate-200 text-slate-800 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl shadow-sm hover:bg-slate-50 active:scale-[0.98] transition-all cursor-pointer">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                     Back to Menu
                 </button>
@@ -664,7 +664,7 @@
         <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER -->
         <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center pointer-events-none">
             <!-- Background Backdrop -->
-            <div class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-200 pointer-events-auto" 
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-200 pointer-events-auto" 
                  :class="closingModal ? 'opacity-0' : 'opacity-100'" 
                  @click="closeModal"></div>
             
@@ -789,7 +789,7 @@
                                     </h3>
                                     
                                     <!-- PIN Entry Gate -->
-                                    <div v-if="!credentialsUnlocked" :class="['bg-white p-5 rounded-lg border flex flex-col items-center justify-center text-center shadow-xs', pinShake ? 'border-red-400 anim-shake' : 'border-slate-200']">
+                                    <div v-if="!credentialsUnlocked" :class="['bg-white p-5 rounded-lg border flex flex-col items-center justify-center text-center shadow-sm', pinShake ? 'border-red-400 anim-shake' : 'border-slate-200']">
                                         <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-3 text-slate-400">
                                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
                                         </div>
@@ -804,9 +804,9 @@
                                                 placeholder="••••"
                                                 maxlength="4"
                                                 @keyup.enter="unlockCredentials"
-                                                class="flex-1 h-12 text-center text-lg tracking-[0.5em] pin-input bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all"
+                                                class="flex-1 h-[52px] text-center text-lg tracking-[0.5em] pin-input bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all"
                                             />
-                                            <button @click="unlockCredentials" class="w-12 h-12 flex items-center justify-center shrink-0 bg-slate-800 text-white font-bold rounded-xl active:scale-95 transition-transform cursor-pointer">
+                                            <button @click="unlockCredentials" class="w-[52px] h-[52px] flex items-center justify-center shrink-0 bg-slate-800 text-white font-bold rounded-xl active:scale-[0.95] transition-transform cursor-pointer">
                                                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                             </button>
                                         </div>
@@ -814,11 +814,11 @@
 
                                     <!-- Unlocked Credentials -->
                                     <div v-else class="space-y-2 animate-fade-in">
-                                        <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-xs">
+                                        <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
                                             <span class="text-xs font-semibold text-slate-400">Email</span>
                                             <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ decryptedEmail }}</span>
                                         </div>
-                                        <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-xs">
+                                        <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
                                             <span class="text-xs font-semibold text-slate-400">Password</span>
                                             <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ decryptedPassword }}</span>
                                         </div>
@@ -846,7 +846,7 @@
                                     <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
                                         <div class="flex justify-between items-center mb-3">
                                             <div class="flex items-center gap-1.5">
-                                                <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded text-[8px] tracking-wide uppercase">MATRIX</span>
+                                                <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded-[2px] text-[8px] tracking-wide uppercase">MATRIX</span>
                                             </div>
                                             <button @click="toggleShowAll(!showAllRoutes)"
                                                     :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
@@ -856,7 +856,7 @@
                                             </button>
                                         </div>
 
-                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-3 select-none">
+                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-[2px] mb-3 select-none">
                                             <div class="border-r border-slate-200/60">PROJ</div>
                                             <div class="border-r border-slate-200/60">FBACK</div>
                                             <div class="border-r border-slate-200/60">DISTRO</div>
@@ -867,8 +867,8 @@
                                         <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
                                             <button v-for="outNum in 5" :key="'out-btn-' + outNum"
                                                     @click="selectOutput(outNum)"
-                                                    class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-95">
-                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-150', getOutputLedClass(outNum)]"></div>
+                                                    class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-[0.95]">
+                                                <div :class="['w-4 h-4 rounded-[2px] transition-all duration-150', getOutputLedClass(outNum)]"></div>
                                                 <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ outNum === 5 ? 'OFF' : outNum }}</span>
                                             </button>
                                         </div>
@@ -880,12 +880,12 @@
                                         <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
                                             <div v-for="inNum in 5" :key="'in-btn-' + inNum"
                                                  class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
-                                                <div :class="['w-4 h-4 rounded-xs transition-all duration-200', getInputLedClass(inNum)]"></div>
+                                                <div :class="['w-4 h-4 rounded-[2px] transition-all duration-200', getInputLedClass(inNum)]"></div>
                                                 <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ inNum === 5 ? 'OFF' : inNum }}</span>
                                             </div>
                                         </div>
 
-                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-xs mb-1 select-none">
+                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-[2px] mb-1 select-none">
                                             <div class="border-r border-slate-200/60">IMAC</div>
                                             <div class="border-r border-slate-200/60">SPARE</div>
                                             <div class="border-r border-slate-200/60">CAM</div>
@@ -921,7 +921,7 @@
                                         </button>
                                     </div>
                                     
-                                    <div v-if="currentWizardNode.type !== 'escalation'" class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-xs">
+                                    <div v-if="currentWizardNode.type !== 'escalation'" class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-sm">
                                         <div v-if="currentWizardNode.type === 'success'" class="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center mb-3 text-brand-green">
                                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                                         </div>
@@ -945,11 +945,11 @@
                                     </div>
 
                                     <div class="space-y-3">
-                                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-12 rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm cursor-pointer">
+                                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-[52px] rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm cursor-pointer">
                                             {{ opt.label }}
                                         </button>
                                         
-                                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-13 rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
+                                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-[52px] rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
                                             {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Sound Team Leader & Skip' }}
                                         </button>
                                     </div>
@@ -963,7 +963,7 @@
         </div>
 
         <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
-        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
+        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[2px] animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
             <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
                 <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
@@ -1525,6 +1525,7 @@
                     };
                 }
             },
+            
             methods: {
                 pushHistoryState(stateObj, urlQuery) {
                     try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
@@ -1894,12 +1895,20 @@
                     return 'More Information';
                 },
                 handleRowClick(id) {
+                    // Always expand/collapse info section
                     this.focusedStep = this.focusedStep === id ? null : id;
+                    
+                    // IF it is unchecked, check it off and automatically advance
+                    // If it is ALREADY checked, it will not uncheck, it will only expand (via code above).
                     if (!this.isStepChecked(id)) {
                         this.checkedSteps.push(id);
                         this.justChecked = id;
                         setTimeout(() => { this.justChecked = null; }, 600);
                         try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
+                        
+                        setTimeout(() => {
+                            this.focusFirstUncheckedStep();
+                        }, 400);
                     }
                 },
                 isStepChecked(id) {
@@ -1908,8 +1917,10 @@
                 toggleStepCheckbox(id) {
                     const idx = this.checkedSteps.indexOf(id);
                     if (idx > -1) {
+                        // Uncheck the item
                         this.checkedSteps.splice(idx, 1);
                     } else {
+                        // Check the item and focus it
                         this.checkedSteps.push(id);
                         this.justChecked = id;
                         this.focusedStep = id;
