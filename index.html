@@ -744,35 +744,78 @@
                                     <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
                                 </div>
 
-                                <!-- Band Rota PDF Quick Link & JSON Widget -->
-                                <div v-if="activeHelpStep.isRotaLink" class="bg-rose-50 border border-rose-200 rounded-2xl p-6 mb-5 text-center flex flex-col items-center shadow-sm">
-                                    <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4">
+                                <!-- Band Rota PDF Quick Link & Live Data Window -->
+                                <div v-if="activeHelpStep.isRotaLink" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-5 text-center flex flex-col items-center shadow-sm">
+                                    <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4 shadow-inner">
                                         <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
                                     </div>
-                                    <h3 class="text-slate-800 text-lg font-bold mb-2">View Sunday Rota</h3>
-                                    <p class="text-slate-500 text-sm mb-4">Open the monthly schedule to see who is on the band this morning.</p>
+                                    <h3 class="text-slate-800 text-lg font-bold mb-2">Who's on Band?</h3>
+                                    <p class="text-slate-500 text-sm mb-5">Live sync from the official Sunday Rota.</p>
                                     
-                                    <!-- TODAY'S BAND JSON WIDGET -->
-                                    <div v-if="todaysBand" class="w-full bg-white rounded-xl shadow-sm border border-rose-100 p-4 mb-5 text-left">
-                                        <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center justify-between">
-                                            <span>Today's Band</span>
-                                            <span class="text-[9px] font-mono font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded uppercase">{{ todaysBand.service || 'Morning Service' }}</span>
-                                        </h4>
-                                        <div class="grid grid-cols-2 gap-2">
-                                            <div v-for="(person, role) in todaysBand.band" :key="role" class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-wider mb-0.5 font-bold">{{ role }}</div>
-                                                <div class="text-[13px] font-bold text-slate-800 truncate">{{ person }}</div>
+                                    <!-- LIVE DATA WINDOW UI -->
+                                    <div class="w-full bg-slate-900 rounded-2xl shadow-xl border border-slate-700 mb-6 overflow-hidden text-left flex flex-col">
+                                        <!-- Window Header Bar -->
+                                        <div class="bg-slate-800 px-4 py-2.5 flex items-center justify-between border-b border-slate-700/50">
+                                            <div class="flex items-center gap-3">
+                                                <div class="flex gap-1.5">
+                                                    <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+                                                    <div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
+                                                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                                </div>
+                                                <span class="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">Live Sync</span>
+                                            </div>
+                                            <div v-if="loadingBand" class="flex items-center gap-1.5 text-emerald-400 text-[10px] font-mono font-bold uppercase">
+                                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                                                Fetching
+                                            </div>
+                                            <div v-else class="flex items-center gap-1.5 text-emerald-400 text-[10px] font-mono font-bold uppercase">
+                                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
+                                                Connected
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Window Content Area -->
+                                        <div class="p-4 bg-[#111215]">
+                                            <div v-if="loadingBand" class="py-8 text-center text-slate-500">
+                                                <div class="animate-spin w-6 h-6 border-2 border-brand-green border-t-transparent rounded-full mx-auto mb-3"></div>
+                                                <p class="text-xs font-mono">Syncing with Google Sheets...</p>
+                                            </div>
+                                            
+                                            <div v-else-if="todaysBand" class="animate-fade-in">
+                                                <h4 class="font-bold text-white text-sm mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
+                                                    <span class="flex items-center gap-2">
+                                                        <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                                        {{ formatDate(todaysBand.date) }}
+                                                    </span>
+                                                    <span class="text-[9px] font-mono font-bold text-slate-900 bg-emerald-400 px-2 py-0.5 rounded-sm uppercase tracking-wide">{{ todaysBand.service || 'Morning Service (C)' }}</span>
+                                                </h4>
+                                                <div class="grid grid-cols-2 gap-2">
+                                                    <div v-for="(person, role) in todaysBand.band" :key="role" class="bg-[#1a1c23] p-2.5 rounded-xl border border-slate-800/80 hover:border-slate-600 transition-colors">
+                                                        <div class="text-[9px] font-mono text-slate-500 uppercase tracking-widest mb-1 font-bold">{{ role }}</div>
+                                                        <div class="text-[13px] font-bold text-slate-200 truncate">{{ person }}</div>
+                                                    </div>
+                                                </div>
+                                                <div v-if="Object.keys(todaysBand.band).length === 0" class="text-xs text-slate-500 italic py-4 text-center bg-[#1a1c23] rounded-xl border border-slate-800/80">
+                                                    No band members scheduled for this service.
+                                                </div>
+                                            </div>
+                                            
+                                            <div v-else class="py-6 text-center text-slate-500 bg-[#1a1c23] rounded-xl border border-slate-800/80">
+                                                <svg class="w-8 h-8 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                                <p class="text-xs font-mono">No upcoming dates found in sheet.</p>
                                             </div>
                                         </div>
                                     </div>
                                     
-                                    <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md">
-                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <div class="w-full flex items-center justify-between text-xs font-semibold text-slate-500 mb-3 px-1">
+                                        <span>Need to see the full month?</span>
+                                    </div>
+                                    <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-300 py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm group">
+                                        <svg class="w-5 h-5 text-slate-400 group-hover:text-rose-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
                                         Open {{ latestRotaPdf.title }}
                                     </button>
-                                    <div v-else class="w-full bg-slate-100 text-slate-500 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 flex flex-col items-center justify-center gap-1">
-                                        <span>No Rota Document Found</span>
-                                        <span class="text-[9px] uppercase tracking-widest font-sans font-medium">Please add schedule to GitHub</span>
+                                    <div v-else class="w-full bg-white text-slate-400 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 border-dashed flex flex-col items-center justify-center gap-1">
+                                        <span>No Full Rota PDF Uploaded</span>
                                     </div>
                                 </div>
 
@@ -1232,7 +1275,7 @@
                     activeHelpStep: null,
                     flowNode: 'start',
                     copySuccess: false,
-                    isPopState: false, // Tracks if a state change came from the browser back button
+                    isPopState: false, 
                     
                     feedbackText: '',
                     feedbackName: '',
@@ -1240,14 +1283,12 @@
                     feedbackSuccess: false,
                     feedbackError: false,
                     
-                    // Secure Login state
                     pinInput: '',
                     pinShake: false,
                     credentialsUnlocked: false,
                     decryptedEmail: '',
                     decryptedPassword: '',
                     
-                    // Documents state
                     documentsList: [],
                     documentSearch: '',
                     selectedDocCategory: 'All',
@@ -1255,6 +1296,7 @@
                     pdfFullscreen: false,
                     repoImages: {},
                     rotaData: null,
+                    loadingBand: false,
                     
                     activeVideoId: null,
                     videoUIActive: true,
@@ -1281,7 +1323,6 @@
                         { id: 'G2Oeo-AFvt0', title: "Overlays", category: 'Visuals' },
                     ],
 
-                    // Touch tracking logic for drawer modal
                     isDragging: false,
                     isSwipingX: false,
                     isSwipingY: false,
@@ -1307,7 +1348,6 @@
                 this.scanGitHubRepo();
                 this.fetchRotaData();
 
-                // Set initial state from URL if present
                 const params = new URLSearchParams(window.location.search);
                 const urlScreen = params.get('screen');
                 if (urlScreen) {
@@ -1315,7 +1355,6 @@
                 }
                 this.replaceHistoryState({ screen: this.screen }, '?screen=' + this.screen);
 
-                // Listen for browser Back/Forward navigation
                 window.addEventListener('popstate', (e) => {
                     this.isPopState = true;
                     
@@ -1323,7 +1362,6 @@
                         this.screen = e.state.screen;
                     }
 
-                    // If history state doesn't flag a modal, ensure they are all safely closed
                     if (!e.state?.modal) {
                         this.activeVideoId = null;
                         this.activePdf = null;
@@ -1335,7 +1373,6 @@
                         }
                     }
 
-                    // Reset flag after Vue processes the reactive changes
                     this.$nextTick(() => {
                         this.isPopState = false;
                     });
@@ -1356,7 +1393,6 @@
                     if (newVal) {
                         this.videoUIActive = true;
                         this.startVideoUITimer();
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1369,7 +1405,6 @@
                 },
                 activePdf(newVal, oldVal) {
                     if (newVal) {
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
@@ -1382,12 +1417,10 @@
                 },
                 activeHelpStep(newVal, oldVal) {
                     if (newVal && !this.closingModal) {
-                        // Only add to timeline if a modal wasn't already open
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
                     } else if (!newVal) {
-                        // Triggers when modal is closed via app UI
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
                         }
@@ -1425,38 +1458,63 @@
                 },
                 todaysBand() {
                     if (!this.rotaData || !this.rotaData.length) return null;
+                    
                     const now = new Date();
-                    const todayStr = now.toISOString().split('T')[0];
+                    now.setHours(0,0,0,0);
                     
-                    // Find the first date in the rota that is on or after today
-                    let upcoming = this.rotaData.find(r => r.date >= todayStr);
+                    const nextSunday = new Date(now);
+                    const daysUntilSunday = (7 - now.getDay()) % 7;
+                    nextSunday.setDate(now.getDate() + daysUntilSunday);
                     
-                    // Fallback to the latest one if we're past the dates in the file
-                    if (!upcoming) upcoming = this.rotaData[this.rotaData.length - 1];
+                    const targetSundayStr = new Date(nextSunday.getTime() - (nextSunday.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+                    const todayStr = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
                     
-                    return upcoming;
+                    // EXPLICIT FIX: Throw away all historic data older than today
+                    const futureRows = this.rotaData.filter(r => r.date >= todayStr);
+                    
+                    if (futureRows.length === 0) return null;
+                    
+                    // 1. Find all rows matching the target Sunday exactly
+                    let matchingRows = futureRows.filter(r => r.date === targetSundayStr);
+                    
+                    // 2. If no exact match, fallback to the next available future date
+                    if (matchingRows.length === 0) {
+                        let firstFoundDate = futureRows[0].date;
+                        matchingRows = futureRows.filter(r => r.date === firstFoundDate);
+                    }
+                    
+                    // Filter specifically for Morning Service (C)
+                    let targetService = matchingRows.find(r => {
+                        let s = r.service.toLowerCase();
+                        return (s.includes('(c)') || s.includes('central')) && (s.includes('morning') || s.includes('am'));
+                    });
+                    
+                    if (!targetService) {
+                         targetService = matchingRows.find(r => r.service.toLowerCase().includes('(c)') || r.service.toLowerCase().includes('central'));
+                    }
+                    if (!targetService) {
+                         targetService = matchingRows.find(r => r.service.toLowerCase().includes('morning') || r.service.toLowerCase().includes('am'));
+                    }
+                    
+                    return targetService || matchingRows[0];
                 },
                 pdfViewerUrl() {
                     if (!this.activePdf) return '';
                     
                     let absoluteUrl = this.activePdf.path;
                     
-                    // Clean up GitHub URLs so they serve as proper PDFs instead of forced downloads
                     if (absoluteUrl.includes('raw.githubusercontent.com')) {
                         absoluteUrl = absoluteUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh');
                         absoluteUrl = absoluteUrl.replace('/main/', '@main/');
                     } else if (!absoluteUrl.startsWith('http')) {
-                        // Handle relative local paths dynamically based on domain
                         absoluteUrl = new URL(absoluteUrl, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
                     }
 
-                    // Apple devices have a flawless native PDF viewer with built-in pinch-to-zoom!
                     const isApple = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
                     
                     if (isApple && absoluteUrl.toLowerCase().endsWith('.pdf')) {
                         return absoluteUrl;
                     } else {
-                        // Android and Word Docs strictly require Google Docs Viewer to display inline
                         return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
                     }
                 },
@@ -1527,13 +1585,178 @@
             },
             
             methods: {
+                formatDate(dateStr) {
+                    if (!dateStr) return "Today's Band";
+                    try {
+                        const [year, month, day] = dateStr.split('-');
+                        const d = new Date(year, month - 1, day);
+                        return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) + " Band";
+                    } catch(e) { return "Today's Band"; }
+                },
                 pushHistoryState(stateObj, urlQuery) {
-                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { }
                 },
                 replaceHistoryState(stateObj, urlQuery) {
                     try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
                 },
                 async fetchRotaData() {
+                    this.loadingBand = true;
+                    try {
+                        const sheetId = '1kiH9hd6zFDjNYT-WThaogFczIiXbgf0qzFXlR3M0Wfo';
+                        // Use Google visualization endpoint to avoid strict CORS blockages on standard export
+                        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+                        
+                        const res = await fetch(url);
+                        if (res.ok) {
+                            const csvText = await res.text();
+                            
+                            const parseCSVRow = (str) => {
+                                let result = [], insideQuote = false, currentVal = '';
+                                for (let i = 0; i < str.length; i++) {
+                                    let char = str[i];
+                                    if (char === '"') { insideQuote = !insideQuote; } 
+                                    else if (char === ',' && !insideQuote) { 
+                                        result.push(currentVal.trim().replace(/^"|"$/g, '')); 
+                                        currentVal = ''; 
+                                    } 
+                                    else { currentVal += char; }
+                                }
+                                result.push(currentVal.trim().replace(/^"|"$/g, ''));
+                                return result;
+                            };
+
+                            const rows = csvText.split(/\r?\n/).map(parseCSVRow);
+
+                            if (rows.length > 1) {
+                                // 1. Identify the true header row (looks for the most populated row in the top 10)
+                                let headerRowIndex = 0;
+                                let maxCols = 0;
+                                for (let i = 0; i < Math.min(10, rows.length); i++) {
+                                    let colsCount = rows[i].filter(x => x.trim().length > 0).length;
+                                    if (colsCount > maxCols) {
+                                        maxCols = colsCount;
+                                        headerRowIndex = i;
+                                    }
+                                }
+                                const headers = rows[headerRowIndex].map(h => h.trim());
+
+                                // 2. Identify the Service/Venue column dynamically
+                                let serviceColIndex = -1;
+                                for (let j = 0; j < headers.length; j++) {
+                                    let h = headers[j].toLowerCase();
+                                    if (h.includes('service') || h.includes('venue') || h.includes('cong') || h.includes('location')) {
+                                        serviceColIndex = j;
+                                        break;
+                                    }
+                                }
+
+                                const parsedData = [];
+                                let lastSeenDate = '';
+                                let lastSeenFormattedDate = '';
+
+                                for (let i = headerRowIndex + 1; i < rows.length; i++) {
+                                    if (rows[i].length < 2 && !lastSeenFormattedDate) continue; 
+                                    
+                                    let rawDate = rows[i][0] ? rows[i][0].trim() : '';
+                                    let formattedDate = null;
+                                    
+                                    if (rawDate) {
+                                        // Robust Date Parsing
+                                        let d = new Date(NaN);
+                                        if (rawDate.match(/^\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4}$/)) {
+                                            const parts = rawDate.split(/[\/\-\.]/);
+                                            let year = parts[2];
+                                            if (year.length === 2) year = '20' + year; 
+                                            d = new Date(`${year}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}T00:00:00`);
+                                        } else if (rawDate.match(/^\d{1,2}[\/\-\.]\d{1,2}$/)) {
+                                            const parts = rawDate.split(/[\/\-\.]/);
+                                            d = new Date(new Date().getFullYear(), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+                                        } else {
+                                            const ordinalMatch = rawDate.match(/(?:[a-zA-Z]+[\s\,]+)?(\d{1,2})(?:st|nd|rd|th)?[\s\-]+([a-zA-Z]{3,})/i);
+                                            if (ordinalMatch) {
+                                                const day = parseInt(ordinalMatch[1], 10);
+                                                const monthStr = ordinalMatch[2].substring(0, 3).toLowerCase();
+                                                const monthMap = { 'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'may': 4, 'jun': 5, 'jul': 6, 'aug': 7, 'sep': 8, 'oct': 9, 'nov': 10, 'dec': 11 };
+                                                const month = monthMap[monthStr];
+                                                
+                                                if (month !== undefined) {
+                                                    let year = new Date().getFullYear();
+                                                    if (new Date().getMonth() >= 10 && month <= 2) year++; 
+                                                    d = new Date(year, month, day);
+                                                }
+                                            } else {
+                                                d = new Date(rawDate.replace(/(st|nd|rd|th)/i, ''));
+                                            }
+                                        }
+
+                                        if (!isNaN(d.getTime())) {
+                                            formattedDate = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+                                            lastSeenFormattedDate = formattedDate;
+                                            lastSeenDate = rawDate;
+                                        } else {
+                                            // Non-date string (like a merged header row). Skip processing as a schedule item.
+                                            continue; 
+                                        }
+                                    } else {
+                                        // Handle merged cells by carrying over verified previous dates
+                                        formattedDate = lastSeenFormattedDate;
+                                    }
+
+                                    if (!formattedDate) continue;
+
+                                    let service = '';
+                                    if (serviceColIndex !== -1 && rows[i][serviceColIndex]) {
+                                        service = rows[i][serviceColIndex].trim();
+                                    } else {
+                                        // Scan row for service keywords if column wasn't explicitly named
+                                        for (let j = 0; j < rows[i].length; j++) {
+                                            let val = rows[i][j] ? rows[i][j].toLowerCase() : '';
+                                            if (val.includes('morning') || val.includes('evening') || val.includes('(c)') || val.includes('(k)') || val.includes('central') || val.includes('kelvingrove')) {
+                                                service = rows[i][j].trim();
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    
+                                    if (!service) service = 'Morning Service';
+                                    
+                                    const band = {};
+                                    for (let j = 1; j < headers.length; j++) {
+                                        if (j === serviceColIndex) continue;
+                                        
+                                        const header = headers[j];
+                                        if (!header) continue;
+                                        
+                                        const hLow = header.toLowerCase();
+                                        // Exclude common non-role header columns
+                                        if (hLow.includes('date') || hLow.includes('service') || hLow.includes('venue') || hLow.includes('notes')) continue;
+                                        
+                                        const cellValue = rows[i][j] ? rows[i][j].trim() : '';
+                                        
+                                        // Ensure it assigns real people, not blank placeholders or dashes
+                                        if (cellValue !== '' && cellValue !== '-' && cellValue.toLowerCase() !== 'n/a') {
+                                            band[header] = cellValue;
+                                        }
+                                    }
+
+                                    parsedData.push({
+                                        date: formattedDate,
+                                        service: service,
+                                        band: band
+                                    });
+                                }
+
+                                parsedData.sort((a, b) => a.date.localeCompare(b.date));
+                                this.rotaData = parsedData;
+                                this.loadingBand = false;
+                                return; 
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Could not fetch live from Google Sheets. Checking fallback...", e);
+                    }
+
+                    // --- FALLBACK (If offline or sheet fails) ---
                     try {
                         let owner = 'vabudar';
                         let repo = 'AV-Setup-Checklist'; 
@@ -1549,48 +1772,22 @@
                         if (res.ok) {
                             this.rotaData = await res.json();
                         } else {
-                            // Fallback to the accurate mock data from Morning Service (C)
+                            // Dummy fallback data
                             this.rotaData = [
                                 {
-                                    "date": "2026-09-06",
-                                    "service": "Morning Service (Central)",
+                                    "date": "2026-10-04",
+                                    "service": "Morning Service (C)",
                                     "band": {
                                         "Piano": "Agnes Brough",
-                                        "French Horn": "Neil Harper",
-                                        "Flute": "Katie Bonanno"
-                                    }
-                                },
-                                {
-                                    "date": "2026-09-13",
-                                    "service": "Morning Service (Central)",
-                                    "band": {
-                                        "Piano": "Shayndel Goo",
-                                        "Violin": "Nigel Mason",
-                                        "Clarinet": "Emma Anderson"
-                                    }
-                                },
-                                {
-                                    "date": "2026-09-20",
-                                    "service": "Morning Service (Central)",
-                                    "band": {
-                                        "Piano": "Richard Henry",
-                                        "Violin": "Catherine Lobb",
-                                        "Oboe": "Kathryn Coombs"
-                                    }
-                                },
-                                {
-                                    "date": "2026-09-27",
-                                    "service": "Morning Service (Central)",
-                                    "band": {
-                                        "Piano": "Shayndel Goo",
                                         "Flute": "Katie Bonanno"
                                     }
                                 }
                             ];
                         }
                     } catch (e) {
-                        console.warn("Could not fetch rota.json, using fallback.");
+                        console.warn("Fallback failed.");
                     }
+                    this.loadingBand = false;
                 },
                 async scanGitHubRepo() {
                     try {
@@ -1708,9 +1905,7 @@
                     if (!this.activeHelpStep || !this.activeHelpStep.login) return;
                     
                     try {
-                        // btoa('4711') -> 'NDcxMQ=='
                         if (btoa(this.pinInput) === 'NDcxMQ==') {
-                            // Using native atob to decode obfuscated base64 strings securely locally
                             this.decryptedEmail = atob(this.activeHelpStep.login.emailEnc);
                             this.decryptedPassword = atob(this.activeHelpStep.login.passEnc);
                             this.credentialsUnlocked = true;
@@ -1870,14 +2065,11 @@
                 },
                 toggleAccordion(label) {
                     this.collapsedBands[label] = !this.collapsedBands[label];
-                    // Replicate Google AI Overview style distinct haptic tap
                     try {
                         if (window.navigator?.vibrate) {
                             if (this.collapsedBands[label]) {
-                                // Closing: Single light tap
                                 window.navigator.vibrate(10);
                             } else {
-                                // Opening: Distinct double tap
                                 window.navigator.vibrate([15, 40, 15]);
                             }
                         }
@@ -1895,11 +2087,8 @@
                     return 'More Information';
                 },
                 handleRowClick(id) {
-                    // Always expand/collapse info section
                     this.focusedStep = this.focusedStep === id ? null : id;
                     
-                    // IF it is unchecked, check it off and automatically advance
-                    // If it is ALREADY checked, it will not uncheck, it will only expand (via code above).
                     if (!this.isStepChecked(id)) {
                         this.checkedSteps.push(id);
                         this.justChecked = id;
@@ -1917,10 +2106,8 @@
                 toggleStepCheckbox(id) {
                     const idx = this.checkedSteps.indexOf(id);
                     if (idx > -1) {
-                        // Uncheck the item
                         this.checkedSteps.splice(idx, 1);
                     } else {
-                        // Check the item and focus it
                         this.checkedSteps.push(id);
                         this.justChecked = id;
                         this.focusedStep = id;
