@@ -21,7 +21,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
@@ -579,20 +578,22 @@
                                             <p :class="['text-[15px] leading-snug font-semibold tracking-tight transition-colors flex-1', isStepChecked(step.id) ? 'line-through text-slate-400' : 'text-slate-800']">{{ step.text }}</p>
                                             
                                             <!-- Subtle Dropdown Arrow (Only displays if step has expandable content) -->
-                                            <svg v-if="isStepExpandable(step)" 
-                                                 :class="['w-4 h-4 shrink-0 transition-transform duration-300 mt-0.5', 
-                                                          focusedStep === step.id ? 'rotate-180 text-slate-800' : 'text-slate-300 group-hover:text-slate-400']" 
-                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="6 9 12 15 18 9"/>
-                                            </svg>
+                                            <button v-if="isStepExpandable(step)" 
+                                                 @click.stop="toggleExpand(step.id)"
+                                                 :class="['w-8 h-8 flex items-center justify-center rounded-full shrink-0 transition-transform duration-300 -mt-1 -mr-2 cursor-pointer', 
+                                                          expandedSteps.includes(step.id) ? 'rotate-180 text-slate-800 bg-slate-100' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600']">
+                                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="6 9 12 15 18 9"/>
+                                                </svg>
+                                            </button>
                                         </div>
                                         
                                         <!-- Expanded Information (Smooth Accordion) -->
                                         <div class="grid transition-[grid-template-rows] duration-300 ease-in-out"
-                                             :class="focusedStep === step.id ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
+                                             :class="expandedSteps.includes(step.id) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
                                             <div class="overflow-hidden">
                                                 <div class="pt-3 space-y-2.5 pb-1 opacity-0 transition-opacity duration-300"
-                                                     :class="focusedStep === step.id ? 'opacity-100 delay-150' : 'opacity-0'">
+                                                     :class="expandedSteps.includes(step.id) ? 'opacity-100 delay-150' : 'opacity-0'">
                                                     
                                                     <!-- Note Box (Only Inline Note) -->
                                                     <div v-if="step.note" class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-[13px] text-slate-600 font-medium">
@@ -689,17 +690,18 @@
                  :style="modalStyle" 
                  :class="closingModal ? 'anim-slide-down' : ''">
                  
+                <!-- Removed mouse events here to allow desktop scroll, kept touch handlers -->
                 <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-0 pb-8 px-6 shadow-2xl relative animate-slide-up border-t border-slate-200 max-h-[92vh] flex flex-col text-slate-800 font-sans pointer-events-auto overflow-hidden"
                      @touchstart="handleModalTouchStart"
                      @touchmove="handleModalTouchMove"
-                     @touchend="handleModalTouchEnd"
-                     @mousedown="handleModalTouchStart"
-                     @mousemove="handleModalTouchMove"
-                     @mouseup="handleModalTouchEnd"
-                     @mouseleave="handleModalTouchEnd">
+                     @touchend="handleModalTouchEnd">
                     
-                    <!-- PULL TO CLOSE HITBOX -->
-                    <div class="w-full h-10 flex justify-center items-center flex-shrink-0 cursor-grab active:cursor-grabbing touch-none z-30">
+                    <!-- PULL TO CLOSE HITBOX (Added mouse events ONLY to the handle for desktop dragging) -->
+                    <div class="w-full h-10 flex justify-center items-center flex-shrink-0 cursor-grab active:cursor-grabbing z-30"
+                         @mousedown="handleModalTouchStart"
+                         @mousemove="handleModalTouchMove"
+                         @mouseup="handleModalTouchEnd"
+                         @mouseleave="handleModalTouchEnd">
                         <div class="w-12 h-1.5 bg-slate-200 rounded-full pointer-events-none"></div>
                     </div>
 
@@ -718,11 +720,13 @@
                         </button>
                     </div>
 
-                    <div class="relative flex-1 w-full mx-auto flex flex-col pointer-events-none">
-                        <div class="flex w-full h-full items-start overflow-hidden flex-1 relative flex-col">
+                    <!-- Added min-h-0 to flex children to allow inner scrolling without breaking boundaries -->
+                    <div class="relative flex-1 min-h-0 w-full mx-auto flex flex-col pointer-events-none">
+                        <div class="flex w-full h-full min-h-0 items-start overflow-hidden flex-1 relative flex-col">
                             <div class="w-full flex-shrink-0 flex flex-col h-full overflow-y-auto overflow-x-hidden px-1 pb-6 relative pointer-events-auto"
                                  ref="scrollContainer"
-                                 :style="carouselStyle">
+                                 :style="carouselStyle"
+                                 style="-webkit-overflow-scrolling: touch;">
                                     
                                 <!-- Title & Close -->
                                 <div class="flex justify-between items-start mb-4 sticky top-0 bg-white/95 backdrop-blur-sm z-20 pt-1 pb-2">
@@ -760,63 +764,20 @@
                                     <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
                                 </div>
 
-                                <!-- Band Rota Word Doc Reader & PDF Backup Window -->
+                                <!-- Band Rota PDF Button -->
                                 <div v-if="activeHelpStep.isRotaLink" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-5 text-center flex flex-col items-center shadow-sm">
                                     <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4 shadow-inner">
                                         <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
                                     </div>
                                     <h3 class="text-slate-800 text-lg font-bold mb-2">Who's on Band?</h3>
-                                    <p class="text-slate-500 text-sm mb-5">Names loaded from the October Word Document.</p>
+                                    <p class="text-slate-500 text-sm mb-5">Open the schedule to check this week's team.</p>
                                     
-                                    <!-- LIVE DATA WINDOW UI -->
-                                    <div class="w-full bg-slate-900 rounded-2xl shadow-xl border border-slate-700 mb-6 overflow-hidden text-left flex flex-col">
-                                        <!-- Window Header Bar -->
-                                        <div class="bg-slate-800 px-4 py-2.5 flex items-center justify-between border-b border-slate-700/50">
-                                            <div class="flex items-center gap-3">
-                                                <div class="flex gap-1.5">
-                                                    <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
-                                                    <div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
-                                                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                                                </div>
-                                                <span class="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">Word Doc Sync</span>
-                                            </div>
-                                            <div v-if="loadingWordDoc" class="flex items-center gap-1.5 text-emerald-400 text-[10px] font-mono font-bold uppercase">
-                                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                                                Reading
-                                            </div>
-                                            <div v-else class="flex items-center gap-1.5 text-emerald-400 text-[10px] font-mono font-bold uppercase">
-                                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
-                                                Loaded
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Window Content Area -->
-                                        <div class="p-4 bg-[#111215]">
-                                            <div v-if="loadingWordDoc" class="py-8 text-center text-slate-500">
-                                                <div class="animate-spin w-6 h-6 border-2 border-brand-green border-t-transparent rounded-full mx-auto mb-3"></div>
-                                                <p class="text-xs font-mono">Parsing Word Document...</p>
-                                            </div>
-                                            
-                                            <div v-else-if="wordDocHtml" class="bg-white rounded-xl p-4 overflow-y-auto max-h-[300px] animate-fade-in text-slate-800">
-                                                <div class="word-doc-content" v-html="wordDocHtml"></div>
-                                            </div>
-                                            
-                                            <div v-else class="py-6 text-center text-slate-500 bg-[#1a1c23] rounded-xl border border-slate-800/80">
-                                                <svg class="w-8 h-8 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                                                <p class="text-xs font-mono">No October Word Doc found in repo.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="w-full flex items-center justify-between text-xs font-semibold text-slate-500 mb-3 px-1">
-                                        <span>Backup: View the PDF Schedule</span>
-                                    </div>
-                                    <button v-if="octoberRotaPdf || latestRotaPdf" @click="previewPdf(octoberRotaPdf || latestRotaPdf)" class="w-full bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-300 py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm group">
+                                    <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-300 py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm group">
                                         <svg class="w-5 h-5 text-slate-400 group-hover:text-rose-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
-                                        Open {{ (octoberRotaPdf || latestRotaPdf).title }}
+                                        Open {{ latestRotaPdf.title }}
                                     </button>
                                     <div v-else class="w-full bg-white text-slate-400 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 border-dashed flex flex-col items-center justify-center gap-1">
-                                        <span>No Backup PDF Found</span>
+                                        <span>No Rota PDF Found</span>
                                     </div>
                                 </div>
 
@@ -1029,7 +990,7 @@
                     </div>
                 </div>
                 <div class="flex-1 bg-slate-100 relative overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
-                    <iframe :src="pdfViewerUrl" class="w-full h-full border-none"></iframe>
+                    <iframe :src="getPdfEmbedUrl(activePdf)" class="w-full h-full border-none"></iframe>
                 </div>
             </div>
         </div>
@@ -1270,6 +1231,7 @@
                     newName: '',
                     teamMembers: [...INITIAL_TEAM],
                     checkedSteps: [],
+                    expandedSteps: [],
                     justChecked: null,
                     focusedStep: null,
                     collapsedBands: {},
@@ -1296,9 +1258,6 @@
                     activePdf: null,
                     pdfFullscreen: false,
                     repoImages: {},
-                    
-                    loadingWordDoc: false,
-                    wordDocHtml: null,
                     
                     activeVideoId: null,
                     videoUIActive: true,
@@ -1421,20 +1380,10 @@
                         if (!this.isPopState && !oldVal) {
                             this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
                         }
-                        // Initiate the Word Doc fetching when Rota Window opens
-                        if (newVal.isRotaLink) {
-                            this.loadWordDoc();
-                        }
                     } else if (!newVal) {
                         if (!this.isPopState && window.history.state?.modal) {
                             window.history.back();
                         }
-                    }
-                },
-                octoberRotaDoc(newDoc) {
-                    // Trigger load if doc populates AFTER the drawer opens (e.g. slow API sync)
-                    if (newDoc && this.activeHelpStep && this.activeHelpStep.isRotaLink && !this.wordDocHtml && !this.loadingWordDoc) {
-                        this.loadWordDoc();
                     }
                 }
             },
@@ -1457,28 +1406,16 @@
                 },
                 latestRotaPdf() {
                     const rotas = this.documentsList.filter(doc => 
+                        doc.type === 'PDF Document' && (
                         doc.filename.toLowerCase().includes('rota') || 
                         doc.filename.toLowerCase().includes('band') ||
-                        doc.filename.toLowerCase().includes('schedule')
+                        doc.filename.toLowerCase().includes('schedule'))
                     );
                     rotas.sort((a, b) => b.filename.localeCompare(a.filename));
                     return rotas.length > 0 ? rotas[0] : null;
                 },
-                octoberRotaDoc() {
-                    return this.documentsList.find(doc =>
-                        doc.filename.toLowerCase().includes('oct') &&
-                        (doc.filename.toLowerCase().endsWith('.doc') || doc.filename.toLowerCase().endsWith('.docx'))
-                    );
-                },
-                octoberRotaPdf() {
-                    return this.documentsList.find(doc =>
-                        doc.filename.toLowerCase().includes('oct') &&
-                        doc.filename.toLowerCase().endsWith('.pdf')
-                    );
-                },
                 pdfViewerUrl() {
                     if (!this.activePdf) return '';
-                    
                     let absoluteUrl = this.activePdf.path;
                     
                     if (absoluteUrl.includes('raw.githubusercontent.com')) {
@@ -1495,6 +1432,12 @@
                     } else {
                         return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
                     }
+                },
+                octoberRotaPdf() {
+                    return this.documentsList.find(doc =>
+                        doc.filename.toLowerCase().includes('oct') &&
+                        doc.filename.toLowerCase().endsWith('.pdf')
+                    );
                 },
                 filteredBands() {
                     if (!this.role) return [];
@@ -1566,11 +1509,38 @@
                 isStepExpandable(step) {
                     return !!(step.note || step.phone || step.multiLink || this.hasDrawerContent(step));
                 },
+                toggleExpand(id) {
+                    const idx = this.expandedSteps.indexOf(id);
+                    if (idx > -1) {
+                        this.expandedSteps.splice(idx, 1);
+                    } else {
+                        this.expandedSteps.push(id);
+                    }
+                },
                 pushHistoryState(stateObj, urlQuery) {
                     try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { }
                 },
                 replaceHistoryState(stateObj, urlQuery) {
                     try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                },
+                getPdfEmbedUrl(doc) {
+                    if (!doc) return '';
+                    let absoluteUrl = doc.path;
+                    
+                    if (absoluteUrl.includes('raw.githubusercontent.com')) {
+                        absoluteUrl = absoluteUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh');
+                        absoluteUrl = absoluteUrl.replace('/main/', '@main/');
+                    } else if (!absoluteUrl.startsWith('http')) {
+                        absoluteUrl = new URL(absoluteUrl, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
+                    }
+
+                    const isApple = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+                    
+                    if (isApple && absoluteUrl.toLowerCase().endsWith('.pdf')) {
+                        return absoluteUrl;
+                    } else {
+                        return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+                    }
                 },
                 async scanGitHubRepo() {
                     try {
@@ -1628,32 +1598,6 @@
                     } catch (e) {
                         console.warn("Repo scan fallback:", e);
                     }
-                },
-                async loadWordDoc() {
-                    // Safety check to ensure target Document exists
-                    if (!this.octoberRotaDoc) {
-                        this.wordDocHtml = null;
-                        return;
-                    }
-
-                    this.loadingWordDoc = true;
-                    try {
-                        if (typeof mammoth === 'undefined') {
-                            throw new Error("Mammoth engine failed to load.");
-                        }
-
-                        const response = await fetch(this.octoberRotaDoc.path);
-                        if (!response.ok) throw new Error("Network request rejected.");
-                        const arrayBuffer = await response.arrayBuffer();
-
-                        // Parse the raw Word document binary data directly into readable HTML logic
-                        const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                        this.wordDocHtml = result.value || "<p>No text could be extracted from the Word Document.</p>";
-                    } catch (e) {
-                        console.error("Failed to parse Word Document:", e);
-                        this.wordDocHtml = null;
-                    }
-                    this.loadingWordDoc = false;
                 },
                 getImageUrl(imageName) {
                     if (!imageName) return null;
@@ -1896,17 +1840,31 @@
                     return 'More Information';
                 },
                 handleRowClick(id) {
-                    this.focusedStep = this.focusedStep === id ? null : id;
+                    this.focusedStep = id;
                     
                     if (!this.isStepChecked(id)) {
                         this.checkedSteps.push(id);
                         this.justChecked = id;
+                        
+                        // Expand the item while the checking animation plays
+                        if (!this.expandedSteps.includes(id)) {
+                            this.expandedSteps.push(id);
+                        }
+                        
                         setTimeout(() => { this.justChecked = null; }, 600);
                         try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
                         
                         setTimeout(() => {
+                            // Automatically collapse this row and move focus
+                            const idx = this.expandedSteps.indexOf(id);
+                            if (idx > -1) {
+                                this.expandedSteps.splice(idx, 1);
+                            }
                             this.focusFirstUncheckedStep();
                         }, 400);
+                    } else {
+                        // If already checked, clicking the row just manually toggles expansion
+                        this.toggleExpand(id);
                     }
                 },
                 isStepChecked(id) {
@@ -1920,10 +1878,19 @@
                         this.checkedSteps.push(id);
                         this.justChecked = id;
                         this.focusedStep = id;
+                        
+                        if (!this.expandedSteps.includes(id)) {
+                            this.expandedSteps.push(id);
+                        }
+                        
                         setTimeout(() => { this.justChecked = null; }, 600);
                         try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
                         
                         setTimeout(() => {
+                            const eIdx = this.expandedSteps.indexOf(id);
+                            if (eIdx > -1) {
+                                this.expandedSteps.splice(eIdx, 1);
+                            }
                             this.focusFirstUncheckedStep();
                         }, 400);
                     }
@@ -1933,6 +1900,10 @@
                         for (let step of band.steps) {
                             if (!this.checkedSteps.includes(step.id)) {
                                 this.focusedStep = step.id;
+                                // Auto-expand the newly focused step
+                                if (!this.expandedSteps.includes(step.id)) {
+                                    this.expandedSteps.push(step.id);
+                                }
                                 return;
                             }
                         }
