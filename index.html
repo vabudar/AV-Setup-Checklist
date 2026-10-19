@@ -519,11 +519,11 @@
         <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] animate-fade-in">
             <div class="sticky top-0 bg-[#F4F7F2]/95 backdrop-blur-md border-b border-slate-200/80 z-20 px-5 pt-4 pb-4 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
-                    <button @click="screen = 'home'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer">
+                    <button @click="screen = 'home'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer w-16">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                         Back
                     </button>
-                    <div class="text-center">
+                    <div class="text-center flex-1">
                         <p class="font-mono text-[9px] tracking-[0.2em] text-slate-400 uppercase font-bold">{{ role }} {{ streaming === 'yes' ? '· STREAM' : (streaming === 'no' ? '· LOCAL ONLY' : '') }}</p>
                         <p class="font-bold text-slate-800 text-sm">{{ currentName }}</p>
                     </div>
@@ -654,16 +654,21 @@
             <p class="font-mono text-[11px] text-brand-green uppercase mb-4 font-bold tracking-widest">Setup Complete</p>
             <h1 class="text-[34px] font-light text-slate-900 mb-12">Nicely done,<br />{{ currentName }}.</h1>
             
-            <div class="flex border border-slate-200 py-8 mb-10 bg-white shadow-md rounded-2xl px-2">
+            <div class="flex border border-slate-200 py-6 mb-8 bg-white shadow-md rounded-2xl px-2 items-center">
                 <div class="flex-1 text-center">
                     <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Role</div>
-                    <div class="text-xl font-bold uppercase text-slate-800">{{ role }}</div>
-                    <div class="text-xs text-slate-400 mt-1 font-semibold">{{ streaming === 'yes' ? 'Streaming' : 'In-House' }}</div>
+                    <div class="text-lg font-bold uppercase text-slate-800 leading-tight">{{ role }}</div>
+                    <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase">{{ streaming === 'yes' ? 'Streaming' : 'In-House' }}</div>
+                </div>
+                <div class="flex-1 border-l border-slate-100 text-center">
+                    <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Time</div>
+                    <div class="text-xl font-bold text-slate-800 leading-tight">{{ formattedTime }}</div>
+                    <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase text-brand-green">{{ speedRating }}</div>
                 </div>
                 <div class="flex-1 border-l border-slate-100 text-center">
                     <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Steps</div>
-                    <div class="text-xl font-bold text-slate-800">{{ checkedSteps.length }}</div>
-                    <div class="text-xs text-slate-400 mt-1 font-semibold">Completed</div>
+                    <div class="text-xl font-bold text-slate-800 leading-tight">{{ checkedSteps.length }}</div>
+                    <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase">Completed</div>
                 </div>
             </div>
 
@@ -1262,6 +1267,10 @@
                     activeVideoId: null,
                     videoUIActive: true,
                     videoUITimer: null,
+                    
+                    elapsedSeconds: 0,
+                    timerInterval: null,
+                    
                     tutorialVideos: [
                         { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
                         { id: '_huTFM-wh9Y', title: "1.2 Introduction to the Team", category: 'Intro' },
@@ -1338,15 +1347,43 @@
                     });
                 });
             },
+            
             watch: {
                 screen(newVal, oldVal) {
                     if (!this.isPopState && newVal !== oldVal) {
                         this.pushHistoryState({ screen: newVal }, '?screen=' + newVal);
                     }
+                    
                     if (newVal === 'list') {
+                        // Reset and start the timer when hitting the list workspace
+                        this.elapsedSeconds = 0;
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = setInterval(() => {
+                            this.elapsedSeconds++;
+                        }, 1000);
+                        
                         this.$nextTick(() => {
                             this.focusFirstUncheckedStep();
                         });
+                    } else if (newVal === 'summary') {
+                        // Stop timer
+                        clearInterval(this.timerInterval);
+                    } else if (newVal === 'home' || newVal === 'user-select') {
+                        // Reset everything if they bail out
+                        clearInterval(this.timerInterval);
+                        this.elapsedSeconds = 0;
+                    }
+                },
+                preGoTimeStepsCompleted(newVal) {
+                    if (newVal && this.timerInterval) {
+                        // Stop the timer once all steps before "Go-Time" are done
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                    } else if (!newVal && !this.timerInterval && this.screen === 'list') {
+                        // Resume timer if they uncheck a pre-go-time task
+                        this.timerInterval = setInterval(() => {
+                            this.elapsedSeconds++;
+                        }, 1000);
                     }
                 },
                 activeVideoId(newVal, oldVal) {
@@ -1388,6 +1425,25 @@
                 }
             },
             computed: {
+                formattedTime() {
+                    const m = Math.floor(this.elapsedSeconds / 60).toString().padStart(2, '0');
+                    const s = (this.elapsedSeconds % 60).toString().padStart(2, '0');
+                    return `${m}:${s}`;
+                },
+                speedRating() {
+                    if (this.elapsedSeconds < 480) return "Lightning Fast ⚡";
+                    if (this.elapsedSeconds < 900) return "Swift & Steady 🏃";
+                    return "Thorough & Careful 🛡️";
+                },
+                preGoTimeStepsCompleted() {
+                    if (!this.role) return false;
+                    // Filter out the Go-Time band and check if all other steps are completed
+                    const preGoTimeBands = this.filteredBands.filter(b => !b.label.includes('Go-Time'));
+                    const requiredStepIds = preGoTimeBands.flatMap(b => b.steps.map(s => s.id));
+                    
+                    if (requiredStepIds.length === 0) return false;
+                    return requiredStepIds.every(id => this.checkedSteps.includes(id));
+                },
                 docCategories() {
                     const cats = this.documentsList.map(d => d.category);
                     return [...new Set(cats)];
@@ -1432,12 +1488,6 @@
                     } else {
                         return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
                     }
-                },
-                octoberRotaPdf() {
-                    return this.documentsList.find(doc =>
-                        doc.filename.toLowerCase().includes('oct') &&
-                        doc.filename.toLowerCase().endsWith('.pdf')
-                    );
                 },
                 filteredBands() {
                     if (!this.role) return [];
@@ -1996,7 +2046,7 @@
                     const rawDateString = new Date().toLocaleDateString('en-GB');
                     const formattedSubjectDate = rawDateString.replace(/\//g, '-');
                     
-                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
+                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\nCompletion Time: ${this.formattedTime}\n\n`;
                     
                     this.filteredBands.forEach(band => {
                         band.steps.forEach(step => {
@@ -2022,7 +2072,7 @@
                 },
                 copyReport() {
                     const rawDateString = new Date().toLocaleDateString('en-GB');
-                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\n\n`;
+                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\nCompletion Time: ${this.formattedTime}\n\n`;
                     
                     this.filteredBands.forEach(band => {
                         band.steps.forEach(step => {
