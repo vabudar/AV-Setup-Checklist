@@ -662,7 +662,7 @@
                 </div>
                 <div class="flex-1 border-l border-slate-100 text-center">
                     <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Time</div>
-                    <div class="text-xl font-bold text-slate-800 leading-tight">{{ formattedTime }}</div>
+                    <div class="text-sm font-bold text-slate-800 leading-snug px-1">{{ formattedTime }}</div>
                     <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase text-brand-green">{{ speedRating }}</div>
                 </div>
                 <div class="flex-1 border-l border-slate-100 text-center">
@@ -1270,6 +1270,8 @@
                     
                     elapsedSeconds: 0,
                     timerInterval: null,
+                    stepDurations: {},
+                    lastActionTimestamp: 0,
                     
                     tutorialVideos: [
                         { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
@@ -1357,6 +1359,8 @@
                     if (newVal === 'list') {
                         // Reset and start the timer when hitting the list workspace
                         this.elapsedSeconds = 0;
+                        this.stepDurations = {};
+                        this.lastActionTimestamp = Date.now();
                         clearInterval(this.timerInterval);
                         this.timerInterval = setInterval(() => {
                             this.elapsedSeconds++;
@@ -1426,9 +1430,7 @@
             },
             computed: {
                 formattedTime() {
-                    const m = Math.floor(this.elapsedSeconds / 60).toString().padStart(2, '0');
-                    const s = (this.elapsedSeconds % 60).toString().padStart(2, '0');
-                    return `${m}:${s}`;
+                    return this.formatDurationStr(this.elapsedSeconds);
                 },
                 speedRating() {
                     if (this.elapsedSeconds < 480) return "Lightning Fast ⚡";
@@ -1894,6 +1896,12 @@
                     
                     if (!this.isStepChecked(id)) {
                         this.checkedSteps.push(id);
+                        
+                        // Record duration using real wall-clock time
+                        const now = Date.now();
+                        this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
+                        this.lastActionTimestamp = now;
+                        
                         this.justChecked = id;
                         
                         // Expand the item while the checking animation plays
@@ -1924,8 +1932,14 @@
                     const idx = this.checkedSteps.indexOf(id);
                     if (idx > -1) {
                         this.checkedSteps.splice(idx, 1);
+                        delete this.stepDurations[id];
                     } else {
                         this.checkedSteps.push(id);
+                        
+                        const now = Date.now();
+                        this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
+                        this.lastActionTimestamp = now;
+                        
                         this.justChecked = id;
                         this.focusedStep = id;
                         
@@ -2042,18 +2056,44 @@
                     return false;
                 },
 
+                formatDurationStr(totalSeconds) {
+                    if (totalSeconds === 0) return "0 secs";
+                    const m = Math.floor(totalSeconds / 60);
+                    const s = totalSeconds % 60;
+                    
+                    const mStr = m === 1 ? '1 min' : `${m} mins`;
+                    const sStr = s === 1 ? '1 sec' : `${s} secs`;
+                    
+                    if (m > 0 && s > 0) return `${mStr} and ${sStr}`;
+                    if (m > 0) return mStr;
+                    return sStr;
+                },
+
+                generateReportText() {
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    let text = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\nPre-Service Setup Time: ${this.formatDurationStr(this.elapsedSeconds)}\n\n`;
+                    
+                    this.filteredBands.forEach(band => {
+                        text += `--- ${band.label} ---\n`;
+                        band.steps.forEach(step => {
+                            let status = '[MISSING]';
+                            if (this.isStepChecked(step.id)) {
+                                const dur = this.stepDurations[step.id] || 0;
+                                status = `[DONE in ${this.formatDurationStr(dur)}]`;
+                            }
+                            text += `${status} ${step.text}\n`;
+                        });
+                        text += `\n`;
+                    });
+                    
+                    return text;
+                },
+
                 async finalizeSession() {
                     const rawDateString = new Date().toLocaleDateString('en-GB');
                     const formattedSubjectDate = rawDateString.replace(/\//g, '-');
                     
-                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\nCompletion Time: ${this.formattedTime}\n\n`;
-                    
-                    this.filteredBands.forEach(band => {
-                        band.steps.forEach(step => {
-                            const done = this.isStepChecked(step.id) ? '[DONE]' : '[MISSING]';
-                            reportText += `${done} ${step.text}\n`;
-                        });
-                    });
+                    let reportText = this.generateReportText();
 
                     emailjs.init("6bJZROd4I9Q_p-uKx");
 
@@ -2071,15 +2111,7 @@
                     this.screen = 'summary';
                 },
                 copyReport() {
-                    const rawDateString = new Date().toLocaleDateString('en-GB');
-                    let reportText = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\nCompletion Time: ${this.formattedTime}\n\n`;
-                    
-                    this.filteredBands.forEach(band => {
-                        band.steps.forEach(step => {
-                            const done = this.isStepChecked(step.id) ? '[DONE]' : '[MISSING]';
-                            reportText += `${done} ${step.text}\n`;
-                        });
-                    });
+                    const reportText = this.generateReportText();
 
                     const el = document.createElement('textarea');
                     el.value = reportText;
@@ -2094,6 +2126,7 @@
                 resetApp() {
                     this.screen = 'home';
                     this.checkedSteps = [];
+                    this.stepDurations = {};
                     this.role = null;
                     this.streaming = null;
                 },
@@ -2107,4 +2140,4 @@
         }).mount('#app');
     </script>
 </body>
-</html>
+    </html>
