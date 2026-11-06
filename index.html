@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,6 @@
     <title>Central Sunday Set-Up</title>
     
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    
     <meta name="theme-color" content="#556462">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,6 +21,13 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- PDF.js for Native Rendering and Zoom Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
@@ -56,12 +63,6 @@
             -webkit-text-security: disc;
             font-family: 'IBM Plex Mono', monospace;
         }
-
-        .word-doc-content { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.5; }
-        .word-doc-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-        .word-doc-content th, .word-doc-content td { border: 1px solid #cbd5e1; padding: 6px 10px; text-align: left; }
-        .word-doc-content th { background-color: #f8fafc; font-weight: 600; }
-        .word-doc-content p { margin-bottom: 0.5rem; }
     </style>
 </head>
 <body class="text-slate-800 selection:bg-brand-green/20">
@@ -973,8 +974,11 @@
         </div>
 
         <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
-        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[2px] animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
-            <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
+        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
+            <!-- Background Lock Layer to isolate panning and pinching strictly to the document wrapper -->
+            <div class="absolute inset-0 bg-transparent backdrop-blur-[2px]" @touchmove.prevent @click="activePdf = null"></div>
+            
+            <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300 z-10', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
                 <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
                         <svg v-if="activePdf.filename.toLowerCase().endsWith('.pdf')" class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -994,8 +998,27 @@
                         </button>
                     </div>
                 </div>
-                <div class="flex-1 bg-slate-100 relative overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
-                    <iframe :src="getPdfEmbedUrl(activePdf)" class="w-full h-full border-none"></iframe>
+                
+                <!-- Native PDF.js Rendering Container -->
+                <div v-if="pdfLoading" class="flex-1 flex flex-col items-center justify-center bg-slate-100">
+                    <svg class="w-8 h-8 text-slate-400 animate-spin mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-sm font-bold text-slate-500 font-mono tracking-widest uppercase">Rendering PDF...</span>
+                </div>
+                <div v-else class="flex-1 overflow-auto w-full h-full relative bg-slate-200" 
+                     style="-webkit-overflow-scrolling: touch;"
+                     ref="pdfScrollContainer"
+                     @touchstart="handlePdfTouchStart"
+                     @touchmove="handlePdfTouchMove"
+                     @touchend="handlePdfTouchEnd">
+                    
+                    <div class="min-h-full flex flex-col items-center p-4"
+                         :style="{ width: `${pdfZoom * 100}%`, transition: isPinching ? 'none' : 'width 0.1s ease-out' }">
+                        <!-- Rendered Pages Array -->
+                        <img v-for="(img, idx) in pdfPages" :key="idx" :src="img" class="w-full bg-white shadow-md mb-4 rounded-[2px] pointer-events-none" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -1235,7 +1258,12 @@
                     streaming: null,
                     newName: '',
                     teamMembers: [...INITIAL_TEAM],
+                    
+                    tracksProgress: {},
                     checkedSteps: [],
+                    stepDurations: {},
+                    elapsedSeconds: 0,
+                    
                     expandedSteps: [],
                     justChecked: null,
                     focusedStep: null,
@@ -1262,15 +1290,27 @@
                     selectedDocCategory: 'All',
                     activePdf: null,
                     pdfFullscreen: false,
+                    
+                    pdfLoading: false,
+                    pdfPages: [],
+                    pdfZoom: 1,
+                    isPinching: false,
+                    initialPinchDistance: 0,
+                    initialZoom: 1,
+                    pinchCenterX: 0,
+                    pinchCenterY: 0,
+                    initialScrollLeft: 0,
+                    initialScrollTop: 0,
+                    initialTouchCenterX: 0,
+                    initialTouchCenterY: 0,
+                    
                     repoImages: {},
                     
                     activeVideoId: null,
                     videoUIActive: true,
                     videoUITimer: null,
                     
-                    elapsedSeconds: 0,
                     timerInterval: null,
-                    stepDurations: {},
                     lastActionTimestamp: 0,
                     
                     tutorialVideos: [
@@ -1316,6 +1356,9 @@
                     showAllRoutes: true
                 }
             },
+            created() {
+                this.loadState();
+            },
             mounted() {
                 this.scanGitHubRepo();
 
@@ -1323,6 +1366,8 @@
                 const urlScreen = params.get('screen');
                 if (urlScreen) {
                     this.screen = urlScreen;
+                } else if (!this.screen) {
+                    this.screen = 'home';
                 }
                 this.replaceHistoryState({ screen: this.screen }, '?screen=' + this.screen);
 
@@ -1355,38 +1400,46 @@
                     if (!this.isPopState && newVal !== oldVal) {
                         this.pushHistoryState({ screen: newVal }, '?screen=' + newVal);
                     }
+                    this.saveState();
                     
                     if (newVal === 'list') {
-                        // Reset and start the timer when hitting the list workspace
-                        this.elapsedSeconds = 0;
-                        this.stepDurations = {};
                         this.lastActionTimestamp = Date.now();
                         clearInterval(this.timerInterval);
                         this.timerInterval = setInterval(() => {
                             this.elapsedSeconds++;
+                            if (this.elapsedSeconds % 5 === 0) { // save periodically
+                                this.syncTrackData();
+                            }
                         }, 1000);
                         
                         this.$nextTick(() => {
                             this.focusFirstUncheckedStep();
                         });
                     } else if (newVal === 'summary') {
-                        // Stop timer
                         clearInterval(this.timerInterval);
+                        this.timerInterval = null;
                     } else if (newVal === 'home' || newVal === 'user-select') {
-                        // Reset everything if they bail out
                         clearInterval(this.timerInterval);
-                        this.elapsedSeconds = 0;
+                        this.timerInterval = null;
+                    }
+                },
+                checkedSteps: {
+                    deep: true,
+                    handler() {
+                        this.syncTrackData();
                     }
                 },
                 preGoTimeStepsCompleted(newVal) {
                     if (newVal && this.timerInterval) {
-                        // Stop the timer once all steps before "Go-Time" are done
                         clearInterval(this.timerInterval);
                         this.timerInterval = null;
+                        this.syncTrackData();
                     } else if (!newVal && !this.timerInterval && this.screen === 'list') {
-                        // Resume timer if they uncheck a pre-go-time task
                         this.timerInterval = setInterval(() => {
                             this.elapsedSeconds++;
+                            if (this.elapsedSeconds % 5 === 0) {
+                                this.syncTrackData();
+                            }
                         }, 1000);
                     }
                 },
@@ -1439,7 +1492,6 @@
                 },
                 preGoTimeStepsCompleted() {
                     if (!this.role) return false;
-                    // Filter out the Go-Time band and check if all other steps are completed
                     const preGoTimeBands = this.filteredBands.filter(b => !b.label.includes('Go-Time'));
                     const requiredStepIds = preGoTimeBands.flatMap(b => b.steps.map(s => s.id));
                     
@@ -1471,25 +1523,6 @@
                     );
                     rotas.sort((a, b) => b.filename.localeCompare(a.filename));
                     return rotas.length > 0 ? rotas[0] : null;
-                },
-                pdfViewerUrl() {
-                    if (!this.activePdf) return '';
-                    let absoluteUrl = this.activePdf.path;
-                    
-                    if (absoluteUrl.includes('raw.githubusercontent.com')) {
-                        absoluteUrl = absoluteUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh');
-                        absoluteUrl = absoluteUrl.replace('/main/', '@main/');
-                    } else if (!absoluteUrl.startsWith('http')) {
-                        absoluteUrl = new URL(absoluteUrl, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
-                    }
-
-                    const isApple = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
-                    
-                    if (isApple && absoluteUrl.toLowerCase().endsWith('.pdf')) {
-                        return absoluteUrl;
-                    } else {
-                        return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
-                    }
                 },
                 filteredBands() {
                     if (!this.role) return [];
@@ -1558,6 +1591,60 @@
             },
             
             methods: {
+                // ==========================================
+                // LocalStorage State Management & Isolation
+                // ==========================================
+                saveState() {
+                    const state = {
+                        screen: this.screen,
+                        currentName: this.currentName,
+                        role: this.role,
+                        roleToSelect: this.roleToSelect,
+                        streaming: this.streaming,
+                        tracksProgress: this.tracksProgress,
+                        teamMembers: this.teamMembers
+                    };
+                    try {
+                        localStorage.setItem('avSetupState', JSON.stringify(state));
+                    } catch (e) {}
+                },
+                loadState() {
+                    try {
+                        const saved = localStorage.getItem('avSetupState');
+                        if (saved) {
+                            const state = JSON.parse(saved);
+                            this.screen = state.screen || 'home';
+                            this.currentName = state.currentName || null;
+                            this.role = state.role || null;
+                            this.roleToSelect = state.roleToSelect || null;
+                            this.streaming = state.streaming || null;
+                            this.tracksProgress = state.tracksProgress || {};
+                            this.teamMembers = state.teamMembers || [...INITIAL_TEAM];
+                            return true;
+                        }
+                    } catch (e) {}
+                    return false;
+                },
+                clearState() {
+                    try {
+                        localStorage.removeItem('avSetupState');
+                        this.tracksProgress = {};
+                    } catch(e) {}
+                },
+                syncTrackData() {
+                    if (!this.role || !this.streaming) return;
+                    const trackKey = `${this.role}-${this.streaming}`;
+                    this.tracksProgress[trackKey] = {
+                        checkedSteps: [...this.checkedSteps],
+                        stepDurations: { ...this.stepDurations },
+                        elapsedSeconds: this.elapsedSeconds
+                    };
+                    this.saveState();
+                },
+
+                // ==========================================
+                // UI Helpers
+                // ==========================================
                 isStepExpandable(step) {
                     return !!(step.note || step.phone || step.multiLink || this.hasDrawerContent(step));
                 },
@@ -1573,27 +1660,120 @@
                     try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { }
                 },
                 replaceHistoryState(stateObj, urlQuery) {
-                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { /* Catch for local file:// protocols */ }
+                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { }
                 },
-                getPdfEmbedUrl(doc) {
-                    if (!doc) return '';
+                
+                // ==========================================
+                // PDF Rendering & Touch Handling
+                // ==========================================
+                getDirectPdfUrl(doc) {
                     let absoluteUrl = doc.path;
-                    
                     if (absoluteUrl.includes('raw.githubusercontent.com')) {
                         absoluteUrl = absoluteUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh');
                         absoluteUrl = absoluteUrl.replace('/main/', '@main/');
                     } else if (!absoluteUrl.startsWith('http')) {
                         absoluteUrl = new URL(absoluteUrl, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
                     }
-
-                    const isApple = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+                    return absoluteUrl;
+                },
+                async loadAndRenderPdf(url) {
+                    this.pdfLoading = true;
+                    this.pdfPages = [];
+                    this.pdfZoom = 1;
+                    this.initialScrollLeft = 0;
+                    this.initialScrollTop = 0;
                     
-                    if (isApple && absoluteUrl.toLowerCase().endsWith('.pdf')) {
-                        return absoluteUrl;
-                    } else {
-                        return `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+                    try {
+                        const loadingTask = pdfjsLib.getDocument(url);
+                        const pdf = await loadingTask.promise;
+                        
+                        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                            const page = await pdf.getPage(pageNum);
+                            // Scale 2 for high-res crispness during pinch zoom
+                            const viewport = page.getViewport({ scale: 2.0 });
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            
+                            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                            this.pdfPages.push(canvas.toDataURL('image/jpeg', 0.8));
+                        }
+                    } catch (error) {
+                        console.error("PDF Rendering Error:", error);
+                        alert("Could not load PDF document.");
+                    } finally {
+                        this.pdfLoading = false;
                     }
                 },
+                handlePdfTouchStart(e) {
+                    if (e.touches.length === 2) {
+                        this.isPinching = true;
+                        this.initialPinchDistance = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        this.initialZoom = this.pdfZoom;
+                        
+                        const container = this.$refs.pdfScrollContainer;
+                        if (container) {
+                            const rect = container.getBoundingClientRect();
+                            
+                            const viewportCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                            const viewportCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                            
+                            this.initialTouchCenterX = viewportCenterX;
+                            this.initialTouchCenterY = viewportCenterY;
+                            
+                            this.pinchCenterX = viewportCenterX - rect.left;
+                            this.pinchCenterY = viewportCenterY - rect.top;
+                            
+                            this.initialScrollLeft = container.scrollLeft;
+                            this.initialScrollTop = container.scrollTop;
+                        }
+                    }
+                },
+                handlePdfTouchMove(e) {
+                    if (this.isPinching && e.touches.length === 2) {
+                        e.preventDefault(); 
+                        const distance = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        const scale = distance / this.initialPinchDistance;
+                        let newZoom = this.initialZoom * scale;
+                        
+                        if (newZoom < 1) newZoom = 1;
+                        if (newZoom > 4) newZoom = 4;
+                        
+                        this.pdfZoom = newZoom;
+                        
+                        const factor = newZoom / this.initialZoom;
+                        const container = this.$refs.pdfScrollContainer;
+                        
+                        if (container) {
+                            const currentTouchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                            const currentTouchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                            
+                            const deltaX = currentTouchCenterX - this.initialTouchCenterX;
+                            const deltaY = currentTouchCenterY - this.initialTouchCenterY;
+
+                            this.$nextTick(() => {
+                                container.scrollLeft = ((this.initialScrollLeft + this.pinchCenterX) * factor) - this.pinchCenterX - deltaX;
+                                container.scrollTop = ((this.initialScrollTop + this.pinchCenterY) * factor) - this.pinchCenterY - deltaY;
+                            });
+                        }
+                    }
+                },
+                handlePdfTouchEnd(e) {
+                    if (e.touches.length < 2) {
+                        this.isPinching = false;
+                    }
+                },
+
+                // ==========================================
+                // Data Fetching
+                // ==========================================
                 async scanGitHubRepo() {
                     try {
                         let owner = 'vabudar';
@@ -1658,6 +1838,9 @@
                 previewPdf(doc) {
                     this.pdfFullscreen = false;
                     this.activePdf = doc;
+                    if (doc.type === 'PDF Document') {
+                        this.loadAndRenderPdf(this.getDirectPdfUrl(doc));
+                    }
                 },
                 playVideo(videoId) {
                     this.activeVideoId = videoId;
@@ -1866,7 +2049,20 @@
                 selectRole(selectedRole, streamOption) {
                     this.role = selectedRole;
                     this.streaming = streamOption;
+                    const trackKey = `${this.role}-${this.streaming}`;
+                    
+                    if (this.tracksProgress[trackKey]) {
+                        this.checkedSteps = [...this.tracksProgress[trackKey].checkedSteps];
+                        this.stepDurations = { ...this.tracksProgress[trackKey].stepDurations };
+                        this.elapsedSeconds = this.tracksProgress[trackKey].elapsedSeconds;
+                    } else {
+                        this.checkedSteps = [];
+                        this.stepDurations = {};
+                        this.elapsedSeconds = 0;
+                    }
+                    
                     this.screen = 'list';
+                    this.saveState();
                 },
                 toggleAccordion(label) {
                     this.collapsedBands[label] = !this.collapsedBands[label];
@@ -1888,7 +2084,9 @@
                     if (step.imageName) return 'View Image Reference';
                     if (step.login) return 'View Login Details';
                     if (step.id === 'vis-6') return 'Open Matrix Guide';
-                    if (step.links && !step.why && !this.flowchartsDatabase[step.id]) return 'Open Links';
+                    if (this.flowchartsDatabase[step.id]) return 'Open Troubleshooting Guide';
+                    if (step.why) return 'Why?';
+                    if (step.links) return 'Open Links';
                     return 'More Information';
                 },
                 handleRowClick(id) {
@@ -1897,14 +2095,12 @@
                     if (!this.isStepChecked(id)) {
                         this.checkedSteps.push(id);
                         
-                        // Record duration using real wall-clock time
                         const now = Date.now();
                         this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
                         this.lastActionTimestamp = now;
                         
                         this.justChecked = id;
                         
-                        // Expand the item while the checking animation plays
                         if (!this.expandedSteps.includes(id)) {
                             this.expandedSteps.push(id);
                         }
@@ -1913,7 +2109,6 @@
                         try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
                         
                         setTimeout(() => {
-                            // Automatically collapse this row and move focus
                             const idx = this.expandedSteps.indexOf(id);
                             if (idx > -1) {
                                 this.expandedSteps.splice(idx, 1);
@@ -1921,7 +2116,6 @@
                             this.focusFirstUncheckedStep();
                         }, 400);
                     } else {
-                        // If already checked, clicking the row just manually toggles expansion
                         this.toggleExpand(id);
                     }
                 },
@@ -1964,7 +2158,6 @@
                         for (let step of band.steps) {
                             if (!this.checkedSteps.includes(step.id)) {
                                 this.focusedStep = step.id;
-                                // Auto-expand the newly focused step
                                 if (!this.expandedSteps.includes(step.id)) {
                                     this.expandedSteps.push(step.id);
                                 }
@@ -2095,6 +2288,8 @@
                     
                     let reportText = this.generateReportText();
 
+                    this.clearState();
+
                     emailjs.init("6bJZROd4I9Q_p-uKx");
 
                     try {
@@ -2125,10 +2320,9 @@
                 },
                 resetApp() {
                     this.screen = 'home';
-                    this.checkedSteps = [];
-                    this.stepDurations = {};
                     this.role = null;
                     this.streaming = null;
+                    this.saveState();
                 },
                 openMultipleLinks(urls) {
                     if (!urls || urls.length === 0) return;
@@ -2140,4 +2334,4 @@
         }).mount('#app');
     </script>
 </body>
-    </html>
+</html>
