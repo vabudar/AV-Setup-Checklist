@@ -2345,3 +2345,2222 @@
     </script>
 </body>
 </html>
+```"py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Video Tutorials</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">Learn the gear & workflows</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+
+                <button @click="screen = 'documents'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        </div>
+                        <div class="py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Documents</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">PDF Manuals, Guides & Protocols</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+
+                <button @click="screen = 'apps'" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-6 h-6 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </div>
+                        <div class="py-1">
+                            <div class="text-xl font-bold text-slate-800 leading-tight">Helpful Apps</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">EQ Simulator & Ministry Grid</div>
+                        </div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+            
+            <button @click="screen = 'feedback'" class="mt-8 pb-10 mx-auto flex items-center justify-center gap-1.5 text-slate-400 hover:text-brand-green font-mono text-[10px] uppercase font-bold tracking-[0.15em] transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Report a Bug / Suggest Feature
+            </button>
+        </div>
+
+        <!-- SCREEN: HELPFUL APPS -->
+        <div v-if="screen === 'apps'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in bg-slate-50">
+            <div class="p-8 pb-4 sticky top-0 bg-slate-50/95 backdrop-blur-md z-10 border-b border-slate-200/80">
+                <button @click="screen = 'home'" class="mb-4 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back
+                </button>
+                <div class="flex items-end justify-between">
+                    <div>
+                        <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-1 font-bold">External Tools</p>
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Helpful Apps</h1>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-8 pt-6 space-y-4 pb-12 flex-1">
+                <a href="https://vabudar.github.io/EQ-Simulator/" target="_blank" rel="noopener noreferrer" class="w-full bg-white border border-slate-200/80 p-4 rounded-2xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 group-hover:bg-brand-green/10 text-brand-green rounded-xl flex items-center justify-center shrink-0 transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22v-7"/><path d="M4 11V2"/><path d="M12 22v-4"/><path d="M12 14V2"/><path d="M20 22v-9"/><path d="M20 9V2"/><line x1="2" x2="6" y1="11" y2="11"/><line x1="10" x2="14" y1="14" y2="14"/><line x1="18" x2="22" y1="9" y2="9"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">EQ Simulator</h3>
+                            <p class="text-xs text-slate-400 mt-0.5 font-medium">Practice desk mixing in your browser</p>
+                        </div>
+                    </div>
+                    <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+        
+                <a href="https://ministrygrid.lifeway.com/#/dashboard/training" target="_blank" rel="noopener noreferrer" class="w-full bg-white border border-slate-200/80 p-4 rounded-2xl text-left flex items-center justify-between group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 group-hover:bg-brand-green/10 text-brand-green rounded-xl flex items-center justify-center shrink-0 transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Ministry Grid</h3>
+                            <p class="text-xs text-slate-400 mt-0.5 font-medium">External AV Training Portal</p>
+                        </div>
+                    </div>
+                    <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- SCREEN: FEEDBACK PORTAL -->
+        <div v-if="screen === 'feedback'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Feedback</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-6">Bug or Feature?</h1>
+            
+            <div class="space-y-4 flex-1 flex flex-col">
+                <input v-model="feedbackName" type="text" placeholder="Your Name (optional)" class="w-full h-[52px] px-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm">
+                
+                <textarea v-model="feedbackText" placeholder="Describe the bug or feature suggestion..." class="w-full flex-1 min-h-[200px] p-5 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm resize-none"></textarea>
+                
+                <button @click="submitFeedback" :disabled="!feedbackText.trim() || feedbackSending" :class="['w-full h-[52px] mt-4 font-mono text-[13px] font-bold tracking-[0.15em] uppercase transition-all flex items-center justify-center gap-2 rounded-2xl border cursor-pointer', feedbackSuccess ? 'bg-emerald-500 border-emerald-500 text-white' : (feedbackText.trim() && !feedbackSending ? 'bg-brand-green border-brand-green text-white shadow-lg hover:opacity-90' : 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed')]">
+                    {{ feedbackSuccess ? 'Sent!' : (feedbackSending ? 'Sending...' : 'Send Feedback') }} 
+                    <svg v-if="!feedbackSuccess && !feedbackSending" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <svg v-if="feedbackSuccess" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: TROUBLESHOOTING PORTAL -->
+        <div v-if="screen === 'troubleshooting'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
+            <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Diagnostics</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Troubleshooting</h1>
+            
+            <div class="space-y-8 pb-10">
+                <div>
+                    <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Audio Issues</h2>
+                    <div class="space-y-3">
+                        <button @click="openTroubleshooter({id: 'audio-7', text: 'Headset Mic No Sound'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Headset Mic No Sound</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'audio-11', text: 'Band Mics No Sound'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Band Mics No Sound</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'audio-13', text: 'YouTube Video No Sound'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">YouTube Video No Sound</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'audio-15', text: 'Lomond Feed Not Working'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Lomond Feed Not Working</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 mb-3 ml-1">Visual & Stream Issues</h2>
+                    <div class="space-y-3">
+                        <button @click="openTroubleshooter({id: 'vis-6', text: 'Matrix Switcher Helper'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                                <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Matrix Switcher Route Guide</span>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-7', text: 'Can\'t Find Slides'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Main Slides</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Can't Find Farsi Slides</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-s-3', text: 'ATEM Not Connecting'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">ATEM Switcher Not Connecting</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button @click="openTroubleshooter({id: 'vis-s-t1', text: 'Breeze Translate Issues'})" class="w-full bg-white p-[18px] rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors text-left flex items-center justify-between group cursor-pointer">
+                            <span class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">Breeze Translate Feed Issues</span>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: VIDEO TUTORIALS -->
+        <div v-if="screen === 'tutorials'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in bg-slate-50">
+            <div class="p-8 pb-4 sticky top-0 bg-slate-50/95 backdrop-blur-md z-10 border-b border-slate-200/80">
+                <button @click="screen = 'home'" class="mb-4 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back
+                </button>
+                <div class="flex items-end justify-between">
+                    <div>
+                        <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-1 font-bold">Training Library</p>
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Video Tutorials</h1>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 space-y-4 pb-12">
+                <button v-for="(video, index) in tutorialVideos" :key="video.id" @click="playVideo(video.id)" class="w-full bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 active:scale-[0.98] transition-all cursor-pointer flex items-center gap-4 group text-left">
+                    <div class="relative w-28 h-16 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200/50">
+                        <img :src="'https://img.youtube.com/vi/' + video.id + '/mqdefault.jpg'" :alt="video.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/320x180/e2e8f0/64748b?text=Video+Unavailable'" />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <div class="w-8 h-8 bg-brand-green/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg group-hover:scale-110 transition-transform">
+                                <svg class="w-4 h-4 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 py-1 pr-2">
+                        <h3 class="font-bold text-slate-800 text-sm leading-snug group-hover:text-brand-green transition-colors line-clamp-2">{{ video.title }}</h3>
+                        <p class="text-[11px] text-slate-500 mt-1.5 line-clamp-1 font-medium">{{ video.category }}</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: REPOSITORY DOCUMENTS (PDF SUPPORT) -->
+        <div v-if="screen === 'documents'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in overflow-y-auto">
+            <button @click="screen = 'home'" class="mb-6 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-1 font-bold">Resources & Files</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-6">Documents</h1>
+            
+            <!-- Search & Filter Bar -->
+            <div class="space-y-3 mb-6">
+                <div class="relative">
+                    <input 
+                        v-model="documentSearch" 
+                        type="text" 
+                        placeholder="Search PDFs or guides..." 
+                        class="w-full h-12 pl-11 pr-4 bg-white border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all shadow-sm"
+                    />
+                    <svg class="w-4 h-4 text-slate-400 absolute left-4 top-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/>
+                    </svg>
+                    <button v-if="documentSearch" @click="documentSearch = ''" class="absolute right-3 top-3.5 text-slate-400 hover:text-slate-600">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                    </button>
+                </div>
+
+                <!-- Category Chips -->
+                <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar text-[11px] font-mono font-bold uppercase">
+                    <button 
+                        @click="selectedDocCategory = 'All'" 
+                        :class="['px-3.5 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap border', selectedDocCategory === 'All' ? 'bg-brand-green text-white border-brand-green shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50']">
+                        All Files
+                    </button>
+                    <button 
+                        v-for="cat in docCategories" 
+                        :key="cat" 
+                        @click="selectedDocCategory = cat" 
+                        :class="['px-3.5 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap border', selectedDocCategory === cat ? 'bg-brand-green text-white border-brand-green shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50']">
+                        {{ cat }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Documents List -->
+            <div class="space-y-3 pb-8">
+                <div 
+                    v-for="doc in filteredDocuments" 
+                    :key="doc.id" 
+                    @click="previewPdf(doc)"
+                    class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 active:scale-[0.98] transition-all flex flex-col group cursor-pointer">
+                    
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-center gap-3.5">
+                            <div v-if="doc.filename.toLowerCase().endsWith('.pdf')" class="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-colors duration-300">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/>
+                                </svg>
+                            </div>
+                            <div v-else class="w-12 h-12 bg-blue-50 border border-blue-100 text-blue-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                            </div>
+                            
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors leading-snug">{{ doc.title }}</h3>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="font-mono text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold uppercase">{{ doc.category }}</span>
+                                    <span class="text-[11px] text-slate-400">{{ doc.type || 'Document' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="filteredDocuments.length === 0" class="text-center py-12 text-slate-400">
+                    <svg class="w-10 h-10 mx-auto mb-2 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="9" y1="15" x2="15" y1="15"/></svg>
+                    <p class="text-sm font-medium">No documents match your filter.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: USER SELECT (FORMERLY HOME) -->
+        <div v-if="screen === 'user-select'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-between animate-fade-in">
+            <div class="p-8 flex-1 flex flex-col min-h-0">
+                <button @click="screen = 'home'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back
+                </button>
+
+                <div class="text-left mb-8 shrink-0">
+                    <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase font-bold mb-1">Pre-Service Setup</p>
+                    <h3 class="text-2xl font-bold text-slate-900">Who's setting up today?</h3>
+                </div>
+                
+                <div class="overflow-y-auto flex-1 pr-1 pb-4 space-y-2.5 -mr-2 pr-2">
+                    <button v-for="name in teamMembers" :key="name" @click="selectUser(name)" class="w-full bg-white border border-slate-200/60 rounded-2xl p-[18px] text-left flex items-center justify-between hover:bg-slate-50 active:scale-[0.99] transition-all shadow-sm group cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-1.5 h-6 bg-slate-300 rounded-full group-hover:bg-brand-green transition-colors"></div>
+                            <span class="text-base font-bold text-slate-800">{{ name }}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-5 bg-white border-t border-slate-200/80 pb-8 sticky bottom-0 shrink-0">
+                <div class="flex gap-2">
+                    <input class="flex-1 h-[52px] px-4 bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-brand-green focus:bg-white rounded-xl placeholder:text-slate-400 transition-colors" placeholder="Name not shown? Add it here" v-model="newName" @keyup.enter="addName" />
+                    <button @click="addName" :disabled="!newName.trim()" class="w-[52px] h-[52px] bg-slate-800 text-white flex items-center justify-center font-bold rounded-xl disabled:opacity-30 active:scale-[0.95] transition-transform cursor-pointer">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: ROLE SELECTION -->
+        <div v-if="screen === 'role'" class="p-8 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-start animate-fade-in">
+            <button @click="screen = 'user-select'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">Welcome, {{ currentName }}</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Choose your role</h1>
+            
+            <button @click="prepareRoleSelection('audio')" class="w-full bg-white border border-slate-200/80 p-6 mb-5 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                        <svg class="w-7 h-7 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" x2="12" y1="19" y2="22"/>
+                        </svg>
+                    </div> 
+                    <div class="py-1">
+                        <div class="text-2xl font-bold text-slate-800 leading-tight">Audio</div>
+                        <div class="text-xs text-slate-400 mt-1.5 leading-relaxed font-medium">Mics, Amps, Sound Desk &<br/>Lomond Settings</div>
+                    </div>
+                </div>
+                <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            <button @click="prepareRoleSelection('visuals')" class="w-full bg-white border border-slate-200/80 p-6 rounded-3xl text-left flex justify-between items-center group hover:bg-slate-50 hover:border-brand-green/30 active:scale-[0.99] transition-all shadow-sm cursor-pointer">
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 bg-brand-green/10 group-hover:bg-brand-green rounded-2xl flex items-center justify-center transition-colors duration-300">
+                        <svg class="w-7 h-7 text-brand-green group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="14" x="2" y="3" rx="2"/>
+                            <line x1="8" x2="16" y1="21" y2="21"/>
+                            <line x1="12" x2="12" y1="17" y2="21"/>
+                        </svg>
+                    </div> 
+                    <div class="py-1">
+                        <div class="text-2xl font-bold text-slate-800 leading-tight">Visuals</div>
+                        <div class="text-xs text-slate-400 mt-1.5 leading-relaxed font-medium">Projectors, Switcher, Slides &<br/>Stream Setup</div>
+                    </div>
+                </div>
+                <svg class="w-6 h-6 text-slate-300 group-hover:text-brand-green transition-colors mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
+
+        <!-- SCREEN: STREAMING QUESTION -->
+        <div v-if="screen === 'streaming'" class="p-8 flex-1 min-h-[calc(100vh-64px)] animate-fade-in">
+            <button @click="screen = 'role'" class="mb-8 text-slate-600 hover:text-slate-900 self-start flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </button>
+            <p class="font-mono text-[11px] tracking-[0.18em] text-slate-400 uppercase mb-2 font-bold">{{ roleToSelect === 'audio' ? 'Audio Setup' : 'Visuals Setup' }}</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-8">Are we streaming today?</h1>
+            
+            <div class="flex flex-col gap-4">
+                <button @click="selectRole(roleToSelect, 'yes')" class="bg-white border border-slate-200 text-slate-800 h-[64px] rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-[0.98] hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
+                    <span>Yes · Streaming Today</span>
+                    <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg>
+                </button>
+                <button @click="selectRole(roleToSelect, 'no')" class="bg-white border border-slate-200 text-slate-800 h-[64px] rounded-2xl flex items-center justify-between px-6 font-bold tracking-[0.1em] uppercase active:scale-[0.98] hover:bg-slate-50 transition-all shadow-sm group cursor-pointer">
+                    <span>No · In-House Only</span>
+                    <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-800 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: CHECKLIST WORKSPACE -->
+        <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] animate-fade-in">
+            <div class="sticky top-0 bg-[#F4F7F2]/95 backdrop-blur-md border-b border-slate-200/80 z-20 px-5 pt-4 pb-4 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <button @click="screen = 'streaming'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer w-16">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                        Back
+                    </button>
+                    <div class="text-center flex-1">
+                        <p class="font-mono text-[9px] tracking-[0.2em] text-slate-400 uppercase font-bold">{{ role }} {{ streaming === 'yes' ? '· STREAM' : (streaming === 'no' ? '· LOCAL ONLY' : '') }}</p>
+                        <p class="font-bold text-slate-800 text-sm">{{ currentName }}</p>
+                    </div>
+                    <div class="w-16"></div>
+                </div>
+                <!-- Progress bar transitions into brand green -->
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 h-3 bg-slate-200/80 rounded-full overflow-hidden">
+                        <div class="h-full bg-brand-green transition-all duration-300" :style="{ width: progressPercentage + '%' }"></div>
+                    </div>
+                    <span class="font-mono text-xs text-slate-500 min-w-[32px] text-right font-bold">{{ checkedSteps.length }}/{{ totalSteps }}</span>
+                </div>
+            </div>
+
+            <div class="px-4 pb-12 flex-1">
+                <div v-for="band in filteredBands" :key="band.label" class="mb-2">
+                    
+                    <!-- Section Separators -->
+                    <div @click="toggleAccordion(band.label)" class="font-mono text-[10px] tracking-[0.25em] text-slate-500 uppercase flex items-center justify-between mt-8 mb-4 font-bold cursor-pointer select-none group">
+                        <div class="flex items-center gap-3 flex-1">
+                            <span class="group-hover:text-slate-800 transition-colors">{{ band.label }}</span>
+                            <div class="flex-1 h-[1px] bg-slate-300/80 group-hover:bg-slate-400 transition-colors"></div>
+                        </div>
+                        <div class="ml-3 text-slate-400 group-hover:text-slate-800 transition-colors">
+                            <svg v-if="collapsedBands[band.label]" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                        </div>
+                    </div>
+
+                    <!-- Step Cards featuring tactile active expansion -->
+                    <div v-if="!collapsedBands[band.label]" class="animate-fade-in space-y-3">
+                        <div v-for="step in band.steps" :key="step.id" class="mb-2.5">
+                            <div :class="[
+                                    'flex flex-col rounded-xl overflow-hidden transition-all duration-300 relative border cursor-pointer group',
+                                    justChecked === step.id ? 'anim-flash' : '',
+                                    focusedStep === step.id ? 'border-slate-800 border-2 shadow-sm bg-white' : (isStepChecked(step.id) && justChecked !== step.id ? 'bg-slate-50/50 border-slate-200/80 opacity-75' : 'bg-white border-slate-200/80 hover:bg-slate-50/50 shadow-sm')
+                                 ]"
+                                 @click="handleRowClick(step.id)">
+                                
+                                <div class="flex items-start p-[18px]">
+                                    <!-- Checkbox (Toggles state regardless of checked status) -->
+                                    <div @click.stop="toggleStepCheckbox(step.id)"
+                                         :class="['w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 z-10 mt-0.5 cursor-pointer',
+                                                  isStepChecked(step.id) && justChecked !== step.id ? 'bg-brand-green border-brand-green text-white' : (focusedStep === step.id ? 'border-slate-500 hover:border-slate-800 bg-white' : 'border-slate-300 hover:border-slate-400 bg-white'),
+                                                  justChecked === step.id ? 'anim-pop anim-ripple bg-brand-green border-brand-green text-white' : '']">
+                                        <svg v-if="isStepChecked(step.id)" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="ml-4 flex-1">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <p :class="['text-[15px] leading-snug font-semibold tracking-tight transition-colors flex-1', isStepChecked(step.id) ? 'line-through text-slate-400' : 'text-slate-800']">{{ step.text }}</p>
+                                            
+                                            <!-- Subtle Dropdown Arrow (Only displays if step has expandable content) -->
+                                            <button v-if="isStepExpandable(step)" 
+                                                 @click.stop="toggleExpand(step.id)"
+                                                 :class="['w-8 h-8 flex items-center justify-center rounded-full shrink-0 transition-transform duration-300 -mt-1 -mr-2 cursor-pointer', 
+                                                          expandedSteps.includes(step.id) ? 'rotate-180 text-slate-800 bg-slate-100' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600']">
+                                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="6 9 12 15 18 9"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Expanded Information (Smooth Accordion) -->
+                                        <div class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+                                             :class="expandedSteps.includes(step.id) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
+                                            <div class="overflow-hidden">
+                                                <div class="pt-3 space-y-2.5 pb-1 opacity-0 transition-opacity duration-300"
+                                                     :class="expandedSteps.includes(step.id) ? 'opacity-100 delay-150' : 'opacity-0'">
+                                                    
+                                                    <!-- Note Box (Only Inline Note) -->
+                                                    <div v-if="step.note" class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-[13px] text-slate-600 font-medium">
+                                                        {{ step.note }}
+                                                    </div>
+
+                                                    <!-- Phone / MultiLink Inline Controls -->
+                                                    <div v-if="step.phone || step.multiLink" class="flex flex-wrap gap-2 pt-1">
+                                                        <div v-if="step.phone">
+                                                            <a :href="'tel:' + step.phone.replace(/\s/g, '')" @click.stop class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-[0.95]">
+                                                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                                                Dial {{ step.phone }}
+                                                            </a>
+                                                        </div>
+                                                        <div v-if="step.multiLink">
+                                                            <button @click.stop="openMultipleLinks(step.multiLink.urls)" class="inline-flex items-center gap-1.5 px-3 py-2 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green rounded-lg transition-colors border border-brand-green/20 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-[0.95] text-left">
+                                                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                                                {{ step.multiLink.label }}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Action Button for diagnostic flows, images, logins, matrix, why -->
+                                                    <div v-if="hasDrawerContent(step)" class="pt-1">
+                                                        <button @click.stop="openTroubleshooter(step)" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors border border-slate-200 text-[11px] uppercase tracking-wider font-bold decoration-none cursor-pointer shadow-sm active:scale-[0.95]">
+                                                            <svg v-if="step.isRotaLink" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                                            <svg v-else-if="step.imageName" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                                            <svg v-else-if="step.links && !step.why && !flowchartsDatabase[step.id]" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                                            <svg v-else-if="step.why || step.fullNote" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                                                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                                            <span>{{ getDrawerButtonLabel(step) }}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Finish Actions located naturally at the end of the scroll list -->
+                <div class="mt-12 mb-8">
+                    <button v-if="progressPercentage === 100" @click="finalizeSession" class="w-full h-[64px] bg-brand-green text-white font-bold rounded-2xl shadow-lg hover:opacity-90 transition-all text-[15px] uppercase tracking-widest flex items-center justify-center gap-3 anim-pop cursor-pointer">
+                        Finish Setup <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                    <button v-else @click="finalizeSession" class="w-full h-14 border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-all text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                        Finish Early
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: COMPLETE REPORT SUMMARY -->
+        <div v-if="screen === 'summary'" class="p-8 pt-12 flex flex-col flex-1 min-h-[calc(100vh-64px)] justify-center text-center animate-fade-in">
+            <p class="font-mono text-[11px] text-brand-green uppercase mb-4 font-bold tracking-widest">Setup Complete</p>
+            <h1 class="text-[34px] font-light text-slate-900 mb-12">Nicely done,<br />{{ currentName }}.</h1>
+            
+            <div class="flex border border-slate-200 py-6 mb-8 bg-white shadow-md rounded-2xl px-2 items-center">
+                <div class="flex-1 text-center">
+                    <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Role</div>
+                    <div class="text-lg font-bold uppercase text-slate-800 leading-tight">{{ role }}</div>
+                    <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase">{{ streaming === 'yes' ? 'Streaming' : 'In-House' }}</div>
+                </div>
+                <div class="flex-1 border-l border-slate-100 text-center">
+                    <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Time</div>
+                    <div class="text-sm font-bold text-slate-800 leading-snug px-1">{{ formattedTime }}</div>
+                    <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase text-brand-green">{{ speedRating }}</div>
+                </div>
+                <div class="flex-1 border-l border-slate-100 text-center">
+                    <div class="font-mono text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-2">Steps</div>
+                    <div class="text-xl font-bold text-slate-800 leading-tight">{{ checkedSteps.length }}</div>
+                    <div class="text-[10px] text-slate-400 mt-1 font-semibold uppercase">Completed</div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <button @click="resetApp" class="w-full h-14 bg-white border border-slate-200 text-slate-800 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl shadow-sm hover:bg-slate-50 active:scale-[0.98] transition-all cursor-pointer">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Back to Menu
+                </button>
+                <button @click="copyReport" :class="['w-full h-14 font-mono font-bold uppercase flex items-center justify-center gap-2 rounded-2xl transition-all cursor-pointer', copySuccess ? 'bg-brand-green/10 text-brand-green border border-brand-green/30' : 'bg-slate-800 border-slate-800 text-white hover:bg-slate-950']">
+                    {{ copySuccess ? 'Report Copied!' : 'Copy Setup Report' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- OVERLAY PANEL: DIAGNOSTIC DRAWER -->
+        <div v-if="activeHelpStep" class="fixed inset-0 z-50 flex items-end justify-center pointer-events-none">
+            <!-- Background Backdrop -->
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-200 pointer-events-auto" 
+                 :class="closingModal ? 'opacity-0' : 'opacity-100'" 
+                 @click="closeModal"></div>
+            
+            <!-- Draggable Modal Wrapper -->
+            <div class="w-full flex justify-center relative z-10 pointer-events-none" 
+                 :style="modalStyle" 
+                 :class="closingModal ? 'anim-slide-down' : ''">
+                 
+                <!-- Removed mouse events here to allow desktop scroll, kept touch handlers -->
+                <div class="bg-white w-full max-w-[480px] rounded-t-[32px] pt-0 pb-8 px-6 shadow-2xl relative animate-slide-up border-t border-slate-200 max-h-[92vh] flex flex-col text-slate-800 font-sans pointer-events-auto overflow-hidden"
+                     @touchstart="handleModalTouchStart"
+                     @touchmove="handleModalTouchMove"
+                     @touchend="handleModalTouchEnd">
+                    
+                    <!-- PULL TO CLOSE HITBOX (Added mouse events ONLY to the handle for desktop dragging) -->
+                    <div class="w-full h-10 flex justify-center items-center flex-shrink-0 cursor-grab active:cursor-grabbing z-30"
+                         @mousedown="handleModalTouchStart"
+                         @mousemove="handleModalTouchMove"
+                         @mouseup="handleModalTouchEnd"
+                         @mouseleave="handleModalTouchEnd">
+                        <div class="w-12 h-1.5 bg-slate-200 rounded-full pointer-events-none"></div>
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <div class="flex justify-between items-center mb-5 text-slate-400 flex-shrink-0" v-if="helpSequence.length > 1">
+                        <button @click="navigateHelp(-1)" :disabled="currentHelpIndex === 0" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                            Prev
+                        </button>
+                        <div class="flex gap-1.5 overflow-hidden max-w-[200px] justify-center">
+                            <span v-for="(step, idx) in helpSequence" :key="step.id" :class="['w-1.5 h-1.5 rounded-full transition-colors flex-shrink-0', idx === currentHelpIndex ? 'bg-brand-green scale-110' : 'bg-slate-200']"></span>
+                        </div>
+                        <button @click="navigateHelp(1)" :disabled="currentHelpIndex === helpSequence.length - 1" class="flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-widest disabled:opacity-30 transition-opacity cursor-pointer">
+                            Next
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Added min-h-0 to flex children to allow inner scrolling without breaking boundaries -->
+                    <div class="relative flex-1 min-h-0 w-full mx-auto flex flex-col pointer-events-none">
+                        <div class="flex w-full h-full min-h-0 items-start overflow-hidden flex-1 relative flex-col">
+                            <div class="w-full flex-shrink-0 flex flex-col h-full overflow-y-auto overflow-x-hidden px-1 pb-6 relative pointer-events-auto"
+                                 ref="scrollContainer"
+                                 :style="carouselStyle"
+                                 style="-webkit-overflow-scrolling: touch;">
+                                    
+                                <!-- Title & Close -->
+                                <div class="flex justify-between items-start mb-4 sticky top-0 bg-white/95 backdrop-blur-sm z-20 pt-1 pb-2">
+                                    <h2 class="text-xl font-bold text-slate-900 pr-4 leading-snug">{{ activeHelpStep.text }}</h2>
+                                    <button @click="closeModal" class="bg-slate-100 hover:bg-slate-200 text-slate-500 p-2 rounded-full transition-colors flex items-center justify-center cursor-pointer flex-shrink-0">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                                    </button>
+                                </div>
+
+                                <!-- Full Note -->
+                                <div v-if="activeHelpStep.fullNote" class="bg-amber-50 border-l-4 border-amber-400 rounded-r-2xl p-5 mb-4 shadow-sm flex-shrink-0">
+                                    <h3 class="font-mono text-[11px] tracking-widest text-amber-600 uppercase font-bold mb-2 flex items-center">
+                                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                            <polyline points="14 2 14 8 20 8"/>
+                                            <line x1="16" y1="13" x2="8" y2="13"/>
+                                            <line x1="16" y1="17" x2="8" y2="17"/>
+                                            <polyline points="10 9 9 9 8 9"/>
+                                        </svg>
+                                        Setup Note
+                                    </h3>
+                                    <p class="text-amber-900 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.fullNote }}</p>
+                                </div>
+
+                                <!-- Purpose / Why -->
+                                <div v-if="activeHelpStep.why" class="bg-brand-green text-white border-l-4 border-emerald-400 rounded-r-2xl p-5 mb-4 shadow-md flex-shrink-0">
+                                    <h3 class="font-mono text-[11px] tracking-widest text-emerald-300 uppercase font-bold mb-2 flex items-center">
+                                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                            <line x1="12" x2="12.01" y1="17" y2="17"/>
+                                        </svg>
+                                        The Purpose
+                                    </h3>
+                                    <p class="text-slate-100 text-[14px] leading-relaxed font-medium">{{ activeHelpStep.why }}</p>
+                                </div>
+
+                                <!-- Band Rota PDF Button -->
+                                <div v-if="activeHelpStep.isRotaLink" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-5 text-center flex flex-col items-center shadow-sm">
+                                    <div class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4 shadow-inner">
+                                        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
+                                    </div>
+                                    <h3 class="text-slate-800 text-lg font-bold mb-2">Who's on Band?</h3>
+                                    <p class="text-slate-500 text-sm mb-5">Open the schedule to check this week's team.</p>
+                                    
+                                    <button v-if="latestRotaPdf" @click="previewPdf(latestRotaPdf)" class="w-full bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-300 py-3.5 px-4 rounded-xl text-sm font-mono font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm group">
+                                        <svg class="w-5 h-5 text-slate-400 group-hover:text-rose-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a1.5 1.5 0 0 0 0-3H9v6"/></svg>
+                                        Open {{ latestRotaPdf.title }}
+                                    </button>
+                                    <div v-else class="w-full bg-white text-slate-400 py-3.5 px-4 rounded-xl text-sm font-mono font-bold border border-slate-200 border-dashed flex flex-col items-center justify-center gap-1">
+                                        <span>No Rota PDF Found</span>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Image Viewer -->
+                                <div v-if="activeHelpStep.imageName && getImageUrl(activeHelpStep.imageName)" class="mb-5 rounded-xl overflow-hidden shadow-sm border border-slate-200 flex-shrink-0 bg-slate-100 flex items-center justify-center min-h-[150px]">
+                                    <img :src="getImageUrl(activeHelpStep.imageName)" :alt="activeHelpStep.imageName" class="w-full h-auto object-contain max-h-[300px]" />
+                                </div>
+
+                                <!-- Secure Login Details Widget -->
+                                <div v-if="activeHelpStep.login" class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-4 flex-shrink-0 shadow-sm transition-all duration-300">
+                                    <h3 class="font-mono text-[11px] tracking-widest text-slate-500 uppercase font-bold mb-3 flex items-center">
+                                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                        Login Credentials
+                                    </h3>
+                                    
+                                    <!-- PIN Entry Gate -->
+                                    <div v-if="!credentialsUnlocked" :class="['bg-white p-5 rounded-lg border flex flex-col items-center justify-center text-center shadow-sm', pinShake ? 'border-red-400 anim-shake' : 'border-slate-200']">
+                                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-3 text-slate-400">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                        </div>
+                                        <p class="text-xs font-semibold text-slate-500 mb-3">Enter the Sunday Team PIN to view</p>
+                                        
+                                        <div class="flex gap-2 w-full max-w-[200px]">
+                                            <input 
+                                                v-model="pinInput" 
+                                                type="password" 
+                                                pattern="[0-9]*" 
+                                                inputmode="numeric" 
+                                                placeholder="••••"
+                                                maxlength="4"
+                                                @keyup.enter="unlockCredentials"
+                                                class="flex-1 h-[52px] text-center text-lg tracking-[0.5em] pin-input bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition-all"
+                                            />
+                                            <button @click="unlockCredentials" class="w-[52px] h-[52px] flex items-center justify-center shrink-0 bg-slate-800 text-white font-bold rounded-xl active:scale-[0.95] transition-transform cursor-pointer">
+                                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Unlocked Credentials -->
+                                    <div v-else class="space-y-2 animate-fade-in">
+                                        <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
+                                            <span class="text-xs font-semibold text-slate-400">Email</span>
+                                            <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ decryptedEmail }}</span>
+                                        </div>
+                                        <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
+                                            <span class="text-xs font-semibold text-slate-400">Password</span>
+                                            <span class="text-[13px] font-mono font-bold text-slate-800 selection:bg-brand-green/20 select-all">{{ decryptedPassword }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Links -->
+                                <div v-if="activeHelpStep.links" class="mb-4 flex-shrink-0 space-y-3">
+                                    <a v-for="(linkObj, idx) in activeHelpStep.links" :key="idx" :href="linkObj.url" target="_blank" rel="noopener noreferrer" class="block bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-green/40 transition-colors cursor-pointer group">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
+                                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="font-bold text-slate-800 text-sm group-hover:text-brand-green transition-colors">{{ linkObj.label }}</h3>
+                                                <p class="text-xs text-slate-500 mt-0.5">{{ linkObj.desc }}</p>
+                                            </div>
+                                            <svg class="w-5 h-5 text-slate-300 group-hover:text-brand-green transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- MATRIX SWITCHER WIDGET -->
+                                <div v-if="activeHelpStep.id === 'vis-6'" class="mb-6 animate-fade-in flex-shrink-0">
+                                    <div class="bg-gradient-to-b from-[#181a1f] to-[#111215] border-2 border-slate-800 rounded-2xl p-4 shadow-2xl relative font-mono text-white select-none overflow-hidden max-w-full animate-fade-in">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="bg-[#dca818] text-slate-950 font-black px-2 py-0.5 rounded-[2px] text-[8px] tracking-wide uppercase">MATRIX</span>
+                                            </div>
+                                            <button @click="toggleShowAll(!showAllRoutes)"
+                                                    :class="['px-2 py-1 rounded-md text-[8px] font-mono font-bold tracking-widest transition-all cursor-pointer border shadow-sm flex items-center gap-1 uppercase', 
+                                                             showAllRoutes ? 'bg-brand-green border-brand-green text-white' : 'bg-[#242831] border-slate-700 text-slate-400 hover:text-white']">
+                                                <span :class="['h-1.5 w-1.5 rounded-full', showAllRoutes ? 'bg-emerald-300' : 'bg-slate-500']"></span>
+                                                Show All
+                                            </button>
+                                        </div>
+
+                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-[2px] mb-3 select-none">
+                                            <div class="border-r border-slate-200/60">PROJ</div>
+                                            <div class="border-r border-slate-200/60">FBACK</div>
+                                            <div class="border-r border-slate-200/60">DISTRO</div>
+                                            <div class="border-r border-slate-200/60 font-extrabold">NEW PROJ</div>
+                                            <div>ALL</div>
+                                        </div>
+
+                                        <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
+                                            <button v-for="outNum in 5" :key="'out-btn-' + outNum"
+                                                    @click="selectOutput(outNum)"
+                                                    class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 hover:border-slate-500 flex items-center justify-center relative shadow-inner cursor-pointer transition-all active:scale-[0.95]">
+                                                <div :class="['w-4 h-4 rounded-[2px] transition-all duration-150', getOutputLedClass(outNum)]"></div>
+                                                <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ outNum === 5 ? 'OFF' : outNum }}</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="h-[1px] bg-slate-800/80 relative flex items-center justify-center my-3">
+                                            <div class="text-[6.5px] tracking-widest text-slate-500 font-bold px-2 bg-[#121417]">INTERACTIVE RACK ASSISTANT</div>
+                                        </div>
+
+                                        <div class="grid grid-cols-5 gap-2 justify-items-center mb-3">
+                                            <div v-for="inNum in 5" :key="'in-btn-' + inNum"
+                                                 class="w-10 h-10 rounded-lg bg-[#242831] border border-slate-700 flex items-center justify-center relative shadow-inner transition-all">
+                                                <div :class="['w-4 h-4 rounded-[2px] transition-all duration-200', getInputLedClass(inNum)]"></div>
+                                                <span class="absolute bottom-0 text-[6px] text-slate-500 font-bold">{{ inNum === 5 ? 'OFF' : inNum }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-5 text-center text-slate-900 font-bold text-[8.5px] bg-[#faf8f5] border border-stone-300 shadow-sm py-1 font-sans rounded-[2px] mb-1 select-none">
+                                            <div class="border-r border-slate-200/60">IMAC</div>
+                                            <div class="border-r border-slate-200/60">SPARE</div>
+                                            <div class="border-r border-slate-200/60">CAM</div>
+                                            <div class="border-r border-slate-200/60 text-slate-400 font-light">-</div>
+                                            <div>OFF</div>
+                                        </div>
+
+                                        <div class="flex justify-between items-center text-[7px] text-slate-500 font-bold mt-3 uppercase tracking-wider">
+                                            <span>VP-424 SCALER UNIT</span>
+                                            <span class="text-emerald-500 flex items-center gap-1">
+                                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> BM TV STUDIO
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="showAllRoutes" class="mt-3 grid grid-cols-3 gap-1.5 font-mono text-[9px] uppercase tracking-wide text-center select-none font-bold">
+                                        <div class="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-1.5 rounded-md">🟡 Out 1 ➔ In 2</div>
+                                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-1.5 rounded-md">🟢 Out 2,3 ➔ In 3</div>
+                                        <div class="bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 p-1.5 rounded-md">🔵 Out 4 ➔ In 1</div>
+                                    </div>
+                                </div>
+
+                                <!-- Diagnostic Wizard -->
+                                <div v-if="flowchartsDatabase[activeHelpStep.id]" class="animate-fade-in flex flex-col h-full bg-slate-50 border border-slate-200/80 rounded-2xl p-5 mb-8 shadow-sm flex-shrink-0">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="font-mono text-[10px] tracking-widest text-slate-500 uppercase font-bold flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                                            Diagnostic Wizard
+                                        </h3>
+                                        <button v-if="flowNode !== 'start'" @click="flowNode = 'start'" class="text-slate-400 hover:text-slate-800 transition-colors text-[10px] font-mono uppercase flex items-center gap-1 cursor-pointer">
+                                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                                            Back
+                                        </button>
+                                    </div>
+                                    
+                                    <div v-if="currentWizardNode.type !== 'escalation'" class="bg-white border border-slate-200 rounded-xl p-5 mb-5 flex-1 flex flex-col justify-center text-center items-center shadow-sm">
+                                        <div v-if="currentWizardNode.type === 'success'" class="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center mb-3 text-brand-green">
+                                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                        </div>
+                                        <p class="text-slate-800 text-sm leading-relaxed font-semibold">{{ currentWizardNode.text }}</p>
+                                    </div>
+
+                                    <!-- Escalation view with direct PDF access -->
+                                    <div v-else class="bg-red-50 border border-red-200 rounded-xl p-5 mb-5 text-center flex flex-col items-center">
+                                        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-3">
+                                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                                        </div>
+                                        <p class="text-slate-800 text-sm font-semibold mb-3">{{ currentWizardNode.text }}</p>
+                                        
+                                        <!-- Quick Link to Reference PDF if matched -->
+                                        <div v-if="matchedPdf" class="w-full mt-2">
+                                            <button @click="previewPdf(matchedPdf)" class="w-full bg-white border border-rose-300 text-rose-700 py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-rose-50 transition-colors cursor-pointer">
+                                                <svg class="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                                Open {{ matchedPdf.filename }}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-3">
+                                        <button v-for="(opt, idx) in currentWizardNode.options" :key="idx" @click="handleFlowAction(opt.target)" class="w-full h-[52px] rounded-xl font-mono font-bold text-xs transition-transform active:scale-[0.98] bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 shadow-sm cursor-pointer">
+                                            {{ opt.label }}
+                                        </button>
+                                        
+                                        <button v-if="currentWizardNode.type" @click="handleResolution(currentWizardNode.type)" :class="['w-full h-[52px] rounded-xl font-mono font-bold tracking-widest uppercase transition-transform active:scale-[0.98] text-white shadow-md cursor-pointer', currentWizardNode.type === 'success' ? 'bg-brand-green shadow-brand-green/20 opacity-90 hover:opacity-100' : 'bg-red-600 shadow-red-700/10 hover:bg-red-700']">
+                                            {{ currentWizardNode.type === 'success' ? 'Mark Task Complete' : 'Alert Sound Team Leader & Skip' }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OVERLAY PANEL: IN-APP PDF VIEWER MODAL -->
+        <div v-if="activePdf" :class="['fixed inset-0 z-50 flex items-center justify-center animate-fade-in transition-colors', pdfFullscreen ? 'bg-black' : 'p-4 bg-black/60']">
+            <!-- Background Lock Layer to isolate panning and pinching strictly to the document wrapper -->
+            <div class="absolute inset-0 bg-transparent backdrop-blur-[2px]" @touchmove.prevent @click="activePdf = null"></div>
+            
+            <div :class="['bg-white overflow-hidden flex flex-col shadow-2xl relative transition-all duration-300 z-10', pdfFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-[460px] h-[85vh] rounded-3xl']">
+                <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
+                    <div class="flex items-center gap-2.5 overflow-hidden pr-2">
+                        <svg v-if="activePdf.filename.toLowerCase().endsWith('.pdf')" class="w-5 h-5 text-rose-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <svg v-else class="w-5 h-5 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        <span class="font-bold text-xs truncate">{{ activePdf.title }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button @click="pdfFullscreen = !pdfFullscreen" class="p-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer" title="Toggle Fullscreen">
+                            <svg v-if="!pdfFullscreen" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                            <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+                        </button>
+                        <a :href="activePdf.path" target="_blank" download class="p-1.5 text-slate-300 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                        </a>
+                        <button @click="activePdf = null" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-full transition-colors cursor-pointer">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Native PDF.js Rendering Container -->
+                <div v-if="pdfLoading" class="flex-1 flex flex-col items-center justify-center bg-slate-100">
+                    <svg class="w-8 h-8 text-slate-400 animate-spin mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-sm font-bold text-slate-500 font-mono tracking-widest uppercase">Rendering PDF...</span>
+                </div>
+                <div v-else class="flex-1 overflow-auto w-full h-full relative bg-slate-200" 
+                     style="-webkit-overflow-scrolling: touch;"
+                     ref="pdfScrollContainer"
+                     @touchstart="handlePdfTouchStart"
+                     @touchmove="handlePdfTouchMove"
+                     @touchend="handlePdfTouchEnd">
+                    
+                    <div class="min-h-full flex flex-col items-center p-4"
+                         :style="{ width: `${pdfZoom * 100}%`, transition: isPinching ? 'none' : 'width 0.1s ease-out' }">
+                        <!-- Rendered Pages Array -->
+                        <img v-for="(img, idx) in pdfPages" :key="idx" :src="img" class="w-full bg-white shadow-md mb-4 rounded-[2px] pointer-events-none" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- OVERLAY PANEL: IN-APP YOUTUBE PLAYER MODAL -->
+        <div v-if="activeVideoId" 
+             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
+             @mousemove="wakeVideoUI" 
+             @touchstart="wakeVideoUI"
+             @click.self="activeVideoId = null">
+            <div class="w-full max-w-[800px] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-slate-800">
+                
+                <!-- Backup Link if video is blocked by YouTube Copyright/Cookies -->
+                <a :href="'https://youtu.be/' + activeVideoId" target="_blank" 
+                   :class="['absolute top-4 left-4 z-20 px-3 py-1.5 bg-brand-green/90 hover:bg-brand-green text-white text-xs font-mono rounded-lg backdrop-blur-md cursor-pointer border border-white/20 flex items-center gap-1.5 shadow-lg decoration-none transition-all duration-500', videoUIActive ? 'opacity-100' : 'opacity-0 pointer-events-none']">
+                    Open in YouTube App
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                </a>
+
+                <!-- Close Button overlaying the video -->
+                <button @click="activeVideoId = null" 
+                        :class="['absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md cursor-pointer border border-white/20 shadow-lg transition-all duration-500', videoUIActive ? 'opacity-100' : 'opacity-0 pointer-events-none']">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </button>
+                
+                <!-- YouTube Iframe using No-Cookie domain to bypass Error 153 -->
+                <iframe 
+                    :src="'https://www.youtube-nocookie.com/embed/' + activeVideoId + '?autoplay=1&rel=0'" 
+                    class="w-full h-full border-none absolute inset-0 z-10" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Vue Setup Engine -->
+    <script>
+        const INITIAL_TEAM = [
+            "Andy", "Izzy", "Johnny", "Joshua", "Melchizedek", "Neil", 
+            "Simon", "Titi", "Ulvis", "Ver-se"
+        ];
+
+        const STEPS = {
+            audio: [
+                { label: 'Immediate Action', steps: [
+                { 
+                    id: 'audio-pre-0', 
+                    text: "Switch both reception TVs (Back & Glass Door) to the upstairs stream.", 
+                    note: "The panel should show \"313\" on the first 3 inputs.",
+                    fullNote: "Use the control pad on the right hand side of the control panel to change the inputs. The panel should show \"313\" on the first 3 inputs.",
+                    imageName: "Reception TVs Control Panel"
+                },
+                { id: 'audio-pre-1', text: "Switch on tech in Lomond", why: "Do this first as it takes a little while to boot up." }
+                ]},
+                { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
+                { id: 'audio-1', text: 'Pray with team member(s)', why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service." },
+                { id: 'audio-2', text: "Read through the handout", why: "Everything you'll need to know for the service is on this sheet. It might be the same as always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.", note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary." },
+                { id: 'audio-3', text: 'Switch on the 2 switches on the wall', why: "This switches everything on. You can do nothing without it." },
+                { id: 'audio-4', text: 'Switch on the desk', why: "This should be done first before switching on the amps." },
+                { id: 'audio-recv', text: 'Switch on mic receivers' },
+                { id: 'audio-5', text: 'Switch on the amps', note: "Ensure the desk is switched on first." },
+                { id: 'audio-6', text: 'Set up headset mics' },
+                { id: 'audio-7', text: 'Test and adjust sound for headset mic', why: "It's good to test this well to make sure it will hold up for the service and that you only have to make small adjustments." },
+                { id: 'audio-8', text: "Figure out who's on band", isRotaLink: true, why: "Do this so you know what mics to take." },
+                { id: 'audio-9', text: "Leave spare mic pack on the speaker's glass table", why: "You'll be kicking yourself if things go wrong with the pack and there's no spare pack for the speaker to switch to." },
+                { id: 'audio-10', text: 'Set up band mics' },
+                { id: 'audio-11', text: 'Test and adjust all band mics', note: "Make sure you know which mic is in which input." },
+                { id: 'audio-12', text: 'Make sure sound is coming through on OBS', why: "This is what goes downstairs to Lomond and reception, so making sure the meters are moving and it's kept at high yellows reaching into reds for the whole service. This will make for adequately loud and consistent volume throughout the stream.", note: "Aiming for yellows touching reds.", branch: 'yes' },
+                { id: 'audio-13', text: 'Test YouTube video for sound level', why: "To make sure sound is coming through from the MAC and the desk is pumping it out loud enough. If it's loud enough from a video but not during the stream, you know the problem is KG!", branch: 'no' },
+                { id: 'audio-14', text: 'Grab headset mics and leave in the vestry and chat to the leader', why: "It makes sure everyone is on the same page and you don't have a service leader strolling out at 10.00am after the countdown has been and gone.", note: "Grab headset mics and leave in the vestry and chat to the service leader/minister about the service whether everything is as normal or as abnormal!" },
+                { id: 'audio-15', text: "Hit Stream in the Lomond Room and Check Sound & Visuals", why: "It's a massive pain to hear that somethings not on down there mid-service.", note: "Hit 'Stream' on the wall panel and make sure sound and visuals are coming through in Lomond and in the reception downstairs." }
+                ]}
+            ],
+            visuals: [
+                { label: 'Immediate Action', steps: [
+                { 
+                    id: 'vis-pre-0', 
+                    text: "Switch both reception TVs (Back & Glass Door) to the upstairs stream.", 
+                    note: "The panel should show \"313\" on the first 3 inputs.",
+                    fullNote: "Use the control pad on the right hand side of the control panel to change the inputs. The panel should show \"313\" on the first 3 inputs.",
+                    imageName: "Reception TVs Control Panel"
+                },
+                { id: 'vis-pre-1', text: "Switch on tech in Lomond", why: "Do this first as it takes a little while to boot up. We do this every week." }
+                ]},
+                { label: '9:00 — 9:40 · Grand Hall Prep', steps: [
+                { id: 'vis-1', text: 'Pray with team member(s)', why: "It's good to do this at the start to bring even your set up to the Lord but also to ensure it's not forgotten at the end. We need the Lord’s help in all our service." },
+                { id: 'vis-2', text: "Read the handout", why: "Everything you'll need to know for the service is on this sheet. It might be the same as always BUT the one week something's different will be the week you don't check it. Make sure you're as confident and confidence-inducing as you can be.", note: "Take note of if we're streaming, who the speaker(s) is and if there's anything out of the ordinary." },
+                { id: 'vis-3', text: 'Turn on both projectors and FBack Screen', note: "We don’t need “Proj” if there’s a Farsi service on." },
+                { id: 'vis-farsi-mac', text: 'Grab the Farsi Mac' },
+                { id: 'vis-4', text: 'Check the 2 switches on the wall are switched on' },
+                { id: 'vis-5', text: 'Switch on both Macs' },
+                { id: 'vis-6', text: 'Set up matrix switcher', why: "This ensures all the screens are showing what they should be.", note: "New Proj is showing Mac, FBack is showing CAMS, Distro is showing CAMS and Proj is showing Spare." },
+                { id: 'vis-7', text: 'On the Slides mac: Open up the Pre, During and Post Service slides' },
+                { id: 'vis-farsi-slides', text: 'Open up the Farsi slides on the Farsi Mac' },
+                
+                { id: 'vis-ns-1', text: 'On the Slides Mac: Open up YouTube in Chrome', why: "We always do this in Chrome because the video quality seems more consistent in Chrome.", note: "Await the stream.", branch: 'no' },
+                { id: 'vis-ns-2', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: 'c291bmQudGVhbUB0cm9uLmNodXJjaA==', passEnc: 'VHJvbnNsYXRpb25D' }, branch: 'no' },
+                { id: 'vis-ns-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: 'cGhpbC5jb3BlbGFuZEB0cm9uLmNodXJjaA==', passEnc: 'MTZKb2huMDM=' }, branch: 'no' },
+                { id: 'vis-ns-3', text: 'On Streaming Mac: Open ATEM Switcher Software', branch: 'no' },
+                { id: 'vis-ns-4', text: 'On Streaming Mac: Open OBS', why: "This is for the sound person to gauge that the sound level is correct.", branch: 'no' },
+
+                { id: 'vis-s-1', text: 'On Streaming Mac: Open OBS', branch: 'yes' },
+                { id: 'vis-s-breeze', text: 'On the Slides Mac: Set up Breeze Translate in Safari', why: "We always do this in Safari because Breeze doesn’t like translating from a video in the same browser.", note: "Await hitting 'Start' (Don’t hit start just yet because the total length of translation time is only 2 hours).", login: { emailEnc: 'c291bmQudGVhbUB0cm9uLmNodXJjaA==', passEnc: 'VHJvbnNsYXRpb25D' }, branch: 'yes' },
+                { id: 'vis-s-zoom', text: 'On Streaming Mac: Open and start the Zoom call', note: 'For listeners dialing in. They must enter Meeting ID: 868 4349 6063.', phone: '+44 20 8080 6592', login: { emailEnc: 'cGhpbC5jb3BlbGFuZEB0cm9uLmNodXJjaA==', passEnc: 'MTZKb2huMDM=' }, branch: 'yes' },
+                { id: 'vis-s-2', text: 'On Streaming Mac: Set up the stream in Boxcast', branch: 'yes' },
+                { id: 'vis-s-3', text: 'On Streaming Mac: Open ATEM switcher software', branch: 'yes' },
+                { id: 'vis-9', text: 'Set up your camera presets on the camera switcher', note: "Make sure you know which preset is which. General rule of thumb for both cameras: Preacher on 1, Band on 2, Cong on 3 and Something special on 4." }
+                ]},
+                { label: '9:40 — 9:50 · Go-Time Transitions', steps: [
+                { id: 'vis-ns-t1', text: "Hit 'Start' Breeze translate", branch: 'no' },
+                { id: 'vis-ns-t2', text: "Find stream on YouTube and play in the background", why: "So your time scrubber is keeping time with the livestream. It’ll make it easier to find the transition point when that time comes.", branch: 'no' },
+                { id: 'vis-ns-t3', text: "Play Pre-Service slides", branch: 'no' },
+                { id: 'vis-ns-t4', text: "Make sure MAC is Live on the cameras", why: "To make sure everyone in the other rooms see the announcements on the screen first and not just a blank computer screen.", branch: 'no' },
+
+                { id: 'vis-s-t1', text: "Start Breeze translate", branch: 'yes' },
+                { id: 'vis-s-t2', text: "Play Pre-Service slides", branch: 'yes' },
+                { id: 'vis-s-t3', text: "Make sure MAC is Live on the cameras", why: "To make sure everyone in the other rooms and venues see the announcements on the screen first and not just a blank computer screen.", branch: 'yes' },
+                { id: 'vis-s-t4', text: "Start stream at 9:45", why: "This is important as it give the other venues time to find the stream and play the stream in the background and allow adequate time to display their notices.", branch: 'yes' },
+                { id: 'vis-s-t5', text: "Check stream is running on YouTube using your phone or browser", why: "So you know it’s good to go.", multiLink: { label: "Open YouTube and Tron Church Website", urls: ["https://www.youtube.com/@TronChurch", "https://www.tron.church/live"] }, links: [{ label: "YouTube Channel", desc: "Open Tron Church on YouTube", url: "https://www.youtube.com/@TronChurch" }, { label: "Tron Church Live", desc: "Open the website livestream page", url: "https://www.tron.church/live" }], branch: 'yes' }
+                ]}
+            ]
+        };
+
+        const FLOWCHARTS = {
+            'audio-7': {
+                'start': { text: "No sound on the headset? Let's check: Are the main amps switched on?", options: [{ label: "No, they were off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
+                'amps_off': { text: "Go ahead and switch the amps on. Did that bring the sound back?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still dead quiet", target: "layer" }] },
+                'layer': { text: "Are you on the correct Custom Layer? (Press both buttons on the left side of the desk so 'Custom' lights up green). Is the light active?", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, it was already on Custom", target: "sliders" }] },
+                'layer_check': { text: "Excellent. Is the mic sound coming through now?", options: [{ label: "Yes, that solved it!", target: "resolved" }, { label: "No, still dead quiet", target: "sliders" }] },
+                'sliders': { text: "Let's check the routing parameters. Are all volume sliders turned up and unmuted? (Ensure you check main desk mute, soft mute, channel mute, channel fader, and physical mic pack switch).", options: [{ label: "No, found a muted slider!", target: "sliders_check" }, { label: "Yes, unmuted & faders are up", target: "cable" }] },
+                'sliders_check': { text: "Let's test it now. Is the sound working?", options: [{ label: "Yes, beautiful sound!", target: "resolved" }, { label: "No, still no signal", target: "cable" }] },
+                'cable': { text: "Let's check physical hardware. Is the connecting cable okay? Try swapping the XLR cable.", options: [{ label: "Swapped it and now it's fixed!", target: "resolved" }, { label: "No, still dead silent", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Fantastic! Mic test successfully confirmed on-air. You are good to go!" },
+                'escalate': { type: 'escalation', text: "We have tried all standard routes. Please reference Can't Hear Mics__3.pdf or contact the Venue Lead for assistance." }
+            },
+            'audio-11': {
+                'start': { text: "Let's test these band inputs! First: Are the main amps powered on?", options: [{ label: "No, they are off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
+                'amps_off': { text: "Go ahead and switch the amps on. Does the band audio come through?", options: [{ label: "Yes, that worked!", target: "resolved" }, { label: "No, still silent", target: "layer" }] },
+                'layer': { text: "No problem. Are you on the correct Custom Layer? (Press both buttons on the left of the board so 'Custom' has a green light below it).", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, confirmed on Custom", target: "sliders" }] },
+                'layer_check': { text: "Perfect. Does the band sound come through now?", options: [{ label: "Yes, working great!", target: "resolved" }, { label: "No, still nothing", target: "sliders" }] },
+                'sliders': { text: "Let's look at the desk. Are all volume faders up and unmuted? (Check main desk mute, soft mute, channel mute, channel fader, and mic pack mute).", options: [{ label: "Found a muted fader!", target: "sliders_check" }, { label: "Yes, verified unmuted & up", target: "cable" }] },
+                'sliders_check': { text: "Does the band sound come through now?", options: [{ label: "Yes, that did it!", target: "resolved" }, { label: "No, still dead", target: "cable" }] },
+                'cable': { text: "Let's check the physical lines. Is the connecting cable OK? Try swapping the line.", options: [{ label: "Swapping it resolved it!", target: "resolved" }, { label: "No, still silent", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Hooray! The band mics are checked and sounding great. You're ready!" },
+                'escalate': { type: 'escalation', text: "Looks like a possible stage box or patch bay issue. Reference Can't Hear Mics__3.pdf or get in touch with the Venue Lead." }
+            },
+            'audio-14': {
+                'start': { text: "Let's double-check the leader's mic! Are the main amps powered on?", options: [{ label: "No, they are off", target: "amps_off" }, { label: "Yes, they are powered up", target: "layer" }] },
+                'amps_off': { text: "Let's toggle the amps on. Does the leader's mic work now?", options: [{ label: "Yes, working!", target: "resolved" }, { label: "No, still silent", target: "layer" }] },
+                'layer': { text: "Let's check the fader layer. Are you on the Custom Layer? (Green light active below 'Custom').", options: [{ label: "No, corrected it now!", target: "layer_check" }, { label: "Yes, on Custom layer", target: "sliders" }] },
+                'layer_check': { text: "Does the leader's mic come through now?", options: [{ label: "Yes, beautiful!", target: "resolved" }, { label: "No, still quiet", target: "sliders" }] },
+                'sliders': { text: "Are all volume faders up and unmuted? (Check desk main, channel mute, and the physical slider on the pack).", options: [{ label: "Fixed a muted channel!", target: "sliders_check" }, { label: "Yes, verified unmuted", target: "cable" }] },
+                'sliders_check': { text: "Is the mic sound active now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still dead", target: "cable" }] },
+                'cable': { text: "Is the connecting cable OK?", options: [{ label: "Yes, swapping fixed it!", target: "resolved" }, { label: "No, still dead", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Perfect! The minister's mic is verified and clear." },
+                'escalate': { type: 'escalation', text: "Refer to Can't Hear Mics__3.pdf or quickly contact your Venue Lead." }
+            },
+            'audio-13': {
+                'start': { text: "Is the volume turned up on the video, the mixer, and on the computer?", options: [{ label: "No, adjusted them", target: "vol_check" }, { label: "Yes, all are turned up", target: "try_video" }] },
+                'vol_check': { text: "Is the sound working now?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still quiet", target: "try_video" }] },
+                'try_video': { text: "Let's try a different YouTube video. Does another video play sound?", options: [{ label: "Yes, other video works!", target: "resolved" }, { label: "No, still silent", target: "fashing_light" }] },
+                'fashing_light': { text: "Are you getting a flashing light on the desk showing sound coming in?", options: [{ label: "No lights flashing", target: "escalate" }, { label: "Yes, desk shows input", target: "sliders" }] },
+                'sliders': { text: "Are all volume faders turned up and unmuted on the desk? (Check main desk mute, soft mute, channel mute, and channel fader).", options: [{ label: "No, fixed a fader!", target: "resolved" }, { label: "Yes, unmuted", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Excellent! YouTube test sound is flowing loud and clear." },
+                'escalate': { type: 'escalation', text: "Reference Can't Hear Youtube Video_2.pdf or contact the Venue Lead." }
+            },
+            'audio-15': {
+                'start': { text: "Let's check Lomond downstairs. Is 'Stream' lit up on the wall panel?", options: [{ label: "No", target: "turn_on_wall" }, { label: "Yes", target: "sound_check" }] },
+                'turn_on_wall': { text: "Switch it on at the wall panel. Fixed?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still silent", target: "sound_check" }] },
+                'sound_check': { text: "Can you hear sound coming from the Grand Hall in the Lomond room?", options: [{ label: "No", target: "matrix_check" }, { label: "Yes, sound is okay", target: "sliders" }] },
+                'sliders': { text: "Are the sliders turned up and unmuted downstairs?", options: [{ label: "No, unmuted them", target: "resolved" }, { label: "Yes, unmuted", target: "matrix_check" }] },
+                'matrix_check': { text: "Is the matrix switcher upstairs showing CAM3 as the output for Distro?", options: [{ label: "No, corrected it!", target: "camera_check" }, { label: "Yes, matrix is correct", target: "camera_check" }] },
+                'camera_check': { text: "Is there a camera shot active on 'Program' on the switcher?", options: [{ label: "No", target: "resolved" }, { label: "Yes", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Fantastic! Lomond feeds are verified and functional." },
+                'escalate': { type: 'escalation', text: "Feeds might be broken downstairs. Reference Can't Hear Stream in Lomond_2.pdf & Can't See Stream in Lomond_2.pdf or get in touch with the Venue Lead." }
+            },
+            'vis-7': {
+                'start': { text: "Oh no, where are the slides? Let's check: Are you connected to the internet?", options: [{ label: "No, offline", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
+                'offline': { text: "Please verify the ethernet cable and router. Did reconnecting fix it?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still offline", target: "other_mac" }] },
+                'other_mac': { text: "Can you see the slides folder on another computer?", options: [{ label: "No", target: "dropbox" }, { label: "Yes, other mac has them", target: "refresh" }] },
+                'refresh': { text: "Try refreshing the local slides folder. Are they showing up now?", options: [{ label: "Yes, loaded!", target: "resolved" }, { label: "No, still blank", target: "dropbox" }] },
+                'dropbox': { text: "Have you gone into Dropbox via a web browser to look for the slides directly?", options: [{ label: "Yes, found them!", target: "resolved" }, { label: "No, still missing", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Hooray! Slides have been successfully loaded and ready for service." },
+                'escalate': { type: 'escalation', text: "Critical setup files are missing. Reference Can't Find Slides_2.pdf or alert the Visuals Lead." }
+            },
+            'vis-farsi-slides': {
+                'start': { text: "Let's locate the Farsi Slides! Are you connected to the internet?", options: [{ label: "No", target: "offline" }, { label: "Yes, connected", target: "other_mac" }] },
+                'offline': { text: "Verify the network cable. Did internet connection restore?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still offline", target: "other_mac" }] },
+                'other_mac': { text: "Can you see the Farsi files on another computer?", options: [{ label: "No", target: "dropbox" }, { label: "Yes, they are there", target: "refresh" }] },
+                'refresh': { text: "Refresh the Farsi slides directory. Did that fix it?", options: [{ label: "Yes, synced!", target: "resolved" }, { label: "No, still blank", target: "dropbox" }] },
+                'dropbox': { text: "Log into the Dropbox web portal in a browser. Are they available there?", options: [{ label: "Yes, downloaded!", target: "resolved" }, { label: "No, still missing", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Hooray! Farsi slides are verified and loaded." },
+                'escalate': { type: 'escalation', text: "Reference Can't Find Slides_2.pdf or contact the Venue Lead." }
+            },
+            'vis-ns-3': {
+                'start': { text: "Let's establish ATEM control. Are you connected to the local switcher ethernet network?", options: [{ label: "No, check cables", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
+                'cables': { text: "Verify the network cables on the back of the ATEM and the Mac. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "reinstall" }] },
+                'reinstall': { text: "Let's try uninstalling and reinstalling the ATEM software. Did a reboot help?", options: [{ label: "Yes, connected now!", target: "resolved" }, { label: "No, still disconnected", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Great! ATEM is fully connected." },
+                'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or get in touch with the Venue Lead." }
+            },
+            'vis-s-3': {
+                'start': { text: "Let's check the ATEM connection. Are you connected to the network?", options: [{ label: "No", target: "cables" }, { label: "Yes, connected", target: "reinstall" }] },
+                'cables': { text: "Verify the switcher cables. Fixed?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still quiet", target: "reinstall" }] },
+                'reinstall': { text: "Have you tried un-installing and reinstalling the software?", options: [{ label: "Yes, connected!", target: "resolved" }, { label: "No, still disconnected", target: "escalate" }] },
+                'resolved': { type: 'success', text: "ATEM Switcher connected successfully." },
+                'escalate': { type: 'escalation', text: "Reference ATEM Switcher Software Not Connecting_2.pdf or alert the Venue Lead." }
+            },
+            'vis-ns-t1': {
+                'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in on the browser?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
+                'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, working now!", target: "resolved" }, { label: "No, still offline", target: "lang_check" }] },
+                'lang_check': { text: "Have you changed the source language on Breeze to 'Multi-language'?", options: [{ label: "No, updated it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Breeze translation is fully active and translating. You're good to go!" },
+                'escalate': { type: 'escalation', text: "Reference Breeze not connecting_2.pdf or alert the Venue Lead." }
+            },
+            'vis-s-t1': {
+                'start': { text: "Let's check the Breeze translation feed. Can you see sound input coming in?", options: [{ label: "No input showing", target: "no_input" }, { label: "Yes, input showing", target: "lang_check" }] },
+                'no_input': { text: "Try converting the sound input selection on the browser settings. Did that fix it?", options: [{ label: "Yes, fixed!", target: "resolved" }, { label: "No, still dead", target: "lang_check" }] },
+                'lang_check': { text: "Have you changed the source language to 'Multi-language'?", options: [{ label: "No, changed it now", target: "resolved" }, { label: "Yes, verified", target: "escalate" }] },
+                'resolved': { type: 'success', text: "Breeze translation active and translating. You're good to go!" },
+                'escalate': { type: 'escalation', text: "Reference Breeze not connecting_2.pdf or alert the Venue Lead." }
+            }
+        };
+
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    screen: 'home', 
+                    currentName: null,
+                    role: null,
+                    roleToSelect: null,
+                    streaming: null,
+                    newName: '',
+                    teamMembers: [...INITIAL_TEAM],
+                    
+                    tracksProgress: {},
+                    checkedSteps: [],
+                    stepDurations: {},
+                    stepCompletionTimes: {},
+                    elapsedSeconds: 0,
+                    
+                    expandedSteps: [],
+                    justChecked: null,
+                    focusedStep: null,
+                    collapsedBands: {},
+                    activeHelpStep: null,
+                    flowNode: 'start',
+                    copySuccess: false,
+                    isPopState: false, 
+                    
+                    feedbackText: '',
+                    feedbackName: '',
+                    feedbackSending: false,
+                    feedbackSuccess: false,
+                    feedbackError: false,
+                    
+                    pinInput: '',
+                    pinShake: false,
+                    credentialsUnlocked: false,
+                    decryptedEmail: '',
+                    decryptedPassword: '',
+                    
+                    documentsList: [],
+                    documentSearch: '',
+                    selectedDocCategory: 'All',
+                    activePdf: null,
+                    pdfFullscreen: false,
+                    
+                    pdfLoading: false,
+                    pdfPages: [],
+                    pdfZoom: 1,
+                    isPinching: false,
+                    initialPinchDistance: 0,
+                    initialZoom: 1,
+                    pinchCenterX: 0,
+                    pinchCenterY: 0,
+                    initialScrollLeft: 0,
+                    initialScrollTop: 0,
+                    initialTouchCenterX: 0,
+                    initialTouchCenterY: 0,
+                    
+                    repoImages: {},
+                    
+                    activeVideoId: null,
+                    videoUIActive: true,
+                    videoUITimer: null,
+                    
+                    timerInterval: null,
+                    lastActionTimestamp: 0,
+                    
+                    tutorialVideos: [
+                        { id: '7IINPKxx8cI', title: "1.1 Why We Do What We Do", category: 'Intro' },
+                        { id: '_huTFM-wh9Y', title: "1.2 Introduction to the Team", category: 'Intro' },
+                        { id: 'lsUNwGHCL50', title: "1.3 What Makes a Good Sound Team Member", category: 'Intro' },
+                        { id: 'i4CjB5ZvNoY', title: "2.0 Why Good Sound is Important and What We're Doing it For", category: 'Audio' },
+                        { id: 'dkDCg7AyhlQ', title: "2.1.1 Introduction to the Main KG Desk", category: 'Audio' },
+                        { id: 'YK06xpeNQdM', title: "2.1.2 Introduction to the Streaming Room", category: 'Audio' },
+                        { id: 'RzrlaeswmME', title: "2.1.3 Introduction to the Band Area", category: 'Audio' },
+                        { id: 'rg2JJnMbwPA', title: "2.2 Introduction to Microphones", category: 'Audio' },
+                        { id: 'eCpa35Hln6s', title: "2.3 Kelvingrove Sound Desk Basics", category: 'Audio' },
+                        { id: '6cqsjkjFEh4', title: "2.4 Principles for Balancing the Band", category: 'Audio' },
+                        { id: 'bPxvkKFaCao', title: "2.5 Using EQ and Compression", category: 'Audio' },
+                        { id: 'IKU3YIJr-Ks', title: "Sound Desk Basics Central QP Version", category: 'Audio' },
+                        { id: '4x7qC2FlvxA', title: "Sound Desk in the Grand Hall", category: 'Audio' },
+                        { id: 'HhQyFvDNzLY', title: "Why We Use Cameras", category: 'Visuals' },
+                        { id: 'JIqOwbrBvIg', title: "Band Area", category: 'Visuals' },
+                        { id: 'NzjqKccCGWk', title: "Lomond/Glasgow", category: 'Visuals' },
+                        { id: 'WWUKm5VoEHg', title: "How to Start a Live Stream", category: 'Visuals' },
+                        { id: 'agltUVBYHlE', title: "The Art of Cameras", category: 'Visuals' },
+                        { id: 'G2Oeo-AFvt0', title: "Overlays", category: 'Visuals' },
+                    ],
+
+                    isDragging: false,
+                    isSwipingX: false,
+                    isSwipingY: false,
+                    touchStartX: 0,
+                    touchStartY: 0,
+                    swipeDragX: 0,
+                    modalDragY: 0,
+                    swipeTransition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    isAtTop: true,
+                    closingModal: false,
+                    
+                    helpSequence: [],
+                    currentHelpIndex: -1,
+                    
+                    stepsDatabase: STEPS,
+                    flowchartsDatabase: FLOWCHARTS,
+
+                    selectedOutput: 4, 
+                    showAllRoutes: true
+                }
+            },
+            created() {
+                this.loadState();
+            },
+            mounted() {
+                this.scanGitHubRepo();
+
+                const params = new URLSearchParams(window.location.search);
+                const urlScreen = params.get('screen');
+                if (urlScreen) {
+                    this.screen = urlScreen;
+                } else if (!this.screen) {
+                    this.screen = 'home';
+                }
+                this.replaceHistoryState({ screen: this.screen }, '?screen=' + this.screen);
+
+                window.addEventListener('popstate', (e) => {
+                    this.isPopState = true;
+                    
+                    if (e.state && e.state.screen) {
+                        this.screen = e.state.screen;
+                    }
+
+                    if (!e.state?.modal) {
+                        this.activeVideoId = null;
+                        this.activePdf = null;
+                        this.pdfFullscreen = false;
+                        if (this.activeHelpStep) {
+                            this.activeHelpStep = null;
+                            this.closingModal = false;
+                            this.flowNode = 'start';
+                        }
+                    }
+
+                    this.$nextTick(() => {
+                        this.isPopState = false;
+                    });
+                });
+            },
+            
+            watch: {
+                screen(newVal, oldVal) {
+                    if (!this.isPopState && newVal !== oldVal) {
+                        this.pushHistoryState({ screen: newVal }, '?screen=' + newVal);
+                    }
+                    this.saveState();
+                    
+                    if (newVal === 'list') {
+                        this.lastActionTimestamp = Date.now();
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = setInterval(() => {
+                            this.elapsedSeconds++;
+                            if (this.elapsedSeconds % 5 === 0) { // save periodically
+                                this.syncTrackData();
+                            }
+                        }, 1000);
+                        
+                        this.$nextTick(() => {
+                            this.focusFirstUncheckedStep();
+                        });
+                    } else if (newVal === 'summary') {
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                    } else if (newVal === 'home' || newVal === 'user-select') {
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                    }
+                },
+                checkedSteps: {
+                    deep: true,
+                    handler() {
+                        this.syncTrackData();
+                    }
+                },
+                preGoTimeStepsCompleted(newVal) {
+                    if (newVal && this.timerInterval) {
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                        this.syncTrackData();
+                    } else if (!newVal && !this.timerInterval && this.screen === 'list') {
+                        this.timerInterval = setInterval(() => {
+                            this.elapsedSeconds++;
+                            if (this.elapsedSeconds % 5 === 0) {
+                                this.syncTrackData();
+                            }
+                        }, 1000);
+                    }
+                },
+                activeVideoId(newVal, oldVal) {
+                    if (newVal) {
+                        this.videoUIActive = true;
+                        this.startVideoUITimer();
+                        if (!this.isPopState && !oldVal) {
+                            this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
+                        }
+                    } else {
+                        clearTimeout(this.videoUITimer);
+                        if (!this.isPopState && window.history.state?.modal) {
+                            window.history.back();
+                        }
+                    }
+                },
+                activePdf(newVal, oldVal) {
+                    if (newVal) {
+                        if (!this.isPopState && !oldVal) {
+                            this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
+                        }
+                    } else {
+                        this.pdfFullscreen = false;
+                        if (!this.isPopState && window.history.state?.modal) {
+                            window.history.back();
+                        }
+                    }
+                },
+                activeHelpStep(newVal, oldVal) {
+                    if (newVal && !this.closingModal) {
+                        if (!this.isPopState && !oldVal) {
+                            this.pushHistoryState({ screen: this.screen, modal: true }, window.location.href);
+                        }
+                    } else if (!newVal) {
+                        if (!this.isPopState && window.history.state?.modal) {
+                            window.history.back();
+                        }
+                    }
+                }
+            },
+            computed: {
+                formattedTime() {
+                    return this.formatDurationStr(this.elapsedSeconds);
+                },
+                speedRating() {
+                    if (this.elapsedSeconds < 480) return "Lightning Fast ⚡";
+                    if (this.elapsedSeconds < 900) return "Swift & Steady 🏃";
+                    return "Thorough & Careful 🛡️";
+                },
+                preGoTimeStepsCompleted() {
+                    if (!this.role) return false;
+                    const preGoTimeBands = this.filteredBands.filter(b => !b.label.includes('Go-Time'));
+                    const requiredStepIds = preGoTimeBands.flatMap(b => b.steps.map(s => s.id));
+                    
+                    if (requiredStepIds.length === 0) return false;
+                    return requiredStepIds.every(id => this.checkedSteps.includes(id));
+                },
+                docCategories() {
+                    const cats = this.documentsList.map(d => d.category);
+                    return [...new Set(cats)];
+                },
+                filteredDocuments() {
+                    return this.documentsList.filter(doc => {
+                        const matchesCategory = this.selectedDocCategory === 'All' || doc.category === this.selectedDocCategory;
+                        const query = this.documentSearch.toLowerCase().trim();
+                        const matchesQuery = !query || doc.title.toLowerCase().includes(query) || doc.filename.toLowerCase().includes(query) || doc.category.toLowerCase().includes(query);
+                        return matchesCategory && matchesQuery;
+                    });
+                },
+                matchedPdf() {
+                    if (!this.currentWizardNode || !this.currentWizardNode.text) return null;
+                    return this.documentsList.find(d => this.currentWizardNode.text.includes(d.filename));
+                },
+                latestRotaPdf() {
+                    const rotas = this.documentsList.filter(doc => 
+                        doc.type === 'PDF Document' && (
+                        doc.filename.toLowerCase().includes('rota') || 
+                        doc.filename.toLowerCase().includes('band') ||
+                        doc.filename.toLowerCase().includes('schedule'))
+                    );
+                    rotas.sort((a, b) => b.filename.localeCompare(a.filename));
+                    return rotas.length > 0 ? rotas[0] : null;
+                },
+                filteredBands() {
+                    if (!this.role) return [];
+                    return this.stepsDatabase[this.role].map(band => {
+                        return {
+                            label: band.label,
+                            steps: band.steps.filter(s => {
+                                if (!s.branch) return true;
+                                return this.streaming === s.branch;
+                            })
+                        }
+                    }).filter(b => b.steps.length > 0);
+                },
+                totalSteps() {
+                    return this.filteredBands.reduce((acc, band) => acc + band.steps.length, 0);
+                },
+                progressPercentage() {
+                    if (this.totalSteps === 0) return 0;
+                    return Math.round((this.checkedSteps.length / this.totalSteps) * 100);
+                },
+                currentWizardNode() {
+                    if (!this.activeHelpStep) return {};
+                    
+                    const targetTree = this.flowchartsDatabase[this.activeHelpStep.id] || {
+                        'start': {
+                            text: `Let's check the device infrastructure for "${this.activeHelpStep.text}". Is the item receiving operational line power?`,
+                            options: [
+                                { label: "Yes, it is drawing power", target: "signal_check" },
+                                { label: "No power indicators", target: "power_check" }
+                            ]
+                        },
+                        'power_check': {
+                            text: "Reseat the utility interface connections back into your primary rack strip and check toggles. Did system power initialise?",
+                            options: [
+                                { label: "Yes, power restored", target: "resolved" },
+                                { label: "No, still unpowered", target: "escalate_power" }
+                            ]
+                        },
+                        'signal_check': {
+                            text: `Check that all source parameters match distribution arrays. Ensure cable inputs lock. Did the configuration execute?`,
+                            options: [
+                                { label: "Yes, operational alignment complete", target: "resolved" },
+                                { label: "No signal recovery", target: "escalate_general" }
+                            ]
+                        },
+                        'resolved': { type: 'success', text: "The task loop is confirmed complete and execution was successful.", actionText: "Complete" },
+                        'escalate_power': { type: 'escalation', text: "Main operational line drop detected.", actionText: "Escalate" },
+                        'escalate_general': { type: 'escalation', text: "The distribution matrix interface did not capture matching data streams.", actionText: "Escalate" }
+                    };
+
+                    return targetTree[this.flowNode] || targetTree['start'];
+                },
+                modalStyle() {
+                    if (this.closingModal) return {}; 
+                    if (this.isSwipingY) {
+                        return { transform: `translateY(${this.modalDragY}px)`, transition: 'none' };
+                    }
+                    return { transform: '', transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)' };
+                },
+                carouselStyle() {
+                    return {
+                        transform: `translateX(${this.swipeDragX}px)`,
+                        transition: this.swipeTransition
+                    };
+                }
+            },
+            
+            methods: {
+                // ==========================================
+                // LocalStorage State Management & Isolation
+                // ==========================================
+                saveState() {
+                    const state = {
+                        screen: this.screen,
+                        currentName: this.currentName,
+                        role: this.role,
+                        roleToSelect: this.roleToSelect,
+                        streaming: this.streaming,
+                        tracksProgress: this.tracksProgress,
+                        teamMembers: this.teamMembers,
+                        stepCompletionTimes: this.stepCompletionTimes
+                    };
+                    try {
+                        localStorage.setItem('avSetupState', JSON.stringify(state));
+                    } catch (e) {}
+                },
+                loadState() {
+                    try {
+                        const saved = localStorage.getItem('avSetupState');
+                        if (saved) {
+                            const state = JSON.parse(saved);
+                            this.screen = state.screen || 'home';
+                            this.currentName = state.currentName || null;
+                            this.role = state.role || null;
+                            this.roleToSelect = state.roleToSelect || null;
+                            this.streaming = state.streaming || null;
+                            this.tracksProgress = state.tracksProgress || {};
+                            this.teamMembers = state.teamMembers || [...INITIAL_TEAM];
+                            this.stepCompletionTimes = state.stepCompletionTimes || {};
+                            return true;
+                        }
+                    } catch (e) {}
+                    return false;
+                },
+                clearState() {
+                    try {
+                        localStorage.removeItem('avSetupState');
+                        this.tracksProgress = {};
+                        this.stepCompletionTimes = {};
+                    } catch(e) {}
+                },
+                syncTrackData() {
+                    if (!this.role || !this.streaming) return;
+                    const trackKey = `${this.role}-${this.streaming}`;
+                    this.tracksProgress[trackKey] = {
+                        checkedSteps: [...this.checkedSteps],
+                        stepDurations: { ...this.stepDurations },
+                        stepCompletionTimes: { ...this.stepCompletionTimes },
+                        elapsedSeconds: this.elapsedSeconds
+                    };
+                    this.saveState();
+                },
+
+                // ==========================================
+                // UI Helpers
+                // ==========================================
+                isStepExpandable(step) {
+                    return !!(step.note || step.phone || step.multiLink || this.hasDrawerContent(step));
+                },
+                toggleExpand(id) {
+                    const idx = this.expandedSteps.indexOf(id);
+                    if (idx > -1) {
+                        this.expandedSteps.splice(idx, 1);
+                    } else {
+                        this.expandedSteps.push(id);
+                    }
+                },
+                pushHistoryState(stateObj, urlQuery) {
+                    try { window.history.pushState(stateObj, '', urlQuery); } catch (e) { }
+                },
+                replaceHistoryState(stateObj, urlQuery) {
+                    try { window.history.replaceState(stateObj, '', urlQuery); } catch (e) { }
+                },
+                
+                // ==========================================
+                // PDF Rendering & Touch Handling
+                // ==========================================
+                getDirectPdfUrl(doc) {
+                    let absoluteUrl = doc.path;
+                    if (absoluteUrl.includes('raw.githubusercontent.com')) {
+                        absoluteUrl = absoluteUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh');
+                        absoluteUrl = absoluteUrl.replace('/main/', '@main/');
+                    } else if (!absoluteUrl.startsWith('http')) {
+                        absoluteUrl = new URL(absoluteUrl, window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/')).href;
+                    }
+                    return absoluteUrl;
+                },
+                async loadAndRenderPdf(url) {
+                    this.pdfLoading = true;
+                    this.pdfPages = [];
+                    this.pdfZoom = 1;
+                    this.initialScrollLeft = 0;
+                    this.initialScrollTop = 0;
+                    
+                    try {
+                        const loadingTask = pdfjsLib.getDocument(url);
+                        const pdf = await loadingTask.promise;
+                        
+                        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                            const page = await pdf.getPage(pageNum);
+                            // Scale 2 for high-res crispness during pinch zoom
+                            const viewport = page.getViewport({ scale: 2.0 });
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            
+                            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                            this.pdfPages.push(canvas.toDataURL('image/jpeg', 0.8));
+                        }
+                    } catch (error) {
+                        console.error("PDF Rendering Error:", error);
+                        alert("Could not load PDF document.");
+                    } finally {
+                        this.pdfLoading = false;
+                    }
+                },
+                handlePdfTouchStart(e) {
+                    if (e.touches.length === 2) {
+                        this.isPinching = true;
+                        this.initialPinchDistance = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        this.initialZoom = this.pdfZoom;
+                        
+                        const container = this.$refs.pdfScrollContainer;
+                        if (container) {
+                            const rect = container.getBoundingClientRect();
+                            
+                            const viewportCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                            const viewportCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                            
+                            this.initialTouchCenterX = viewportCenterX;
+                            this.initialTouchCenterY = viewportCenterY;
+                            
+                            this.pinchCenterX = viewportCenterX - rect.left;
+                            this.pinchCenterY = viewportCenterY - rect.top;
+                            
+                            this.initialScrollLeft = container.scrollLeft;
+                            this.initialScrollTop = container.scrollTop;
+                        }
+                    }
+                },
+                handlePdfTouchMove(e) {
+                    if (this.isPinching && e.touches.length === 2) {
+                        e.preventDefault(); 
+                        const distance = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        const scale = distance / this.initialPinchDistance;
+                        let newZoom = this.initialZoom * scale;
+                        
+                        if (newZoom < 1) newZoom = 1;
+                        if (newZoom > 4) newZoom = 4;
+                        
+                        this.pdfZoom = newZoom;
+                        
+                        const factor = newZoom / this.initialZoom;
+                        const container = this.$refs.pdfScrollContainer;
+                        
+                        if (container) {
+                            const currentTouchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                            const currentTouchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                            
+                            const deltaX = currentTouchCenterX - this.initialTouchCenterX;
+                            const deltaY = currentTouchCenterY - this.initialTouchCenterY;
+
+                            this.$nextTick(() => {
+                                container.scrollLeft = ((this.initialScrollLeft + this.pinchCenterX) * factor) - this.pinchCenterX - deltaX;
+                                container.scrollTop = ((this.initialScrollTop + this.pinchCenterY) * factor) - this.pinchCenterY - deltaY;
+                            });
+                        }
+                    }
+                },
+                handlePdfTouchEnd(e) {
+                    if (e.touches.length < 2) {
+                        this.isPinching = false;
+                    }
+                },
+
+                // ==========================================
+                // Data Fetching
+                // ==========================================
+                async scanGitHubRepo() {
+                    try {
+                        let owner = 'vabudar';
+                        let repo = 'AV-Setup-Checklist';
+                        
+                        const host = window.location.hostname;
+                        const pathParts = window.location.pathname.split('/').filter(Boolean);
+                        
+                        if (host.endsWith('.github.io')) {
+                            owner = host.split('.github.io')[0];
+                            repo = pathParts.length > 0 ? pathParts[0] : `${owner}.github.io`;
+                        }
+
+                        if (owner && repo) {
+                            const treeRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`);
+                            if (treeRes.ok) {
+                                const treeData = await treeRes.json();
+                                if (treeData.tree && Array.isArray(treeData.tree)) {
+                                    const rawFiles = treeData.tree.filter(item => item.type === 'blob');
+
+                                    rawFiles.forEach(fileObj => {
+                                        const fullPath = fileObj.path;
+                                        const fileName = fullPath.split('/').pop();
+                                        const cleanName = fileName.replace(/\.(pdf|doc|docx|jpg|jpeg|png|gif|svg)$/i, '');
+                                        const rawPath = `https://raw.githubusercontent.com/${owner}/${repo}/main/${fullPath.split('/').map(encodeURIComponent).join('/')}`;
+                                        
+                                        const isPdf = fullPath.toLowerCase().endsWith('.pdf');
+                                        const isDoc = fullPath.toLowerCase().endsWith('.doc') || fullPath.toLowerCase().endsWith('.docx');
+                                        const isImage = fullPath.toLowerCase().match(/\.(jpg|jpeg|png|gif|svg)$/i);
+                                        
+                                        if (isPdf || isDoc) {
+                                            const exists = this.documentsList.some(d => 
+                                                d.filename.toLowerCase() === fileName.toLowerCase() ||
+                                                d.path.toLowerCase().endsWith(fullPath.toLowerCase())
+                                            );
+
+                                            if (!exists) {
+                                                this.documentsList.push({
+                                                    id: 'gh-' + (fileObj.sha || Math.random().toString(36).substring(2, 9)),
+                                                    title: cleanName,
+                                                    category: 'Repository File',
+                                                    type: isPdf ? 'PDF Document' : 'Word Document',
+                                                    path: rawPath,
+                                                    filename: fileName
+                                                });
+                                            }
+                                        } else if (isImage) {
+                                            this.repoImages[cleanName.toLowerCase()] = rawPath;
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Repo scan fallback:", e);
+                    }
+                },
+                getImageUrl(imageName) {
+                    if (!imageName) return null;
+                    return this.repoImages[imageName.toLowerCase()] || null;
+                },
+                previewPdf(doc) {
+                    this.pdfFullscreen = false;
+                    this.activePdf = doc;
+                    if (doc.type === 'PDF Document') {
+                        this.loadAndRenderPdf(this.getDirectPdfUrl(doc));
+                    }
+                },
+                playVideo(videoId) {
+                    this.activeVideoId = videoId;
+                },
+                wakeVideoUI() {
+                    this.videoUIActive = true;
+                    this.startVideoUITimer();
+                },
+                startVideoUITimer() {
+                    clearTimeout(this.videoUITimer);
+                    this.videoUITimer = setTimeout(() => {
+                        this.videoUIActive = false;
+                    }, 3500);
+                },
+                async submitFeedback() {
+                    if (!this.feedbackText.trim()) return;
+                    this.feedbackSending = true;
+                    this.feedbackSuccess = false;
+
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
+                    const senderName = this.feedbackName.trim() || (this.currentName ? this.currentName : "Anonymous");
+                    let emailContent = `APP FEEDBACK / BUG REPORT\nFrom: ${senderName}\nDate: ${rawDateString}\n\nMessage:\n${this.feedbackText}\n`;
+
+                    emailjs.init("6bJZROd4I9Q_p-uKx");
+
+                    try {
+                        await emailjs.send("service_767ih1c", "template_vpq8sqe", {
+                            report_content: emailContent,
+                            subject_date: "APP FEEDBACK - " + formattedSubjectDate,
+                            operator_name: senderName
+                        });
+                        this.feedbackSending = false;
+                        this.feedbackSuccess = true;
+                        
+                        setTimeout(() => {
+                            this.feedbackSuccess = false;
+                            this.feedbackText = '';
+                            this.feedbackName = '';
+                            this.screen = 'home';
+                        }, 2000);
+                    } catch (error) {
+                        console.error("EmailJS payload transfer failure:", error);
+                        this.feedbackSending = false;
+                        alert("Failed to send feedback. Please check your connection or try again later.");
+                    }
+                },
+                
+                unlockCredentials() {
+                    if (!this.activeHelpStep || !this.activeHelpStep.login) return;
+                    
+                    try {
+                        if (btoa(this.pinInput) === 'NDcxMQ==') {
+                            this.decryptedEmail = atob(this.activeHelpStep.login.emailEnc);
+                            this.decryptedPassword = atob(this.activeHelpStep.login.passEnc);
+                            this.credentialsUnlocked = true;
+                        } else {
+                            this.triggerPinShake();
+                        }
+                    } catch (e) {
+                        this.triggerPinShake();
+                    }
+                },
+                
+                triggerPinShake() {
+                    this.pinShake = true;
+                    this.pinInput = '';
+                    try { if (window.navigator?.vibrate) window.navigator.vibrate([10, 30, 10, 30, 10]); } catch(e) {}
+                    setTimeout(() => { this.pinShake = false; }, 400);
+                },
+                
+                // UNIFIED MODAL TOUCH & SWIPE SYSTEM
+                handleModalTouchStart(e) {
+                    const touch = e.type.includes('touch') ? e.touches[0] : e;
+                    this.swipeTransition = 'none'; 
+                    this.touchStartX = touch.clientX;
+                    this.touchStartY = touch.clientY;
+                    this.isSwipingX = false;
+                    this.isSwipingY = false;
+                    this.isDragging = true;
+
+                    const scrollContainer = this.$refs.scrollContainer;
+                    this.isAtTop = scrollContainer ? scrollContainer.scrollTop <= 1 : true;
+                },
+
+                handleModalTouchMove(e) {
+                    if (!this.isDragging) return;
+                    const touch = e.type.includes('touch') ? e.touches[0] : e;
+                    const currentX = touch.clientX;
+                    const currentY = touch.clientY;
+                    const diffX = currentX - this.touchStartX;
+                    const diffY = currentY - this.touchStartY;
+
+                    if (!this.isSwipingX && !this.isSwipingY) {
+                        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 5) {
+                            this.isSwipingX = true;
+                        } else if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 5) {
+                            if (diffY > 0 && this.isAtTop) {
+                                this.isSwipingY = true;
+                            }
+                        }
+                    }
+
+                    if (this.isSwipingX) {
+                        if(e.cancelable) e.preventDefault(); 
+                        let dragX = diffX;
+                        if ((this.currentHelpIndex === 0 && diffX > 0) ||
+                            (this.currentHelpIndex === this.helpSequence.length - 1 && diffX < 0)) {
+                            dragX = diffX * 0.3;
+                        }
+                        this.swipeDragX = dragX;
+                    } else if (this.isSwipingY) {
+                        if (diffY > 0) {
+                            if(e.cancelable) e.preventDefault(); 
+                            this.modalDragY = diffY;
+                        }
+                    }
+                },
+
+                handleModalTouchEnd(e) {
+                    if (!this.isDragging) return;
+                    this.isDragging = false;
+                    
+                    const thresholdX = 60;
+                    const thresholdY = 75;
+                    let swipedDirection = 0;
+
+                    if (this.isSwipingX) {
+                        if (this.swipeDragX > thresholdX && this.currentHelpIndex > 0) {
+                            this.navigateHelp(-1);
+                            swipedDirection = -1;
+                        } else if (this.swipeDragX < -thresholdX && this.currentHelpIndex < this.helpSequence.length - 1) {
+                            this.navigateHelp(1);
+                            swipedDirection = 1;
+                        }
+                    } else if (this.isSwipingY) {
+                        if (this.modalDragY > thresholdY) {
+                            this.closeModal();
+                        }
+                    }
+
+                    if (swipedDirection !== 0) {
+                        this.swipeTransition = 'none';
+                        this.swipeDragX = swipedDirection === 1 ? (window.innerWidth || 400) : -(window.innerWidth || 400);
+                        
+                        setTimeout(() => {
+                            this.swipeTransition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+                            this.swipeDragX = 0;
+                        }, 20);
+                    } else {
+                        this.swipeTransition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+                        this.swipeDragX = 0;
+                    }
+
+                    if (!this.closingModal) {
+                        this.modalDragY = 0;
+                    }
+
+                    this.isSwipingX = false;
+                    this.isSwipingY = false;
+                },
+
+                closeModal() {
+                    this.closingModal = true;
+                    setTimeout(() => {
+                        this.activeHelpStep = null;
+                        this.closingModal = false;
+                        this.modalDragY = 0;
+                        this.flowNode = 'start';
+                        this.pinInput = '';
+                        this.credentialsUnlocked = false;
+                    }, 250);
+                },
+
+                navigateHelp(direction) {
+                    if (this.currentHelpIndex !== -1 && this.helpSequence.length > 0) {
+                        const nextIndex = this.currentHelpIndex + direction;
+                        if (nextIndex >= 0 && nextIndex < this.helpSequence.length) {
+                            this.currentHelpIndex = nextIndex;
+                            this.activeHelpStep = this.helpSequence[nextIndex];
+                            this.flowNode = 'start';
+                            this.pinInput = '';
+                            this.credentialsUnlocked = false;
+                            if (this.activeHelpStep.id === 'vis-6') {
+                                this.showAllRoutes = true;
+                            }
+                        }
+                    }
+                },
+
+                selectUser(name) {
+                    this.currentName = name;
+                    this.screen = 'role';
+                },
+                addName() {
+                    if (!this.newName.trim()) return;
+                    this.teamMembers.push(this.newName.trim());
+                    this.currentName = this.newName.trim();
+                    this.newName = '';
+                    this.screen = 'role';
+                },
+                prepareRoleSelection(selectedRole) {
+                    this.roleToSelect = selectedRole;
+                    this.screen = 'streaming';
+                },
+                selectRole(selectedRole, streamOption) {
+                    this.role = selectedRole;
+                    this.streaming = streamOption;
+                    const trackKey = `${this.role}-${this.streaming}`;
+                    
+                    if (this.tracksProgress[trackKey]) {
+                        this.checkedSteps = [...this.tracksProgress[trackKey].checkedSteps];
+                        this.stepDurations = { ...this.tracksProgress[trackKey].stepDurations };
+                        this.stepCompletionTimes = { ...this.tracksProgress[trackKey].stepCompletionTimes };
+                        this.elapsedSeconds = this.tracksProgress[trackKey].elapsedSeconds;
+                    } else {
+                        this.checkedSteps = [];
+                        this.stepDurations = {};
+                        this.stepCompletionTimes = {};
+                        this.elapsedSeconds = 0;
+                    }
+                    
+                    this.screen = 'list';
+                    this.saveState();
+                },
+                toggleAccordion(label) {
+                    this.collapsedBands[label] = !this.collapsedBands[label];
+                    try {
+                        if (window.navigator?.vibrate) {
+                            if (this.collapsedBands[label]) {
+                                window.navigator.vibrate(10);
+                            } else {
+                                window.navigator.vibrate([15, 40, 15]);
+                            }
+                        }
+                    } catch(e) {}
+                },
+                hasDrawerContent(step) {
+                    return step.why || step.fullNote || this.flowchartsDatabase[step.id] || step.isRotaLink || step.imageName || step.login || step.links || step.id === 'vis-6';
+                },
+                getDrawerButtonLabel(step) {
+                    if (step.isRotaLink) return 'View Rota';
+                    if (step.imageName) return 'View Image Reference';
+                    if (step.login) return 'View Login Details';
+                    if (step.id === 'vis-6') return 'Open Matrix Guide';
+                    if (this.flowchartsDatabase[step.id]) return 'Open Troubleshooting Guide';
+                    if (step.why) return 'Why?';
+                    if (step.links) return 'Open Links';
+                    return 'More Information';
+                },
+                handleRowClick(id) {
+                    this.focusedStep = id;
+                    
+                    if (!this.isStepChecked(id)) {
+                        this.checkedSteps.push(id);
+                        
+                        const now = Date.now();
+                        this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
+                        this.stepCompletionTimes[id] = new Date(now).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                        this.lastActionTimestamp = now;
+                        
+                        this.justChecked = id;
+                        
+                        if (!this.expandedSteps.includes(id)) {
+                            this.expandedSteps.push(id);
+                        }
+                        
+                        setTimeout(() => { this.justChecked = null; }, 600);
+                        try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
+                        
+                        setTimeout(() => {
+                            const idx = this.expandedSteps.indexOf(id);
+                            if (idx > -1) {
+                                this.expandedSteps.splice(idx, 1);
+                            }
+                            this.focusFirstUncheckedStep();
+                        }, 400);
+                    } else {
+                        this.toggleExpand(id);
+                    }
+                },
+                isStepChecked(id) {
+                    return this.checkedSteps.includes(id);
+                },
+                toggleStepCheckbox(id) {
+                    const idx = this.checkedSteps.indexOf(id);
+                    if (idx > -1) {
+                        this.checkedSteps.splice(idx, 1);
+                        delete this.stepDurations[id];
+                        delete this.stepCompletionTimes[id];
+                    } else {
+                        this.checkedSteps.push(id);
+                        
+                        const now = Date.now();
+                        this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
+                        this.stepCompletionTimes[id] = new Date(now).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                        this.lastActionTimestamp = now;
+                        
+                        this.justChecked = id;
+                        this.focusedStep = id;
+                        
+                        if (!this.expandedSteps.includes(id)) {
+                            this.expandedSteps.push(id);
+                        }
+                        
+                        setTimeout(() => { this.justChecked = null; }, 600);
+                        try { if (window.navigator?.vibrate) window.navigator.vibrate(40); } catch(e) {}
+                        
+                        setTimeout(() => {
+                            const eIdx = this.expandedSteps.indexOf(id);
+                            if (eIdx > -1) {
+                                this.expandedSteps.splice(eIdx, 1);
+                            }
+                            this.focusFirstUncheckedStep();
+                        }, 400);
+                    }
+                },
+                focusFirstUncheckedStep() {
+                    for (let band of this.filteredBands) {
+                        for (let step of band.steps) {
+                            if (!this.checkedSteps.includes(step.id)) {
+                                this.focusedStep = step.id;
+                                if (!this.expandedSteps.includes(step.id)) {
+                                    this.expandedSteps.push(step.id);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                    this.focusedStep = null;
+                },
+                openTroubleshooter(step) {
+                    if (this.screen === 'list') {
+                        this.helpSequence = this.filteredBands.flatMap(b => b.steps).filter(s => s.why || this.flowchartsDatabase[s.id] || s.note || s.fullNote || s.links || s.isRotaLink || s.imageName || s.login);
+                    } else if (this.screen === 'troubleshooting') {
+                        this.helpSequence = [
+                            {id: 'audio-7', text: 'Headset Mic No Sound'},
+                            {id: 'audio-11', text: 'Band Mics No Sound'},
+                            {id: 'audio-13', text: 'YouTube Video No Sound'},
+                            {id: 'audio-15', text: 'Lomond Feed Not Working'},
+                            {id: 'vis-6', text: 'Matrix Switcher Route Guide'},
+                            {id: 'vis-7', text: 'Can\'t Find Main Slides'},
+                            {id: 'vis-farsi-slides', text: 'Can\'t Find Farsi Slides'},
+                            {id: 'vis-s-3', text: 'ATEM Switcher Not Connecting'},
+                            {id: 'vis-s-t1', text: 'Breeze Translate Feed Issues'}
+                        ];
+                    } else {
+                        this.helpSequence = [step];
+                    }
+                    
+                    const foundIndex = this.helpSequence.findIndex(s => s.id === step.id);
+                    this.currentHelpIndex = foundIndex !== -1 ? foundIndex : 0;
+                    
+                    this.activeHelpStep = this.helpSequence[this.currentHelpIndex] || step;
+                    this.flowNode = 'start';
+                    this.pinInput = '';
+                    this.credentialsUnlocked = false;
+                    if (this.activeHelpStep.id === 'vis-6') {
+                        this.showAllRoutes = true;
+                    }
+                },
+                handleFlowAction(target) {
+                    this.flowNode = target;
+                },
+                handleResolution(type) {
+                    if (type === 'success' && this.activeHelpStep) {
+                        if (!this.checkedSteps.includes(this.activeHelpStep.id)) {
+                            this.checkedSteps.push(this.activeHelpStep.id);
+                        }
+                    }
+                    this.closeModal();
+                },
+
+                selectOutput(outNum) {
+                    this.showAllRoutes = false;
+                    this.selectedOutput = outNum;
+                    try { if (window.navigator?.vibrate) window.navigator.vibrate(20); } catch(e) {}
+                },
+                toggleShowAll(state) {
+                    this.showAllRoutes = state;
+                    if (!state) {
+                        this.selectedOutput = 4;
+                    }
+                },
+                getOutputLedClass(outNum) {
+                    if (this.showAllRoutes) {
+                        if (outNum === 1) return 'bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'; 
+                        if (outNum === 2 || outNum === 3) return 'bg-emerald-500 border border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]'; 
+                        if (outNum === 4) return 'bg-cyan-400 border border-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.8)]'; 
+                        return 'bg-[#180a0c] border border-stone-900';
+                    } else {
+                        return this.selectedOutput === outNum ? 'bg-rose-500 border border-rose-400 shadow-[0_0_12px_#f43f5e]' : 'bg-[#180a0c] border border-stone-900';
+                    }
+                },
+                getInputLedClass(inNum) {
+                    if (this.showAllRoutes) {
+                        if (inNum === 1) return 'bg-cyan-400 border border-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.8)]'; 
+                        if (inNum === 2) return 'bg-amber-500 border border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'; 
+                        if (inNum === 3) return 'bg-emerald-500 border border-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.8)]'; 
+                        return 'bg-[#180a0c] border border-stone-900';
+                    } else {
+                        return this.isInputActive(inNum) ? 'bg-rose-500 border border-rose-400 shadow-[0_0_12px_#f43f5e]' : 'bg-[#180a0c] border border-stone-900';
+                    }
+                },
+                isInputActive(inNum) {
+                    if (this.selectedOutput === 1 && inNum === 2) return true; 
+                    if (this.selectedOutput === 2 && inNum === 3) return true; 
+                    if (this.selectedOutput === 3 && inNum === 3) return true; 
+                    if (this.selectedOutput === 4 && inNum === 1) return true; 
+                    if (this.selectedOutput === 5 && inNum === 5) return true; 
+                    return false;
+                },
+
+                formatDurationStr(totalSeconds) {
+                    if (totalSeconds === 0) return "0 secs";
+                    const m = Math.floor(totalSeconds / 60);
+                    const s = totalSeconds % 60;
+                    
+                    const mStr = m === 1 ? '1 min' : `${m} mins`;
+                    const sStr = s === 1 ? '1 sec' : `${s} secs`;
+                    
+                    if (m > 0 && s > 0) return `${mStr} and ${sStr}`;
+                    if (m > 0) return mStr;
+                    return sStr;
+                },
+
+                generateReportText() {
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    let text = `AV SETUP FINAL REPORT - ${rawDateString}\nTech Operator: ${this.currentName}\nRole Track: ${this.role.toUpperCase()}\nPre-Service Setup Time: ${this.formatDurationStr(this.elapsedSeconds)}\n\n`;
+                    
+                    this.filteredBands.forEach(band => {
+                        text += `--- ${band.label} ---\n`;
+                        band.steps.forEach(step => {
+                            let status = '[MISSING]';
+                            if (this.isStepChecked(step.id)) {
+                                const dur = this.stepDurations[step.id] || 0;
+                                const compTime = this.stepCompletionTimes[step.id] || 'Unknown Time';
+                                status = `[DONE at ${compTime} (took ${this.formatDurationStr(dur)})]`;
+                            }
+                            text += `${status} ${step.text}\n`;
+                        });
+                        text += `\n`;
+                    });
+                    
+                    return text;
+                },
+
+                async finalizeSession() {
+                    const rawDateString = new Date().toLocaleDateString('en-GB');
+                    const formattedSubjectDate = rawDateString.replace(/\//g, '-');
+                    
+                    let reportText = this.generateReportText();
+
+                    this.clearState();
+
+                    emailjs.init("6bJZROd4I9Q_p-uKx");
+
+                    try {
+                        await emailjs.send("service_767ih1c", "template_vpq8sqe", {
+                            report_content: reportText,
+                            subject_date: formattedSubjectDate,
+                            operator_name: this.currentName
+                        });
+                        console.log("Report transmitted successfully.");
+                    } catch (error) {
+                        console.error("EmailJS payload transfer failure:", error);
+                    }
+
+                    this.screen = 'summary';
+                },
+                copyReport() {
+                    const reportText = this.generateReportText();
+
+                    const el = document.createElement('textarea');
+                    el.value = reportText;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    
+                    this.copySuccess = true;
+                    setTimeout(() => { this.copySuccess = false; }, 2000);
+                },
+                resetApp() {
+                    this.screen = 'home';
+                    this.role = null;
+                    this.streaming = null;
+                    this.saveState();
+                },
+                openMultipleLinks(urls) {
+                    if (!urls || urls.length === 0) return;
+                    urls.forEach(url => {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
