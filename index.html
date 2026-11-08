@@ -519,7 +519,7 @@
         <div v-if="screen === 'list'" class="flex flex-col flex-1 min-h-[calc(100vh-64px)] animate-fade-in">
             <div class="sticky top-0 bg-[#F4F7F2]/95 backdrop-blur-md border-b border-slate-200/80 z-20 px-5 pt-4 pb-4 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
-                    <button @click="screen = 'home'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer w-16">
+                    <button @click="screen = 'streaming'" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer w-16">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                         Back
                     </button>
@@ -1059,7 +1059,7 @@
     <!-- Vue Setup Engine -->
     <script>
         const INITIAL_TEAM = [
-            "Andy", "Izzy", "Johnny", "Melchizedek", "Neil", 
+            "Andy", "Izzy", "Johnny", "Joshua", "Melchizedek", "Neil", 
             "Simon", "Titi", "Ulvis", "Ver-se"
         ];
 
@@ -1261,6 +1261,7 @@
                     tracksProgress: {},
                     checkedSteps: [],
                     stepDurations: {},
+                    stepCompletionTimes: {},
                     elapsedSeconds: 0,
                     
                     expandedSteps: [],
@@ -1601,7 +1602,8 @@
                         roleToSelect: this.roleToSelect,
                         streaming: this.streaming,
                         tracksProgress: this.tracksProgress,
-                        teamMembers: this.teamMembers
+                        teamMembers: this.teamMembers,
+                        stepCompletionTimes: this.stepCompletionTimes
                     };
                     try {
                         localStorage.setItem('avSetupState', JSON.stringify(state));
@@ -1619,6 +1621,7 @@
                             this.streaming = state.streaming || null;
                             this.tracksProgress = state.tracksProgress || {};
                             this.teamMembers = state.teamMembers || [...INITIAL_TEAM];
+                            this.stepCompletionTimes = state.stepCompletionTimes || {};
                             return true;
                         }
                     } catch (e) {}
@@ -1628,6 +1631,7 @@
                     try {
                         localStorage.removeItem('avSetupState');
                         this.tracksProgress = {};
+                        this.stepCompletionTimes = {};
                     } catch(e) {}
                 },
                 syncTrackData() {
@@ -1636,6 +1640,7 @@
                     this.tracksProgress[trackKey] = {
                         checkedSteps: [...this.checkedSteps],
                         stepDurations: { ...this.stepDurations },
+                        stepCompletionTimes: { ...this.stepCompletionTimes },
                         elapsedSeconds: this.elapsedSeconds
                     };
                     this.saveState();
@@ -2053,10 +2058,12 @@
                     if (this.tracksProgress[trackKey]) {
                         this.checkedSteps = [...this.tracksProgress[trackKey].checkedSteps];
                         this.stepDurations = { ...this.tracksProgress[trackKey].stepDurations };
+                        this.stepCompletionTimes = { ...this.tracksProgress[trackKey].stepCompletionTimes };
                         this.elapsedSeconds = this.tracksProgress[trackKey].elapsedSeconds;
                     } else {
                         this.checkedSteps = [];
                         this.stepDurations = {};
+                        this.stepCompletionTimes = {};
                         this.elapsedSeconds = 0;
                     }
                     
@@ -2096,6 +2103,7 @@
                         
                         const now = Date.now();
                         this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
+                        this.stepCompletionTimes[id] = new Date(now).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
                         this.lastActionTimestamp = now;
                         
                         this.justChecked = id;
@@ -2126,11 +2134,13 @@
                     if (idx > -1) {
                         this.checkedSteps.splice(idx, 1);
                         delete this.stepDurations[id];
+                        delete this.stepCompletionTimes[id];
                     } else {
                         this.checkedSteps.push(id);
                         
                         const now = Date.now();
                         this.stepDurations[id] = Math.floor((now - this.lastActionTimestamp) / 1000);
+                        this.stepCompletionTimes[id] = new Date(now).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
                         this.lastActionTimestamp = now;
                         
                         this.justChecked = id;
@@ -2271,7 +2281,8 @@
                             let status = '[MISSING]';
                             if (this.isStepChecked(step.id)) {
                                 const dur = this.stepDurations[step.id] || 0;
-                                status = `[DONE in ${this.formatDurationStr(dur)}]`;
+                                const compTime = this.stepCompletionTimes[step.id] || 'Unknown Time';
+                                status = `[DONE at ${compTime} (took ${this.formatDurationStr(dur)})]`;
                             }
                             text += `${status} ${step.text}\n`;
                         });
