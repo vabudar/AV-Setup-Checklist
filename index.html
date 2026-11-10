@@ -1620,7 +1620,17 @@
                             this.roleToSelect = state.roleToSelect || null;
                             this.streaming = state.streaming || null;
                             this.tracksProgress = state.tracksProgress || {};
-                            this.teamMembers = state.teamMembers || [...INITIAL_TEAM];
+                            
+                            // Merge initial team with cached team to ensure new hardcoded names appear
+                            let loadedTeam = state.teamMembers || [];
+                            INITIAL_TEAM.forEach(name => {
+                                if (!loadedTeam.includes(name)) {
+                                    loadedTeam.push(name);
+                                }
+                            });
+                            loadedTeam.sort();
+                            this.teamMembers = loadedTeam;
+                            
                             this.stepCompletionTimes = state.stepCompletionTimes || {};
                             return true;
                         }
